@@ -1,5 +1,13 @@
+:root {
+  --default-padding: 2rem;
+}
+
 .App {
   text-align: center;
+}
+
+a {
+  text-decoration: none;
 }
 
 .App-logo {
@@ -13,6 +21,10 @@
   }
 }
 
+.padded-sides {
+  padding: 0 var(--default-padding);
+}
+
 .App-header {
   /* background-color: #282c34; */
   min-height: 100vh;
@@ -23,6 +35,10 @@
   font-size: calc(10px + 2vmin);
   color: white;
   color: black;
+}
+
+.weddingToolbar {
+  background-color: #f281b3;
 }
 
 .App-link {
