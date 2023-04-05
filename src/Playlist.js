@@ -1,13 +1,13 @@
 
 import * as React from 'react';
-import cake from './images/cake.jpg';
+import music from './images/music.jpg';
 
 function TimeAndDate() {
     return (
       <div className="weddingBody">
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <img src={cake} alt="cake" className="cakeImg"/>
+          <img src={music} alt="music" className="cakeImg"/>
           <div className="padded-sides">
               <p>
                 We hope to play music that will make it difficult to sit down.

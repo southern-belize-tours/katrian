@@ -1,12 +1,12 @@
 import * as React from 'react';
-import cake from './images/cake.jpg';
+import clock from './images/clock.jpg'
 
 function TimeAndDate() {
     return (
       <div className="weddingBody">
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <img src={cake} alt="cake" className="cakeImg"/>
+          <img src={clock} alt="clock" className="cakeImg"/>
           <div className="padded-sides">
               <p>
                 We are not sure when or where a wedding will be happening. We dearly love our friends and family and will be sure to promptly notify everyone when a date and place is set in stone.

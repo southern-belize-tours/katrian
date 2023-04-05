@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
+import camera from './images/camera.jpg'
+
 function importAll(r) {
     let ret = [];
     let i = 0;
@@ -31,6 +33,7 @@ class Gallery extends React.Component {
     render() {
         return (
             <div className="weddingBody">
+                <img src={camera} alt="camera" className="cakeImg"/>
                 <Box sx={{ overflowY: 'scroll' }}>
                   <ImageList variant="masonry" cols={3} gap={8}>
                     {this.images.map((item) => (
