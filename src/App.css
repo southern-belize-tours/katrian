@@ -37,8 +37,46 @@ a {
   color: black;
 }
 
+.formLine {
+  display: flex;
+  gap: var(--default-padding);
+  flex-wrap: wrap;
+}
+
+.temp {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  gap: var(--default-padding);
+  align-items: center;
+}
+
+.itemActions {
+  display: flex;
+  flex: 0 0 auto;
+  /* gap: var(--default-padding); */
+  align-items: center;
+}
+
 .weddingToolbar {
   background-color: #f281b3;
+}
+
+.registryList {
+  max-height: 50vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: var(--default-padding);
+  background: rgb(245, 248, 250);
+}
+
+.registryList .formLine{
+  display: flex;
+  gap: var(--default-padding);
+  border: 1px solid rgb(227,233,237);
+  border-radius: 4px;
+  background: rgb(255,255,255);
 }
 
 .App-link {

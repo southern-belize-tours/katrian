@@ -10,6 +10,7 @@ import WebsiteNames from './WebsiteNames.js';
 import Donations from './Donations.js';
 import Playlist from './Playlist.js';
 import Gallery from './Gallery.js';
+import Registry from './Registry.js';
 
 const links = [
   {text: "Home", route: "/"},
@@ -32,6 +33,7 @@ function App() {
           <Route path="/Donations" component={Donations} />
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" component={Gallery}></Route>
+          <Route path="/Registry" component={Registry}></Route>
           {/* <Route path="/contact" component={Contact} /> */}
         </Switch>
       </Router>
