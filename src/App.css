@@ -51,6 +51,13 @@ a {
   align-items: center;
 }
 
+.spinner {
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
 .itemActions {
   display: flex;
   flex: 0 0 auto;
@@ -59,7 +66,7 @@ a {
 }
 
 .weddingToolbar {
-  background-color: #f281b3;
+  background-color: #ac9ecf;
 }
 
 .registryList {
@@ -83,7 +90,7 @@ a {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+@keyframes spin {
   from {
     transform: rotate(0deg);
   }

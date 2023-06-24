@@ -2,6 +2,7 @@ import './App.css';
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import { Switch, Route } from "react-router-dom";
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Home from './Home.js';
 import TimeAndDate from './TimeAndDate.js';
@@ -11,6 +12,13 @@ import Donations from './Donations.js';
 import Playlist from './Playlist.js';
 import Gallery from './Gallery.js';
 import Registry from './Registry.js';
+import Login from './Login.js';
+import Test from './Test.js';
+
+import { Amplify } from 'aws-amplify';
+import awsConfig from './aws-exports';
+
+Amplify.configure(awsConfig);
 
 const links = [
   {text: "Home", route: "/"},
@@ -21,9 +29,35 @@ const links = [
   {text: "Playlist", route: "/Playlist"},
 ];
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#ac9ecf',
+    },
+    secondary: {
+      main: '#a9b69c',
+    },
+    background: {
+      default: '#f5f5f5',
+    },
+  },
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#0077c2 !important',
+        color: '#fff',
+        '&:hover': {
+          backgroundColor: '#005ca9',
+        },
+      },
+    },
+  },
+});
+
 function App() {
   return (
     <>
+    {/* // <ThemeProvider theme={theme}> */}
       <WeddingToolbar links={links}></WeddingToolbar>
       <Router>
         <Switch>
@@ -34,9 +68,12 @@ function App() {
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" component={Gallery}></Route>
           <Route path="/Registry" component={Registry}></Route>
+          <Route path="/Login" component={Login}></Route>
+          <Route path="/Test" component={Test}></Route>
           {/* <Route path="/contact" component={Contact} /> */}
         </Switch>
       </Router>
+    {/* // </ThemeProvider> */}
     </>
   );
 }

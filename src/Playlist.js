@@ -11,7 +11,7 @@ function TimeAndDate() {
           <div className="padded-sides">
               <p>
                 We hope to play music that will make it difficult to sit down.
-                Please feel free to request collaborator access on our <a target="_blank" href="https://open.spotify.com/playlist/05qaofCfEVNM02kdE81AEy?si=447cd6af3d7b47f2">Spotify Playlist</a>.
+                Please feel free to request collaborator access on our <a rel="noopener noreferrer" target="_blank" href="https://open.spotify.com/playlist/05qaofCfEVNM02kdE81AEy?si=447cd6af3d7b47f2">Spotify Playlist</a>.
               </p>
           </div>
         </header>

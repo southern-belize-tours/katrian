@@ -1,5 +1,5 @@
 import * as React from 'react';
-import clock from './images/clock.jpg'
+import gift from './images/gift.jpg'
 
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -187,11 +187,11 @@ class Registry extends React.Component {
             <div className="weddingBody">
               <header className="App-header">
                 {/* <img src={logo} className="App-logo" alt="logo" /> */}
-                <img src={clock} alt="clock" className="cakeImg"/>
+                <img src={gift} alt="gift" className="cakeImg"/>
                 <div className="padded-sides">
                     <p>
                       Katrian Registry
-                      <Button variant="contained"
+                      <Button variant="contained" color="primary"
                         onClick={()=>{this.deleteAll()}}>
                         <DeleteIcon/> Delete All
                       </Button>
@@ -209,7 +209,7 @@ class Registry extends React.Component {
                       </Button>
                     </p>
                     <div className="registryList">
-                    {this.state.addingNew == true ?
+                    {this.state.addingNew === true ?
                     <form onSubmit={this.handleSubmit}>
                         <div className="formLine">
                             <TextField required id="name" label="Item Name" variant="standard" />
@@ -249,12 +249,12 @@ class Registry extends React.Component {
                             </IconButton>
                         </div>
                     </form>
-                    : this.state.updatingExisting == true ?
+                    : this.state.updatingExisting === true ?
                     <></>
                     :
                     <></>}
                     {this.state.models.map(model => (
-                        this.state.updatingExisting == true && this.state.updatingModel.id === model.id ?
+                        this.state.updatingExisting === true && this.state.updatingModel.id === model.id ?
                         <EditItemForm model={model} cancelCallback={this.cancelUpdateExisting} submitFunction={this.updateModel}></EditItemForm>
                         :
                         <div className="formLine">
@@ -270,6 +270,7 @@ class Registry extends React.Component {
                                 <div>{new Date(model.itemTimestam).toLocaleDateString()}</div>
                                 <div>
                                     <a target="_blank"
+                                      rel="noopener noreferrer"
                                         href={model.itemLink}>
                                         <LinkIcon></LinkIcon>
                                     </a>

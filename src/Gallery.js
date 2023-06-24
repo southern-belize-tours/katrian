@@ -11,7 +11,7 @@ import camera from './images/camera.jpg'
 function importAll(r) {
     let ret = [];
     let i = 0;
-    r.keys().map((item, index) => { ret[item.replace('./', '')] = r(item); ++i });
+    r.keys().map((item, index) => { ret[item.replace('./', '')] = r(item); ++i; return null });
     ret["numKeys"] = i;
     return ret;
 }
@@ -38,8 +38,7 @@ class Gallery extends React.Component {
                   <ImageList variant="masonry" cols={3} gap={8}>
                     {this.images.map((item) => (
                       <ImageListItem key={item}>
-                        <img
-                          alt="A cute photo"
+                        <img alt=""
                           src={`${images[item]}?w=248&fit=crop&auto=format`}
                           loading="lazy"
                         />

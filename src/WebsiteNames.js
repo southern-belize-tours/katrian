@@ -5,7 +5,6 @@ function WebsiteNames() {
     return (
       <div className="weddingBody">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <img src={cake} alt="cake" className="cakeImg"/>
           <div className="padded-sides">
               <p>
