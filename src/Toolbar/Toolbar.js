@@ -7,7 +7,10 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
+// import MenuItemLink from './MenuItemLink.js'
 import MenuItem from '@mui/material/MenuItem';
+// import { Link } from 'react-router-dom'; // Import Link from React Router
+
 
 export default function WeddingToolbar({links}) {
   // const [open, setOpen] = React.useState(false);
@@ -27,6 +30,7 @@ export default function WeddingToolbar({links}) {
       <AppBar position="static">
         <Toolbar className="weddingToolbar">
           <IconButton
+            className="white"
             size="large"
             edge="start"
             color="inherit"
@@ -56,11 +60,12 @@ export default function WeddingToolbar({links}) {
             }}
           >
             {links.map(link => 
-              <MenuItem 
-              onClick={handleClose}
-                href={link.route}>
-                  <a href={link.route}>{link.text}</a>
+              <a href={link.route} className="no-decorate black" key={`menu-item-${link.text}`}>
+              <MenuItem to={link.route}>
+                  <span className="no-decorate">{link.text}</span>
+                  {/* <a href={link.route}>{link.text}</a> */}
               </MenuItem>
+              </a>
             )}
           </Menu>
           {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import cake from './images/cake.jpg';
+import cake from './images/cake.png';
 
 function WebsiteNames() {
     return (

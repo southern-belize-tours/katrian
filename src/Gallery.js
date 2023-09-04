@@ -6,50 +6,59 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
-import camera from './images/camera.jpg'
+// Custom Components
+import Camera from './page_art/camera/camera.js';
+import GallerySummary from './GallerySummary.js';
 
-function importAll(r) {
-    let ret = [];
-    let i = 0;
-    r.keys().map((item, index) => { ret[item.replace('./', '')] = r(item); ++i });
-    ret["numKeys"] = i;
-    return ret;
-}
-let images = importAll(require.context('./images/Gallery', false, /\.(jpg)$/)); 
+// Images and Styling
+import camera from './images/camera.png'
+
+// Carousel Refractoring
+import Carousel from 'react-material-ui-carousel'
+import { Paper, Button } from '@mui/material'
+import Summary from './Summary';
 
 class Gallery extends React.Component {
 
     constructor(props) {
         super();
-        this.images = [];
-        console.log(images);
-        for (const [key,] of Object.entries(images)) {
-           this.images.push(key);
-        }
-        this.images.pop();
-        console.log(this.images);
     }
 
     render() {
         return (
-            <div className="weddingBody">
-                <img src={camera} alt="camera" className="cakeImg"/>
-                <Box sx={{ overflowY: 'scroll' }}>
-                  <ImageList variant="masonry" cols={3} gap={8}>
-                    {this.images.map((item) => (
-                      <ImageListItem key={item}>
-                        <img
-                          alt="A cute photo"
-                          src={`${images[item]}?w=248&fit=crop&auto=format`}
-                          loading="lazy"
-                        />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
-                </Box>
+          <div className="weddingBody">
+            <div>
+              <h1>Galleries</h1>
+              {/* <Carousel autoPlay={false}
+                style={{scroll: "auto"}}>
+                {this.props.galleries.map((gallery, i) =>
+                  <Paper className="flexed centered">
+                    <GallerySummary galleries = {this.props.galleries}
+                      gallery = {gallery}>
+                        
+                      </GallerySummary>
+                  </Paper>
+                )}
+              </Carousel> */}
+                {/* <img src={camera} alt="camera" className="cakeImg"/> */}
+                <div className="flexed centered justified">
+                  <Camera doTransition={true}
+                    size={400}></Camera>
+                </div>
+                <div>
+                  {this.props.galleries.map(gallery => 
+                    <h2>
+                      <a href={gallery.route}>{gallery.text}</a>
+                    </h2>)}
+                {this.props.galleries.map(gallery => {
+                      <a href = {gallery.route}>{gallery.text}</a>
+                      // <GallerySummary gallery = {gallery} ></GallerySummary>
+                    })}
+                </div>
                 <div>
                 </div>
             </div> 
+            </div>
         );
     }
 }
