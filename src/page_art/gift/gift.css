@@ -1,0 +1,124 @@
+.giftContainer {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* border: solid 1px black; */
+}
+
+.giftContainer.small .leftBow, .giftContainer.small .rightBow,
+.giftContainer.small .topBox, .giftContainer.small .giftBottom {
+    border-width: .3rem;
+}
+
+.giftContainer.small .topBox {
+    height: calc(50% - .6rem);
+}
+
+.giftContainer.small .giftBottom {
+    margin-top: -.3rem;
+    height: calc(70% - .6rem);
+}
+
+.giftTop {
+    height: 48%;
+    width: 100%;
+    position: relative;
+    align-items: flex-end;
+    display: flex;
+    overflow: hidden;
+
+    /* border: solid 1px blue; */
+}
+
+.leftBow, .rightBow {
+    position: absolute;
+    border: solid #AC9EED 1rem;
+    border-radius: 50%;
+}
+
+.leftBow {
+    left: 20%;
+    top: 0%;
+    height: 70%;
+    width: 30%;
+}
+
+.rightBow {
+    left: 43%;
+    top: 21%;
+    height: 53%;
+    width: 23%;
+}
+
+.topBox {
+    height: calc(50% - 2rem);
+    width: 100%;
+    border: solid #AC9EED 1rem;
+    border-radius: 1%;
+    background: white;
+    z-index: 1;
+}
+
+.giftBottom {
+    margin-top: -1rem;
+    height: calc(70% - 2rem);
+    width: 80%;
+    z-index: 1;
+    overflow: hidden;
+    position: relative;
+
+    border: solid 1rem #AC9EED;
+}
+
+.topLeft, .topRight, .bottomLeft, .bottomRight {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    border: solid 0px #a7b69d;
+    transition: all .3s;
+}
+
+.topLeft {
+    border-bottom-width: 1rem;
+    border-right-width: 1rem;
+    /* left: -1rem; */
+    /* top: -1rem; */
+}
+
+.topLeft.moved {
+    transform: translate(-100%, -100%)
+}
+
+.topRight {
+    border-bottom-width: 1rem;
+    border-left-width: 1rem;
+    left: 50%;
+}
+
+.topRight.moved {
+    transform: translate(100%, -100%)
+}
+
+.bottomLeft {
+    top: 50%;
+    border-top-width: 1rem;
+    border-right-width: 1rem;
+}
+
+.bottomLeft.moved {
+    transform: translate(-100%, 100%);
+}
+
+.bottomRight {
+    left: 50%;
+    top: 50%;
+    border-top-width: 1rem;
+    border-left-width: 1rem;
+}
+
+.bottomRight.moved {
+    transform: translate(100%, 100%);
+}

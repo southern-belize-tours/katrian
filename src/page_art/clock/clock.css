@@ -1,0 +1,116 @@
+.clockContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.clockContainer.small .clockOuterRing::after {
+    height: 88%;
+    width: 88%;
+    left: 6%;
+    top: 6%;
+}
+
+.clockContainer.small .clockSmallHand, .clockContainer.small .clockBigHand {
+    width: 4.5%;
+}
+
+.clockDiamondTop {
+    background: #AC9EED;
+    height: 4%;
+    width: 19%;
+    position: relative;
+}
+
+.clockDiamondTop::before, .clockDiamondTop::after {
+    content: '';
+    position: absolute;
+    background: white;
+    height: 200%;
+    width: 120%;
+}
+
+.clockDiamondTop::before {
+    left: -89%;
+    transform: rotate(-45deg);
+}
+
+.clockDiamondTop::after {
+    right: -89%;
+    transform: rotate(45deg);
+}
+
+.clockDiamondBottom {
+    background: #AC9EED;
+    height: 9%;
+    width: 19%;
+    position: relative;
+}
+
+.clockDiamondBottom::before, .clockDiamondBottom::after {
+    content: '';
+    position: absolute;
+    background: white;
+    height: 100%;
+    width: 100%;
+}
+
+.clockDiamondBottom::before {
+    left: -67%;
+    transform: rotate(70deg);
+}
+
+.clockDiamondBottom::after {
+    right: -67%;
+    transform: rotate(-70deg);
+}
+
+.clockOuterRing {
+    /* background: red; */
+    background: #AC9EED;
+    height: 87%;
+    width: 87%;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clockOuterRing::before {
+    content: '';
+    position: absolute;
+    height: 4%;
+    width: 15%;
+    top: -2%;
+    background: #AC9EED;
+}
+
+.clockOuterRing::after {
+    content: '';
+    position: absolute;
+    height: 92%;
+    width: 92%;
+    background-color: white;
+    border-radius: 50%;
+    left: 4%;
+    top: 4%;
+}
+
+.clockBigHand, .clockSmallHand {
+    position: absolute;
+    background-color: #a7b69d;
+    z-index: 3;
+    width: 2.5%;
+}
+
+.clockSmallHand {
+    height: 20%;
+}
+
+.clockBigHand {
+    height: 40%;
+}

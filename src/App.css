@@ -1,5 +1,30 @@
+:root {
+  --default-padding: 2rem;
+  --default-gap: 1rem;
+}
+
 .App {
   text-align: center;
+}
+
+a {
+  /* text-decoration: none; */
+}
+
+.white {
+  color: white !important;
+}
+
+.black {
+  color: black !important;
+}
+
+.no-decorate {
+  text-decoration: none;
+}
+
+.secondary {
+  color: #a9b69c;
 }
 
 .App-logo {
@@ -13,8 +38,60 @@
   }
 }
 
+.summaryPaper {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--default-gap);
+  justify-content: center;
+  align-items: center;
+}
+
+.navList {
+  max-width: fit-content;
+}
+
+.navListItem {
+  /* gap: 1rem;
+  flex: 1 1 auto;
+  transition: all .3s; */
+  gap: 1rem;
+  flex: 1 1 auto;
+  transition: all .3s;
+  text-decoration: none;
+  font-color: black;
+  color: black;
+  font-weight: 500;
+}
+
+.navListItem:hover {
+  transform: scale(1.1);
+}
+
+.padded {
+  padding: var(--default-padding);
+}
+
+.padded-top {
+  padding: 0;
+  padding-top: var(--default-padding);
+}
+
+.padded-bottom {
+  padding: 0px;
+  padding-bottom: var(--default-padding);
+}
+
+.padded-top-bottom {
+  padding: var(--default-padding) 0;
+}
+
+.padded-sides {
+  padding: 0 var(--default-padding);
+}
+
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,6 +99,28 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  color: black;
+}
+
+.flexed {
+  display: flex !important;
+  gap: var(--default-gap)
+}
+
+.col {
+  flex-direction: column;
+}
+
+.centered {
+  align-items: center;
+}
+
+.justified {
+  justify-content: center;
+}
+
+.swissFlag {
+  color: #FF0000 !important;
 }
 
 .App-link {
