@@ -2,8 +2,8 @@ import * as React from 'react';
 
 
 // Caurosel experiment
-import Carousel from 'react-material-ui-carousel'
-import { Paper, Button } from '@mui/material'
+// import Carousel from 'react-material-ui-carousel'
+// import { Paper, Button } from '@mui/material'
 import Summary from './Summary';
 
 function TimeAndDate() {
@@ -24,15 +24,17 @@ function TimeAndDate() {
   ];
 
     return (
-      // <div className="weddingBody">
-        <Carousel autoPlay={false}>
+      <div className="weddingBody">
+        {/* // <Carousel autoPlay={false}> */}
           {items.map( (item, i) => 
-            <Paper className="summaryPaper">
+            // <Paper className="summaryPaper">
+            <>
               <h1>{item.name}</h1>
               {item.component}
-            </Paper>
+            </>
+            // </Paper>
             )}
-        </Carousel>
-      // </div>
+        {/* // </Carousel> */}
+      </div>
     );
   } export default TimeAndDate;

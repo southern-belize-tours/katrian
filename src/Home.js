@@ -2,7 +2,15 @@ import * as React from 'react';
 import cake from './images/cake.png';
 import Cake from './page_art/cake/cake';
 
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+
 function Home() {
+
+  const location = useLocation();
+  const pathname = location.pathname;
+  const search = location.search;
+  const hash = location.hash;
+
     return (
       <div className="weddingBody">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}

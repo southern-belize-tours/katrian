@@ -25,9 +25,9 @@ const links = [
   {text: "Home", route: "/", component: <Cake size={100}></Cake>},
   {text: "Time & Place", route: "/TimeAndPlace", component: <Clock size={100}></Clock>},
   // {text: "Website Names", route: "/WebsiteNames"},
-  {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>},
   {text: "Engagement Gallery", route: "/Gallery", component: <Camera size={100}></Camera>},
   {text: "Playlist", route: "/Playlist", component: <Music size={100}></Music>},
+  {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>},
 ];
 
 const journeyDescription = [
@@ -64,8 +64,10 @@ const galleries = [
 ];
 
 function App() {
+
   return (
     <ThemeProvider theme = {theme}>
+      
       {/* <WeddingToolbar links={links}></WeddingToolbar> */}
       <Router>
         <Switch>
@@ -80,9 +82,11 @@ function App() {
               gallery = {gallery}></GallerySummary>}></Route>
           )}
           {/* <Route path="/contact" component={Contact} /> */}
+
         </Switch>
+        <NavList links={links}></NavList>
+
       </Router>
-      <NavList links={links}></NavList>
     </ThemeProvider>
   );
 }
