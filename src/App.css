@@ -1,6 +1,15 @@
 :root {
   --default-padding: 2rem;
   --default-gap: 1rem;
+  --clr-lavender: #ad9ded
+}
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* height: 100%; */
+  min-height: 100vh;
 }
 
 .App {
@@ -64,8 +73,38 @@ a {
   font-weight: 500;
 }
 
-.navListItem:hover {
+.navListItemIcon {
+  transition: all .3s;
+}
+
+.navListItem:hover > .navListItemIcon {
   transform: scale(1.1);
+}
+
+.navListItem:hover > .navListItemText::after {
+  width: 100%;
+}
+
+.navListItemText {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.navListMenu {
+  position: absolute;
+}
+
+.navListItemText::after {
+  content: "";
+  position: absolute;
+  /* width: 100%; */
+  width: 0px;
+  height: 2px;
+  background-color: var(--clr-lavender);
+  bottom: -4px;
+  transition: all .3s;
 }
 
 .padded {

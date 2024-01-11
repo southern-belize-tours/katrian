@@ -1,0 +1,73 @@
+.faqItems {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
+    padding: 0 var(--default-padding);
+}
+
+.faqItem {
+    display: flex;
+    flex-direction: row;
+    gap: var(--default-gap);
+    /* background-color: #fafafa; */
+    padding: var(--default-gap);
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: solid 2px #bbbbbb;
+}
+
+.faqBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
+    flex: 1 1 auto;
+}
+
+.questionForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
+    transition: all .3s ease-in-out;
+    overflow: hidden;
+    width: -webkit-fill-available;
+    padding: 0 var(--default-padding);
+}
+
+.questionForm.closed {
+    max-height: 0px;
+}
+
+.questionForm.open {
+    /* max-height: 10rem; */
+    max-height: 70vh;
+    /* height: max-content; */
+}
+
+.questionPanel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.faqPin {
+    transition: all .3s;
+    max-height: 0px;
+}
+
+.faqPin.pinned {
+    max-height: 2rem;
+}
+
+.faqAnswer {
+    display: flex;
+    flex-direction: row;
+    gap: var(--default-gap);
+}
+
+.faqAnswerText {
+    flex: 1 1 auto;
+}
+
+.faqQuestion {
+    font-weight: bold;
+}

@@ -1,0 +1,45 @@
+.boneContainer {
+    position: relative;
+    display: flex;
+    height: 16px;
+    width: 8px;
+    /* justify-content: space-between; */
+    /* justify-content: space-around; */
+
+}
+
+.leftBone, .rightBone {
+    position: relative;
+    height: 100%;
+    width: 2px;
+    height: 16px;
+    background: white;
+}
+
+.leftBone::before, .leftBone::after, .rightBone::before, .rightBone::after {
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 4px;
+    /* border-radius: 3px; */
+    background: white;
+}
+
+.leftBone::before, .rightBone::before {
+    top: -2px;
+}
+
+.leftBone::after, .rightBone::after {
+    bottom: -2px;
+}
+
+.leftBone::before, .leftBone::after {
+    left: -4px;
+}
+
+.rightBone::before, .rightBone::after {
+    right: -4
+    
+    
+    px;
+}

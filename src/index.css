@@ -19,13 +19,12 @@ code {
 }
 
 .weddingBody {
-  /* margin-top: var(--default-padding); */
   background-color: white;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* gap: var(--default-padding); */
   gap: var(--default-gap);
   margin-bottom: var(--default-padding);
 }
