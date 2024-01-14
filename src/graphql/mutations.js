@@ -10,6 +10,8 @@ export const createFaq = /* GraphQL */ `
       id
       question
       answer
+      pinned
+      likes
       createdAt
       updatedAt
       __typename
@@ -25,6 +27,8 @@ export const updateFaq = /* GraphQL */ `
       id
       question
       answer
+      pinned
+      likes
       createdAt
       updatedAt
       __typename
@@ -40,6 +44,8 @@ export const deleteFaq = /* GraphQL */ `
       id
       question
       answer
+      pinned
+      likes
       createdAt
       updatedAt
       __typename

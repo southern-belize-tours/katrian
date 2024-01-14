@@ -33,7 +33,10 @@ import awsconfig from './aws-exports.js';
 
 import FaqCreateForm from './ui-components/FaqCreateForm.jsx';
 import { AuthProvider } from './Contexts/AuthContext/AuthContext.js';
-import { FaqServiceProvider } from './Services/FaqService/FaqServiceContext.js';
+import { FaqServiceProvider, useFaqService } from './Services/FaqService/FaqServiceContext.js';
+
+// Spinner
+import { BeatLoader } from 'react-spinners';
 
 // Amplify.configure(awsmobile);
 Amplify.configure(awsconfig);
@@ -126,10 +129,13 @@ const galleries = [
 
 
 function App() {
+  const FaqService = useFaqService();
+
   return (
     <ThemeProvider theme = {theme}>
       <FaqServiceProvider>
       <AuthProvider>
+        {/* <BeatLoader loading = {FaqService.isLoading()}></BeatLoader> */}
       <div className="pageContainer">
       {/* <WeddingToolbar links={links}></WeddingToolbar> */}
       <NavList links={links}></NavList>

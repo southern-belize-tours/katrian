@@ -4,5 +4,4 @@ type Faq @model @auth(rules: [{allow: public}]) {
   answer: String
   likes: Int
   pinned: Boolean
-}
- 
+} 

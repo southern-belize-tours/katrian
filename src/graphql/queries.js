@@ -7,6 +7,8 @@ export const getFaq = /* GraphQL */ `
       id
       question
       answer
+      pinned
+      likes
       createdAt
       updatedAt
       __typename
@@ -24,6 +26,8 @@ export const listFaqs = /* GraphQL */ `
         id
         question
         answer
+        pinned
+        likes
         createdAt
         updatedAt
         __typename

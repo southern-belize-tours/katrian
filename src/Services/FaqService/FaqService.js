@@ -1,11 +1,24 @@
+// Amplify backend functions
 import { DataStore } from 'aws-amplify/datastore';
 import { Faq } from '../../models';
+import { generateClient } from 'aws-amplify/api';
+import { listFaqs, getFaq } from '../../graphql/queries';
+import { createFaq, deleteFaq, updateFaq } from '../../graphql/mutations';
+
+
+const client = generateClient();
 
 export default class FaqService {
 
     constructor() {
         this.faqs = [];
+        this.loading = true;
     }
+
+    isLoading () {
+        return this.loading;
+    }
+
 
   /**
    * Gets all faqs from GraphQL
@@ -14,8 +27,10 @@ export default class FaqService {
    */
   async fetchFaqs() {
     try {
-        const newFaqs = await DataStore.query(Faq);
-        this.faqs = [...newFaqs];
+        const newFaqs = await client.graphql({
+            query: listFaqs
+        });
+        this.faqs = [...newFaqs.data.listFaqs.items];
         return [...this.faqs];
     } catch (e) {
         console.log("Error fetching Frequently Asked Questions", e);
@@ -31,11 +46,22 @@ export default class FaqService {
    */
   async createFaq(data) {
     try {
-        const post = await DataStore.save(
-            new Faq(data)
-        );
-        const newFaqs = await DataStore.query(Faq);
-        this.faqs = [...newFaqs];
+        const newFaq = await client.graphql({
+            query: createFaq,
+            variables: {
+                input: data
+            }
+        });
+        // this.faqs = [...this.faqs, newFaq];
+        // return [...this.faqs];
+        const updatedFaqs = await this.fetchFaqs();
+        return [...updatedFaqs];
+
+        // const post = await DataStore.save(
+        //     new Faq(data)
+        // );
+        // const newFaqs = await DataStore.query(Faq);
+        // this.faqs = [...newFaqs];
     } catch (e) {
         console.log("Error creating new Faq");
         return [];
@@ -51,11 +77,17 @@ export default class FaqService {
   async deleteFaq(id) {
     try {
         const faqToDelete = await DataStore.query(Faq, id);
-        await DataStore.delete(faqToDelete);
-        // const updatedFaqs = faqs.filter(faq => faq.id !== id);
-        // this.faqs = [...updatedFaqs];
+        const deletedFaq = await client.graphql({
+            query: deleteFaq,
+            variables: {
+                input: {
+                    id: id
+                }
+            }
+        });
         const updatedFaqs = await this.fetchFaqs();
-        return [...updatedFaqs];
+        this.faqs = [...updatedFaqs];
+        return [...this.faqs];
     } catch (e) {
         console.log("Error deleting Frequently Asked Question", e);
         return [];
@@ -71,14 +103,24 @@ export default class FaqService {
    */
   async pinFaq(id, pinned) {
     try {
-        const faqToUpdate = await DataStore.query(Faq, id);
-        const updatedFaq = Faq.copyOf(faqToUpdate, updated => {
-            updated.pinned = !pinned;
+        const faqToUpdate = await client.graphql({
+            query: getFaq,
+            variables: {
+                id: id
+            }
         });
-        const result = await DataStore.save(updatedFaq);
-        const newFaqs = await DataStore.query(Faq);
-        this.faqs = [...newFaqs];
-        return [...newFaqs];
+        // console.log(faqToUpdate);
+        const updatedFaq = await client.graphql({
+            query: updateFaq,
+            variables: {
+                input: {
+                    id: id,
+                    pinned: !pinned
+                }
+            }
+        });
+        // console.log(updatedFaq);
+        return this.fetchFaqs();
     } catch (e) {
         console.log("Error toggling pin ", e);
         return [];
@@ -94,69 +136,36 @@ export default class FaqService {
    */
   async answerFaq(id, answer) {
     try {
-        const faqToUpdate = await DataStore.query(Faq, id);
-        const updatedFaq = Faq.copyOf(faqToUpdate, updated => {
-            updated.answer = answer;
+        const faqToUpdate = await client.graphql({
+            query: getFaq,
+            variables: {
+                id: id
+            }
         });
-        const result = await DataStore.save(updatedFaq);
-        const newFaqs = await DataStore.query(Faq);
-        this.faqs = [...newFaqs];
-        return [...newFaqs];
+        // console.log(faqToUpdate);
+        const updatedFaq = await client.graphql({
+            query: updateFaq,
+            variables: {
+                input: {
+                    id: id,
+                    answer: answer
+                }
+            }
+        });
+        // console.log(updatedFaq);
+        return this.fetchFaqs();
+        // const faqToUpdate = await DataStore.query(Faq, id);
+        // const updatedFaq = Faq.copyOf(faqToUpdate, updated => {
+        //     updated.answer = answer;
+        // });
+        // const result = await DataStore.save(updatedFaq);
+        // const newFaqs = await DataStore.query(Faq);
+        // this.faqs = [...newFaqs];
+        return [...this.faqs];
     } catch (e) {
         console.log("Error toggling pin ", e);
         return [];
     }
   }
-
-  /**
-     * Builds a dictionary mapping each tour's url to an array of images from a bucket
-     * 
-     * @returns dictionary object
-     */
-//   async buildPhotoDict() {
-//     let toursReceived = [...this.tours];
-//     if (toursReceived.length == 0 ) {
-//         try {
-//             toursReceived = await this.fetchTours();
-//             this.tours = [...toursReceived];
-//         } catch (e) {
-//             console.log("Error trying to fetch tours when building a photo dictionary", e);
-//         }
-//     }
-//     let newTourPhotoDict = {};
-//     for (let i = 0; i < toursReceived.length; ++i) {
-//       const folderName = toursReceived[i].url;
-//       try {
-//         const folderContents = await Storage.list(`${folderName}/`);
-//         let files = [];
-//         if (folderContents && folderContents.results && folderContents.results.length) {
-//           for(let j=0;j<folderContents.results.length; ++j) {
-//             let fileExtension = folderContents.results[j].key.split('.').slice(-1)[0];
-//             if (fileExtension === "png" || fileExtension === "jpg" || fileExtension === "jpeg") {
-//               files.push(folderContents.results[j]);
-//             }
-//           }
-//           const imageUrls = await Promise.all(
-//             files.map(async (file) => {
-//               const imageUrl = await Storage.get(file.key);
-//               return imageUrl;
-//             })
-//           );
-//           let zippedStructure = [];
-//           for (let j = 0; j < imageUrls.length; ++j) {
-//             let struct = {key: files[j].key, url: imageUrls[j]}
-//             zippedStructure.push(struct);
-//           }
-//           // newTourPhotoDict[folderName] = imageUrls;
-//           newTourPhotoDict[folderName] = zippedStructure;
-//         } else {
-//           newTourPhotoDict[folderName] = [];
-//         }
-//       } catch (error) {
-//         console.log(`Error getting files from folder ${folderName}:`, error);
-//       }
-//     }
-//     return newTourPhotoDict;
-//   }
 
 }

@@ -9,6 +9,7 @@ import './Faq.css';
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { FaqItem } from "./FaqItem";
 import { useFaqService } from "../Services/FaqService/FaqServiceContext";
+import { BeatLoader, CircleLoader, ClipLoader } from "react-spinners";
 
 const FaqForm = () => {
   const FaqService = useFaqService();
@@ -57,24 +58,28 @@ const FaqForm = () => {
    * Callback function when a Faq question is answered on item component
    */
   const answerCallback = useCallback(async (id, answer) => {
+    setLoading(true);
     try {
       const newFaqs = await FaqService.answerFaq(id, answer);
       setFaqs([...newFaqs]);
     } catch (e) {
       console.log("Error on answer callback ", e);
     }
+    setLoading(false);
   }, []);
 
   /**
    * Callback function for FaqItem pin icon clicks
    */
   const pinCallback = useCallback(async (id, pinned) => {
+    setLoading(true);
     try {
       const newFaqs = await FaqService.pinFaq(id, pinned)
       setFaqs([...newFaqs]);
     } catch (e) {
       console.log("Error on pin callback ", e);
     }
+    setLoading(false);
   }, []); 
   
   /**
@@ -111,20 +116,20 @@ const FaqForm = () => {
     }
     setLoading(true);
     try {
-
-
-      const post = await DataStore.save(
-        new Faq({
-          question: question,
-          likes: 0,
-          pinned: false,
-          // answer: 'Test FAQ Answer'
-        })
-      );
-      const newFaqs = await DataStore.query(Faq);
+      const newFaqs = await FaqService.createFaq({"question": question, "likes": 0, "pinned": false});
+      
+      // const post = await DataStore.save(
+      //   new Faq({
+      //     question: question,
+      //     likes: 0,
+      //     pinned: false,
+      //     // answer: 'Test FAQ Answer'
+      //   })
+      // );
+      // const newFaqs = await DataStore.query(Faq);
       setFaqs([...newFaqs]);
       setQuestion("");
-      console.log('Faq saved successfully!', post);
+      // console.log('Faq saved successfully!', post);
     } catch (error) {
       console.log('Error saving Faq', error);
     }
@@ -195,8 +200,16 @@ const FaqForm = () => {
         </Button>
       </div>
 
-      {loading && <CircularProgress></CircularProgress>}
-      {faqs.filter(faq => faq.answer).length > 0 &&
+      {/* {loading && <CircularProgress></CircularProgress>} */}
+      {/* <BeatLoader loading = {loading}></BeatLoader> */}
+      {/* <CircleLoader size = {200} loading = {loading}></CircleLoader> */}
+      <ClipLoader size = {200}
+        className="faqLoader"
+        color = "primary"
+        loading = {loading}></ClipLoader>
+
+
+      {!loading && faqs.filter(faq => faq.answer).length > 0 &&
       <>
         <div className="faqItems">
         <h2>Answered Questions</h2>
@@ -247,7 +260,7 @@ const FaqForm = () => {
       }
 
       {/* Unanswered Questions here */}
-      {faqs.filter(faq => !faq.answer).length > 0 &&
+      {!loading && faqs.filter(faq => !faq.answer).length > 0 &&
       <>
         <h2>Unanswered Questions</h2>
         <div className="faqItems">
