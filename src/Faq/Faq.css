@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: var(--default-gap);
     padding: 0 var(--default-padding);
+    width: -webkit-fill-available;
 }
 
 .faqItem {
@@ -10,7 +11,7 @@
     flex-direction: row;
     gap: var(--default-gap);
     /* background-color: #fafafa; */
-    padding: var(--default-gap);
+    padding: var(--default-gap) 0px;
     align-items: center;
     justify-content: space-between;
     border-bottom: solid 2px #bbbbbb;
@@ -78,4 +79,17 @@
     border-bottom-color: transparent !important;
     position: absolute;
     position: fixed !important;
+}
+
+.faqToolbar {
+    display: flex;
+    /* gap: var(--default-gap); */
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+}
+
+@media(max-width: 425px) {
+    .faqToolbar {
+        flex-direction: column;
+    }
 }

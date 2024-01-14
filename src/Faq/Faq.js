@@ -10,6 +10,7 @@ import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { FaqItem } from "./FaqItem";
 import { useFaqService } from "../Services/FaqService/FaqServiceContext";
 import { BeatLoader, CircleLoader, ClipLoader } from "react-spinners";
+import Question from "../page_art/question/question";
 
 const FaqForm = () => {
   const FaqService = useFaqService();
@@ -178,13 +179,26 @@ const FaqForm = () => {
       {/* {user!==null && <h1>Signed In!</h1>} */}
       <div className="questionPanel">
         <h1>Frequently Asked Questions</h1>
-        <Button variant="outlined"
+      </div>
+
+      {/* {loading && <CircularProgress></CircularProgress>} */}
+      {/* <BeatLoader loading = {loading}></BeatLoader> */}
+      {/* <CircleLoader size = {200} loading = {loading}></CircleLoader> */}
+      <ClipLoader size = {0}
+        className="faqLoader"
+        color = "primary"
+        loading = {loading}></ClipLoader>
+
+      <Question size = {400}
+        loading = {loading}>
+      </Question>
+
+      {!loading && <Button variant="outlined"
           onClick = {() => {setAsking(!asking)}}>
           {asking ? <><Cancel></Cancel> Cancel</>
           : <><ContactSupport></ContactSupport> Ask a Question</>
           }
-        </Button>
-      </div>
+        </Button>}
 
       <div className={`questionForm ${asking ? "open" : "closed"}`} 
         onSubmit = {() => {createFaq();}}>
@@ -200,19 +214,11 @@ const FaqForm = () => {
         </Button>
       </div>
 
-      {/* {loading && <CircularProgress></CircularProgress>} */}
-      {/* <BeatLoader loading = {loading}></BeatLoader> */}
-      {/* <CircleLoader size = {200} loading = {loading}></CircleLoader> */}
-      <ClipLoader size = {200}
-        className="faqLoader"
-        color = "primary"
-        loading = {loading}></ClipLoader>
-
 
       {!loading && faqs.filter(faq => faq.answer).length > 0 &&
       <>
-        <div className="faqItems">
         <h2>Answered Questions</h2>
+        <div className="faqItems">
         {faqs.filter(faq => faq.answer).sort((a, b) => {
     if (a.pinned && !b.pinned) {
         return -1; // a comes before b

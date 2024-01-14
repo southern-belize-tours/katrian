@@ -6,7 +6,7 @@ import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 
 export const FaqItem = ({faq, answerCallback, pinCallback, deleteCallback}) => {
     const {user, login, logout} = useContext(AuthContext);
-    const [answer, setAnswer] = useState("");
+    const [answer, setAnswer] = useState(faq.answer ? faq.answer : "");
     const [isEditing, setIsEditing] = useState(false);
 
     return (
@@ -67,7 +67,7 @@ export const FaqItem = ({faq, answerCallback, pinCallback, deleteCallback}) => {
             }
         </div>
         {user && user.isSignedIn &&
-        <>
+        <div className="faqToolbar">
             <Tooltip title={`${faq.pinned ? "Unpin Question" : "Pin Question"}`}>
                 <IconButton color={`${faq.pinned ? "primary" : "secondary"}`}
                     onClick = {async () => {
@@ -91,7 +91,7 @@ export const FaqItem = ({faq, answerCallback, pinCallback, deleteCallback}) => {
                     </Delete>
                 </IconButton>
             </Tooltip>
-        </>
+        </div>
         }
     </div>
     );

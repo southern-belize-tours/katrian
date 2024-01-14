@@ -1,7 +1,9 @@
 :root {
   --default-padding: 2rem;
   --default-gap: 1rem;
-  --clr-lavender: #ad9ded
+  --clr-lavender: #ad9ded;
+  --clr-background: #ffffff;
+  --clr-secondary: #a7b69d;
 }
 
 .pageContainer {

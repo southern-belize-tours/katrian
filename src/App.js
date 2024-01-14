@@ -28,6 +28,7 @@ import GallerySummary from './GallerySummary';
 import Gift from './page_art/gift/gift';
 
 import Pumpkin from './pumpkin/pumpkin';
+import Sandbox from './Sandbox/Sandbox.js';
 import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports.js';
 
@@ -155,6 +156,7 @@ function App() {
           <Route path = "/FAQ" exact component = {() => <FaqForm></FaqForm>}></Route>
           {/* <Route path = "/test" exact component = {() => <FaqCreateForm></FaqCreateForm>}></Route> */}
           {/* <Route path="/contact" component={Contact} /> */}
+          <Route path = "/Sandbox" exact component = {() => <Sandbox></Sandbox>}></Route>
           <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>
         </Switch>
       </Router>
