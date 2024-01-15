@@ -46,11 +46,10 @@ const timeAndPlaceItems = [
 const links = [
   {text: "Home", route: "/", component: <Cake size={100}></Cake>, items: []},
   {text: "Logistics", route: "/Logistics", component: <Clock size={100}></Clock>, items: timeAndPlaceItems},
-  // {text: "Website Names", route: "/WebsiteNames"},
-  {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>, items: []},
   {text: "Gallery", route: "/Gallery", component: <Camera size={100}></Camera>, items: []},
   {text: "Playlist", route: "/Playlist", component: <Music size={100}></Music>, items: []},
-  {text: "FAQ", route: "/FAQ", component: <Question size={100}></Question>}
+  {text: "FAQ", route: "/FAQ", component: <Question size={100}></Question>, items: []},
+  {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>, items: []},
 ];
 
 const journeyDescription = [
