@@ -1,0 +1,22 @@
+.cuvierContainer {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.cuvierCircle {
+    position: absolute;
+    border: solid var(--clr-lavender);
+    height: 65%;
+    width: 65%;
+    border-radius: 50%;
+}
+
+.cuvierCircle.left {
+    right: 46%;
+}
+
+.cuvierCircle.right {
+    left: 46%;
+}
