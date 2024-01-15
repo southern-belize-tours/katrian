@@ -58,8 +58,70 @@ a {
   align-items: center;
 }
 
+.navListContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: -webkit-fill-available;
+}
+
+.rightNavArrow, .leftNavArrow {
+  height: 2rem;
+  width: 2rem;
+  border: solid .5rem var(--clr-lavender);
+  transform: rotate(45deg);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  transition: all .3s;
+}
+
+.rightNavArrow.disabled, .leftNavArrow.disabled {
+  border-color: grey;
+  cursor:auto
+}
+
+/* .rightNavArrow::after, .leftNavArrow::after {
+  content: '';
+  position: absolute;
+  background: #f1f1f1;
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
+  top: -2rem;
+  z-index: 0;
+}
+
+.rightNavArrow::after {
+  left: -1rem;
+  top: -1rem;
+} */
+
+.rightNavArrow {
+  border-bottom: 0;
+  border-left: 0;
+}
+
+.leftNavArrow {
+  border-top: 0;
+  border-right: 0;
+}
+
 .navList {
   max-width: fit-content;
+  transition: all .3s;
+  /* overflow: hidden; */
+  gap: 10px !important;
+}
+
+.navListBox {
+  overflow: hidden;
+  width: -webkit-fill-available;
+}
+
+.navListBox.red {
+  background: red;
 }
 
 .navListItem {

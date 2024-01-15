@@ -3,6 +3,7 @@ import cake from './images/cake.png';
 import Cake from './page_art/cake/cake';
 
 function Home() {
+
     return (
       <div className="weddingBody">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}

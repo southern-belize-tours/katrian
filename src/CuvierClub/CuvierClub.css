@@ -1,0 +1,18 @@
+.imageStack {
+    display: flex;
+    gap: var(--default-gap);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+.imageStack img{
+    height: 300px;
+}
+
+.cuvierClubHistory {
+    /* padding: 0 var(--default-gap); */
+    margin: 0 5rem;
+}

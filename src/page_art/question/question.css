@@ -13,9 +13,11 @@
     width: 65%;
     border-radius: 50%;
     border: solid var(--clr-lavender);
+    transition: all .3s;
 }
 
 .bigCircle.spinning {
+    border-color: var(--clr-secondary);
     animation: 0.75s linear 0s infinite normal both running react-spinners-ClipLoader-clip;
 }
 
@@ -26,24 +28,24 @@
     position: absolute;
     top: 75%;
     left: 0%;
-    height: 67%;
-    width: 56%;
+    height: 72%;
+    width: 62%;
     background: var(--clr-background);
     position: absolute;
-    top: 50%;
-    left: -7%;
+    top: 40%;
+    left: -13%;
 }
 
 .questionDiamond {
-    height: 20%;
-    width: 20%;
+    height: 10%;
+    width: 15%;
     overflow: hidden;
     transform: rotate(180deg);
 }
 
 .questionDiamondTop {
     background: var(--clr-secondary);
-    height: 24%;
+    height: 34%;
     width: 100%;
     position: relative;
 }
@@ -82,11 +84,28 @@
 }
 
 .questionDiamondBottom::before {
-    left: -67%;
-    transform: rotate(70deg);
+    left: -61%;
+    transform: rotate(42deg);
 }
 
 .questionDiamondBottom::after {
-    right: -67%;
-    transform: rotate(-70deg);
+    right: -61%;
+    transform: rotate(-42deg);
+}
+
+.leftProng, .rightProng, .centerProng {
+    position: absolute;
+    background: var(--clr-lavender);
+    height: 15%;
+    top: 72%;
+}
+
+.leftProng {
+    transform: rotate(15deg);
+    right: 52%;
+}
+
+.rightProng {
+    transform: rotate(-15deg);
+    left: 52%;
 }

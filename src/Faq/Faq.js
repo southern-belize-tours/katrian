@@ -3,7 +3,7 @@ import { Faq } from "../models";
 
 import { DataStore } from 'aws-amplify/datastore';
 import { Cancel, ContactSupport, Delete, PushPin } from "@mui/icons-material";
-import { Button, CircularProgress, IconButton, Input } from "@mui/material";
+import { Button, CircularProgress, IconButton, Input, TextField } from "@mui/material";
 
 import './Faq.css';
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
@@ -202,12 +202,18 @@ const FaqForm = () => {
 
       <div className={`questionForm ${asking ? "open" : "closed"}`} 
         onSubmit = {() => {createFaq();}}>
-        <Input type="text"
+        <TextField multiline={true}
+          placeholder="Will there be vegetarian options?"
+          value={question}
+          label="Your Question"
+          onChance = {(e) => {setQuestion(e.target.value)}}>
+        </TextField>
+        {/* <Input type="text"
           multiline={true}
           value={question}
           placeholder="Your Question"
           onChange = {(e) => {setQuestion(e.target.value)}}>
-        </Input>
+        </Input> */}
         <Button variant="outlined"
           onClick = {() => {createFaq();}}>
           Submit Question
