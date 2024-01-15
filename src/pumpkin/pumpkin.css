@@ -1,0 +1,49 @@
+.spookyContainer {
+    background: black;
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+}
+
+h1, h2, h3, h4, h5 {
+}
+
+.halloweenTitle {
+    color: #ff7002;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.bonesContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    padding: 1rem;
+}
+
+.infoBullet {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.infoIndent {
+    padding: 1rem;
+    padding-left: 5rem;
+}
+
+.halloweenIcon {
+    /* color: #fd9701; */
+    color: #ae04ff;
+    font-size: 2rem !important;
+}

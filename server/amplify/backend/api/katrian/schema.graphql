@@ -1,0 +1,7 @@
+type Faq @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  question: String
+  answer: String
+  pinned: Boolean
+  likes: Int
+}

@@ -1,33 +1,55 @@
 import './App.css';
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import { Switch, Route } from "react-router-dom";
 
+import { SignInForm } from './SignInForm/SignInForm.js';
 import Home from './Home.js';
 import TimeAndDate from './TimeAndDate.js';
-import WeddingToolbar from './Toolbar/Toolbar';
 // import WebsiteNames from './WebsiteNames.js';
 import Donations from './Donations.js';
 import Playlist from './Playlist.js';
 import Gallery from './Gallery.js';
+import FaqForm from './Faq/Faq.js';
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'; // Import your custom theme
 import Cake from './page_art/cake/cake';
-import NavList from './NavList';
+import NavList from './NavList/NavList.js';
 import Clock from './page_art/clock/clock';
 import Camera from './page_art/camera/camera';
 import Music from './page_art/music/music';
 import GallerySummary from './GallerySummary';
 import Gift from './page_art/gift/gift';
 
+import Sandbox from './Sandbox/Sandbox.js';
+import { Amplify } from 'aws-amplify';
+import awsconfig from './aws-exports.js';
+
+import { AuthProvider } from './Contexts/AuthContext/AuthContext.js';
+import { FaqServiceProvider, useFaqService } from './Services/FaqService/FaqServiceContext.js';
+
+// Spinner
+import CuvierClubHistory from './CuvierClub/CuvierClubHistory.js';
+import Question from './page_art/question/question.js';
+
+Amplify.configure(awsconfig);
+
+const timeAndPlaceItems = [
+  {text: "Summary", route: "/TimeAndPlace"},
+  {text: "Bachelor Party", route: "/Bachelor"},
+  {text: "Bachelorette Party", route: "/Bachelorette"},
+  {text: "Rehearsal", route: "/Rehearsal"},
+  {text: "Ceremony", route: "/Ceremony"},
+  {text: "Saturday Brunch", route: "/Brunch"},
+];
+
 const links = [
-  {text: "Home", route: "/", component: <Cake size={100}></Cake>},
-  {text: "Time & Place", route: "/TimeAndPlace", component: <Clock size={100}></Clock>},
-  // {text: "Website Names", route: "/WebsiteNames"},
-  {text: "Engagement Gallery", route: "/Gallery", component: <Camera size={100}></Camera>},
-  {text: "Playlist", route: "/Playlist", component: <Music size={100}></Music>},
-  {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>},
+  {text: "Home", route: "/", component: <Cake size={100}></Cake>, items: []},
+  {text: "Logistics", route: "/Logistics", component: <Clock size={100}></Clock>, items: timeAndPlaceItems},
+  {text: "Gallery", route: "/Gallery", component: <Camera size={100}></Camera>, items: []},
+  {text: "Playlist", route: "/Playlist", component: <Music size={100}></Music>, items: []},
+  {text: "FAQ", route: "/FAQ", component: <Question size={100}></Question>, items: []},
+  {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>, items: []},
 ];
 
 const journeyDescription = [
@@ -63,16 +85,25 @@ const galleries = [
   {text: "The Eurotrip", route: "/Gallery/eurotrip", description: eurotripDescription}
 ];
 
+
 function App() {
+
+  const FaqService = useFaqService();
 
   return (
     <ThemeProvider theme = {theme}>
-      
+      <FaqServiceProvider>
+      <AuthProvider>
+        {/* <BeatLoader loading = {FaqService.isLoading()}></BeatLoader> */}
+      <div className="pageContainer">
       {/* <WeddingToolbar links={links}></WeddingToolbar> */}
+      {/* <NavList links={links}></NavList> */}
       <Router>
+        <NavList links={links}></NavList>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/TimeAndPlace" component={TimeAndDate} />
+          <Route path="/Logistics" component={TimeAndDate} />
+          <Route path="/CuvierClubHistory" component={CuvierClubHistory} />
           {/* <Route path="/WebsiteNames" component={WebsiteNames} /> */}
           <Route path="/Donations" component={Donations} />
           <Route path="/Playlist" component={Playlist}></Route>
@@ -81,12 +112,18 @@ function App() {
             <Route path={gallery.route} exact component={() => <GallerySummary galleries = {galleries}
               gallery = {gallery}></GallerySummary>}></Route>
           )}
+          {/* <Route path = "/Pumpkin" exact component={() => <Pumpkin></Pumpkin>}></Route> */}
+          <Route path = "/FAQ" exact component = {() => <FaqForm></FaqForm>}></Route>
+          {/* <Route path = "/test" exact component = {() => <FaqCreateForm></FaqCreateForm>}></Route> */}
           {/* <Route path="/contact" component={Contact} /> */}
-
+          <Route path = "/Sandbox" exact component = {() => <Sandbox></Sandbox>}></Route>
+          <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>
         </Switch>
-        <NavList links={links}></NavList>
-
       </Router>
+      {/* <NavList links={links}></NavList> */}
+      </div>
+      </AuthProvider>
+      </FaqServiceProvider>
     </ThemeProvider>
   );
 }

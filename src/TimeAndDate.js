@@ -25,16 +25,8 @@ function TimeAndDate() {
 
     return (
       <div className="weddingBody">
-        {/* // <Carousel autoPlay={false}> */}
-          {items.map( (item, i) => 
-            // <Paper className="summaryPaper">
-            <>
-              <h1>{item.name}</h1>
-              {item.component}
-            </>
-            // </Paper>
-            )}
-        {/* // </Carousel> */}
+        <h1>Time and Place Summary</h1>
+        <Summary></Summary>
       </div>
     );
   } export default TimeAndDate;

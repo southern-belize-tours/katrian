@@ -27,37 +27,35 @@ class Gallery extends React.Component {
     render() {
         return (
           <div className="weddingBody">
-            <div>
-              <h1>Galleries</h1>
-              {/* <Carousel autoPlay={false}
-                style={{scroll: "auto"}}>
-                {this.props.galleries.map((gallery, i) =>
-                  <Paper className="flexed centered">
-                    <GallerySummary galleries = {this.props.galleries}
-                      gallery = {gallery}>
-                        
-                      </GallerySummary>
-                  </Paper>
-                )}
-              </Carousel> */}
-                {/* <img src={camera} alt="camera" className="cakeImg"/> */}
-                <div className="flexed centered justified">
-                  <Camera doTransition={true}
-                    size={400}></Camera>
-                </div>
-                <div>
-                  {this.props.galleries.map(gallery => 
-                    <h2>
-                      <a href={gallery.route}>{gallery.text}</a>
-                    </h2>)}
-                {this.props.galleries.map(gallery => {
-                      <a href = {gallery.route}>{gallery.text}</a>
-                      // <GallerySummary gallery = {gallery} ></GallerySummary>
-                    })}
-                </div>
-                <div>
-                </div>
-            </div> 
+            <h1>Galleries</h1>
+            {/* <Carousel autoPlay={false}
+              style={{scroll: "auto"}}>
+              {this.props.galleries.map((gallery, i) =>
+                <Paper className="flexed centered">
+                  <GallerySummary galleries = {this.props.galleries}
+                    gallery = {gallery}>
+                      
+                    </GallerySummary>
+                </Paper>
+              )}
+            </Carousel> */}
+              {/* <img src={camera} alt="camera" className="cakeImg"/> */}
+              <div className="flexed centered justified">
+                <Camera doTransition={true}
+                  size={400}></Camera>
+              </div>
+              <div>
+                {/* {this.props.galleries.map(gallery => 
+                  <h2>
+                    <a href={gallery.route}>{gallery.text}</a>
+                  </h2>)} */}
+              {this.props.galleries.map(gallery => {
+                    <a href = {gallery.route}>{gallery.text}</a>
+                    // <GallerySummary gallery = {gallery} ></GallerySummary>
+                  })}
+              </div>
+              <div>
+              </div>
             </div>
         );
     }

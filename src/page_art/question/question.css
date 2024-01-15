@@ -1,0 +1,111 @@
+.questionContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.bigCircle {
+    position: relative;
+    height: 65%;
+    width: 65%;
+    border-radius: 50%;
+    border: solid var(--clr-lavender);
+    transition: all .3s;
+}
+
+.bigCircle.spinning {
+    border-color: var(--clr-secondary);
+    animation: 0.75s linear 0s infinite normal both running react-spinners-ClipLoader-clip;
+}
+
+.innerCircle {
+    height: 50%;
+    width: 50%;
+    background: var(--clr-background);
+    position: absolute;
+    top: 75%;
+    left: 0%;
+    height: 72%;
+    width: 62%;
+    background: var(--clr-background);
+    position: absolute;
+    top: 40%;
+    left: -13%;
+}
+
+.questionDiamond {
+    height: 10%;
+    width: 15%;
+    overflow: hidden;
+    transform: rotate(180deg);
+}
+
+.questionDiamondTop {
+    background: var(--clr-secondary);
+    height: 34%;
+    width: 100%;
+    position: relative;
+}
+
+.questionDiamondTop::before, .questionDiamondTop::after {
+    content: '';
+    position: absolute;
+    background: white;
+    height: 200%;
+    width: 120%;
+}
+
+.questionDiamondTop::before {
+    left: -89%;
+    transform: rotate(-45deg);
+}
+
+.questionDiamondTop::after {
+    right: -89%;
+    transform: rotate(45deg);
+}
+
+.questionDiamondBottom {
+    background: var(--clr-secondary);
+    height: 108%;
+    width: 100%;
+    position: relative;
+}
+
+.questionDiamondBottom::before, .questionDiamondBottom::after {
+    content: '';
+    position: absolute;
+    background: var(--clr-background);
+    height: 100%;
+    width: 100%;
+}
+
+.questionDiamondBottom::before {
+    left: -61%;
+    transform: rotate(42deg);
+}
+
+.questionDiamondBottom::after {
+    right: -61%;
+    transform: rotate(-42deg);
+}
+
+.leftProng, .rightProng, .centerProng {
+    position: absolute;
+    background: var(--clr-lavender);
+    height: 15%;
+    top: 72%;
+}
+
+.leftProng {
+    transform: rotate(15deg);
+    right: 52%;
+}
+
+.rightProng {
+    transform: rotate(-15deg);
+    left: 52%;
+}
