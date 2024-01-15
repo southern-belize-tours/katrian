@@ -31,6 +31,7 @@ import { FaqServiceProvider, useFaqService } from './Services/FaqService/FaqServ
 // Spinner
 import CuvierClubHistory from './CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
+import Cuvier from './page_art/cuvier/Cuvier.js';
 
 Amplify.configure(awsconfig);
 
@@ -47,8 +48,9 @@ const links = [
   {text: "Home", route: "/", component: <Cake size={100}></Cake>, items: []},
   {text: "Logistics", route: "/Logistics", component: <Clock size={100}></Clock>, items: timeAndPlaceItems},
   {text: "Gallery", route: "/Gallery", component: <Camera size={100}></Camera>, items: []},
-  {text: "Playlist", route: "/Playlist", component: <Music size={100}></Music>, items: []},
   {text: "FAQ", route: "/FAQ", component: <Question size={100}></Question>, items: []},
+  {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={100}></Cuvier>, items: []},
+  {text: "Playlist", route: "/Playlist", component: <Music size={100}></Music>, items: []},
   {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>, items: []},
 ];
 

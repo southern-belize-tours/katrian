@@ -28,7 +28,7 @@ code {
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   gap: var(--default-gap);
   margin-bottom: var(--default-padding);
 }

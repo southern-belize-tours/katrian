@@ -14,5 +14,6 @@
 
 .cuvierClubHistory {
     /* padding: 0 var(--default-gap); */
-    margin: 0 5rem;
+    margin: 0 2rem;
+    max-width: -webkit-fill-available;
 }
