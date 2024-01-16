@@ -38,7 +38,7 @@ export default class TuneService {
                     input: data
                 }
             });
-            this.tunes = [...this.tunes, newTune];
+            this.tunes = [...this.tunes, newTune.data.createTune];
             return [...this.tunes];
         } catch (e) {
             console.log("Error adding tune", e);
@@ -77,9 +77,8 @@ export default class TuneService {
                     }
                 }
             });
-            const updatedTunes = this.tunes.map(tune => {if (tune.id == id) {tune.name = name; tune.artist = artist}});
-            this.tunes = [...updatedTunes];
-            return [...this.tunes];
+            const newTunes = await this.fetchTunes();
+            return [...newTunes];
         } catch (e) {
             console.log("Error updating tune name", e);
             return [];

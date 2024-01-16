@@ -6,7 +6,7 @@ import * as React from 'react';
 // import { Paper, Button } from '@mui/material'
 import Summary from './Summary';
 
-function TimeAndDate() {
+function TimeAndDate(props) {
 
   let items = [
     {name: "Time and Place Summary",
@@ -26,7 +26,7 @@ function TimeAndDate() {
     return (
       <div className="weddingBody">
         <h1>Time and Place Summary</h1>
-        <Summary></Summary>
+        <Summary size={props.size ? props.size : 400}></Summary>
       </div>
     );
   } export default TimeAndDate;

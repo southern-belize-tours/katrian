@@ -13,8 +13,7 @@ export default function Question (props) {
         if (props && props.size) {
             setSize(props.size);
         }
-
-    }, [])
+    })
 
     return (
     <div className="questionContainer"

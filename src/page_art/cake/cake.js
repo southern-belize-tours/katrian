@@ -26,7 +26,7 @@ function Cake (props) {
         if (timeoutId !== null) {
             return () => clearTimeout(timeoutId);
         }
-    }, []);
+    });
 
     return (
         <div className={`cakeContainer ${size <= 100 ? "small " : ""}`}

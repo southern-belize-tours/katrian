@@ -42,7 +42,7 @@ class Gallery extends React.Component {
               {/* <img src={camera} alt="camera" className="cakeImg"/> */}
               <div className="flexed centered justified">
                 <Camera doTransition={true}
-                  size={400}></Camera>
+                  size={this.props.size ? this.props.size : 400}></Camera>
               </div>
               <div>
                 {/* {this.props.galleries.map(gallery => 

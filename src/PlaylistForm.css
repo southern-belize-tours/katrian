@@ -6,7 +6,7 @@
 }
 
 .playlistFormField {
-    min-width: 20rem !important;
+    min-width: min(17rem, 80vw) !important;
     flex: 1 1 auto;
 }
 
@@ -31,18 +31,17 @@
 
 .tuneNameTextField, .tuneName {
     flex: 1 1 auto;
+    width: -webkit-fill-available;
 }
 
 .tuneArtistTextField, .tuneArtist {
     flex: 1 1 auto;
-}
-
-/* .playlistItems {
     width: -webkit-fill-available;
-} */
+}
 
 .playlistFormContainer {
     display: flex;
     flex-direction: column;
     width: -webkit-fill-available;
+    gap: var(--default-gap);
 }

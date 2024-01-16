@@ -45,16 +45,6 @@ const timeAndPlaceItems = [
   {text: "Saturday Brunch", route: "/Brunch"},
 ];
 
-const links = [
-  {text: "Home", route: "/", component: <Cake size={100}></Cake>, items: []},
-  {text: "Logistics", route: "/Logistics", component: <Clock size={100}></Clock>, items: timeAndPlaceItems},
-  {text: "FAQ", route: "/FAQ", component: <Question size={100}></Question>, items: []},
-  {text: "Gallery", route: "/Gallery", component: <Camera size={100}></Camera>, items: []},
-  {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={100}></Cuvier>, items: []},
-  {text: "Playlist", route: "/Playlist", component: <Music size={100}></Music>, items: []},
-  {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>, items: []},
-];
-
 const journeyDescription = [
   "Ian and Katrina met and dated in Oakridge High School Junior and Senior Year",
   "They reunited as College Sophomores, met abroad and fell in love in Torino Italy, and dated long-distance between Santa Cruz and San Luis Obispo",
@@ -88,10 +78,49 @@ const galleries = [
   {text: "The Eurotrip", route: "/Gallery/eurotrip", description: eurotripDescription}
 ];
 
+function debounce(fn, ms) {
+  let timer;
+  return () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+      timer = null;
+      fn.apply(this, arguments);
+      }, ms);
+  };
+}
 
 function App() {
+  const [linkSize, setLinkSize] = React.useState(100);
 
   const FaqService = useFaqService();
+
+  React.useEffect(() => {
+    const checkMediaSize = () => {
+      if (window.innerWidth <= 768) {
+        setLinkSize(50);
+      } else {
+        setLinkSize(100);
+      }
+    }
+
+    // Only check the resizing every 100ms
+    const debouncedCheckMediaSize = debounce(checkMediaSize, 100);
+
+    debouncedCheckMediaSize();
+    window.addEventListener('resize', debouncedCheckMediaSize);
+
+    return () => window.removeEventListener('resize', debouncedCheckMediaSize);
+  }, [])
+
+  const links = [
+    {text: "Home", route: "/", component: <Cake size={linkSize}></Cake>, items: []},
+    {text: "Logistics", route: "/Logistics", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
+    {text: "FAQ", route: "/FAQ", component: <Question size={linkSize}></Question>, items: []},
+    {text: "Gallery", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: []},
+    {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
+    {text: "Playlist", route: "/Playlist", component: <Music size={linkSize}></Music>, items: []},
+    {text: "Donations", route: "/Donations", component: <Gift size={linkSize}></Gift>, items: []},
+  ];
 
   return (
     <ThemeProvider theme = {theme}>
@@ -105,18 +134,18 @@ function App() {
       <Router>
         <NavList links={links}></NavList>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/Logistics" component={TimeAndDate} />
-          <Route path="/CuvierClubHistory" component={CuvierClubHistory} />
-          <Route path="/Donations" component={Donations} />
+          <Route path="/" exact component={() => <Home size={linkSize * 4}></Home>} />
+          <Route path="/Logistics" exact component={() => <TimeAndDate size={linkSize * 4}></TimeAndDate>} />
+          <Route path="/CuvierClubHistory" exact component={() => <CuvierClubHistory size = {linkSize * 4}></CuvierClubHistory>} />
+          <Route path="/Donations" exact component={() => <Donations size = {linkSize * 4}></Donations>} />
           <Route path="/Playlist" component={Playlist}></Route>
-          <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries}></Gallery>}></Route>
+          <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries} size = {linkSize * 4}></Gallery>}></Route>
           {galleries.map(gallery => 
             <Route path={gallery.route} exact component={() => <GallerySummary galleries = {galleries}
               gallery = {gallery}></GallerySummary>}></Route>
           )}
           {/* <Route path = "/Pumpkin" exact component={() => <Pumpkin></Pumpkin>}></Route> */}
-          <Route path = "/FAQ" exact component = {() => <FaqForm></FaqForm>}></Route>
+          <Route path = "/FAQ" exact component = {() => <FaqForm size = {linkSize * 4}></FaqForm>}></Route>
           {/* <Route path = "/test" exact component = {() => <FaqCreateForm></FaqCreateForm>}></Route> */}
           {/* <Route path="/contact" component={Contact} /> */}
           <Route path = "/Sandbox" exact component = {() => <Sandbox></Sandbox>}></Route>

@@ -5,7 +5,7 @@ function NavListItem ({link}) {
     return (
         <a href={link.route}
             id={`nav-list-item-${link.route}`}
-            className="flexed col centered justified navListItem">
+            className="flexed col centered spacedBetween navListItem">
             {/* {(link.items && link.items.length > 0) &&
                 <div className = "nav-submenu">
                     {link.items.map(item =>

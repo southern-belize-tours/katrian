@@ -18,7 +18,7 @@
 
 .bigCircle.spinning {
     border-color: var(--clr-secondary);
-    animation: 0.75s linear 0s infinite normal both running react-spinners-ClipLoader-clip;
+    animation: 0.75s linear 0s infinite normal both running music-load;
 }
 
 .innerCircle {
@@ -108,4 +108,16 @@
 .rightProng {
     transform: rotate(-15deg);
     left: 52%;
+}
+
+@keyframes music-load {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

@@ -82,22 +82,6 @@ a {
   cursor:auto
 }
 
-/* .rightNavArrow::after, .leftNavArrow::after {
-  content: '';
-  position: absolute;
-  background: #f1f1f1;
-  border-radius: 50%;
-  height: 4rem;
-  width: 4rem;
-  top: -2rem;
-  z-index: 0;
-}
-
-.rightNavArrow::after {
-  left: -1rem;
-  top: -1rem;
-} */
-
 .rightNavArrow {
   border-bottom: 0;
   border-left: 0;
@@ -113,6 +97,11 @@ a {
   transition: all .3s;
   /* overflow: hidden; */
   gap: 10px !important;
+  padding: var(--default-padding);
+}
+
+.spacedBetween {
+  justify-content: space-between;
 }
 
 .navListBox {
@@ -120,19 +109,11 @@ a {
   width: -webkit-fill-available;
 }
 
-.navListBox.red {
-  background: red;
-}
-
 .navListItem {
-  /* gap: 1rem;
-  flex: 1 1 auto;
-  transition: all .3s; */
   gap: 1rem;
   flex: 1 1 auto;
   transition: all .3s;
   text-decoration: none;
-  font-color: black;
   color: black;
   font-weight: 500;
 }
@@ -154,6 +135,7 @@ a {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
+  text-align: center;
 }
 
 .navListMenu {
@@ -236,5 +218,16 @@ a {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .leftNavArrow, .rightNavArrow {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  .navListItemText {
+    font-size: .7rem;
   }
 }

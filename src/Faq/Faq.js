@@ -12,7 +12,7 @@ import { useFaqService } from "../Services/FaqService/FaqServiceContext";
 import { BeatLoader, CircleLoader, ClipLoader } from "react-spinners";
 import Question from "../page_art/question/question";
 
-const FaqForm = () => {
+const FaqForm = (props) => {
   const FaqService = useFaqService();
 
   // Get current user data for context
@@ -173,7 +173,7 @@ const FaqForm = () => {
         color = "primary"
         loading = {loading}></ClipLoader>
 
-      <Question size = {400}
+      <Question size = {props.size ? props.size : 400}
         loading = {loading}>
       </Question>
 
@@ -192,12 +192,6 @@ const FaqForm = () => {
           label="Your Question"
           onChange = {(e) => {setQuestion(e.target.value)}}>
         </TextField>
-        {/* <Input type="text"
-          multiline={true}
-          value={question}
-          placeholder="Your Question"
-          onChange = {(e) => {setQuestion(e.target.value)}}>
-        </Input> */}
         <Button variant="outlined"
           onClick = {() => {createFaq();}}>
           Submit Question
