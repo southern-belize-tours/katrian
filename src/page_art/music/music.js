@@ -21,6 +21,9 @@ function Music (props) {
             <div className = "musicContainer"
                 style={{width: `${size}px`, height: `${size}px`}}>
                 <div className = "musicNoteCircle">
+                    {props && props.loading &&
+                        <div className="musicNoteLoader" style={{borderWidth: `${size/20}px`}}></div>
+                    }
                     <div className="firstLine"></div>
                     <div className="secondLine"></div>
                     <div className="thirdLine"></div>

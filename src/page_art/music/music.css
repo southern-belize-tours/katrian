@@ -67,3 +67,26 @@
     height: 10%;
     width: 75%;
 }
+
+.musicNoteLoader {
+    position: absolute;
+    animation: 0.75s linear 0s infinite normal both running music-load;
+    border: solid transparent;
+    border-top-color: var(--clr-secondary);
+    border-radius: 50%;
+    height: 77%;
+    width: 77%;
+    z-index: 1;
+}
+
+@keyframes music-load {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

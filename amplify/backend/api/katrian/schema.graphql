@@ -1,7 +1,14 @@
+type Tune @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  artist: String
+}
+
 type Faq @model @auth(rules: [{allow: public}]) {
   id: ID!
   question: String
   answer: String
   likes: Int
   pinned: Boolean
-} 
+}
+ 

@@ -1,0 +1,48 @@
+.playlistAddForm {
+    display: flex;
+    gap: var(--default-gap);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.playlistFormField {
+    min-width: 20rem !important;
+    flex: 1 1 auto;
+}
+
+.playlistItemContainer {
+    display: flex;
+    flex-direction: row;
+    gap: var(--default-gap);
+    padding: var(--default-padding) 0;
+    align-items: center;
+}
+
+.tuneProperties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--default-gap);
+    flex: 1 1 auto;
+}
+
+.tuneArtist {
+    font-weight: 600;
+}
+
+.tuneNameTextField, .tuneName {
+    flex: 1 1 auto;
+}
+
+.tuneArtistTextField, .tuneArtist {
+    flex: 1 1 auto;
+}
+
+/* .playlistItems {
+    width: -webkit-fill-available;
+} */
+
+.playlistFormContainer {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+}
