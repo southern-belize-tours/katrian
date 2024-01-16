@@ -32,6 +32,7 @@ import { FaqServiceProvider, useFaqService } from './Services/FaqService/FaqServ
 import CuvierClubHistory from './CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
 import Cuvier from './page_art/cuvier/Cuvier.js';
+import { TuneServiceProvider } from './Services/TuneService/TuneServiceContext.js';
 
 Amplify.configure(awsconfig);
 
@@ -47,8 +48,8 @@ const timeAndPlaceItems = [
 const links = [
   {text: "Home", route: "/", component: <Cake size={100}></Cake>, items: []},
   {text: "Logistics", route: "/Logistics", component: <Clock size={100}></Clock>, items: timeAndPlaceItems},
-  {text: "Gallery", route: "/Gallery", component: <Camera size={100}></Camera>, items: []},
   {text: "FAQ", route: "/FAQ", component: <Question size={100}></Question>, items: []},
+  {text: "Gallery", route: "/Gallery", component: <Camera size={100}></Camera>, items: []},
   {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={100}></Cuvier>, items: []},
   {text: "Playlist", route: "/Playlist", component: <Music size={100}></Music>, items: []},
   {text: "Donations", route: "/Donations", component: <Gift size={100}></Gift>, items: []},
@@ -95,6 +96,7 @@ function App() {
   return (
     <ThemeProvider theme = {theme}>
       <FaqServiceProvider>
+      <TuneServiceProvider>
       <AuthProvider>
         {/* <BeatLoader loading = {FaqService.isLoading()}></BeatLoader> */}
       <div className="pageContainer">
@@ -106,7 +108,6 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/Logistics" component={TimeAndDate} />
           <Route path="/CuvierClubHistory" component={CuvierClubHistory} />
-          {/* <Route path="/WebsiteNames" component={WebsiteNames} /> */}
           <Route path="/Donations" component={Donations} />
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries}></Gallery>}></Route>
@@ -125,6 +126,7 @@ function App() {
       {/* <NavList links={links}></NavList> */}
       </div>
       </AuthProvider>
+      </TuneServiceProvider>
       </FaqServiceProvider>
     </ThemeProvider>
   );

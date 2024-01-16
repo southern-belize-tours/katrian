@@ -91,25 +91,9 @@ const FaqForm = () => {
       const newFaqs = await FaqService.deleteFaq(id);
       setFaqs([...newFaqs]);
     } catch (e) {
-      console.log("Error on delete callback");
+      console.log("Error on delete callback", e);
     }
   }, []);
-
-  const deleteFaq = async (id) => {
-    setLoading(true);
-    try {
-      const newFaqs = await FaqService.deleteFaq(id);
-      setFaqs([...newFaqs]);
-
-      // const faqToDelete = await DataStore.query(Faq, id);
-      // await DataStore.delete(faqToDelete);
-      // const updateFaqs = faqs.filter(faq => faq.id !== id);
-      // setFaqs([...updateFaqs]);
-    } catch (error) {
-      console.log("Error deleting faq", error);
-    }
-    setLoading(false);
-  }
 
   const createFaq = async () => {
     if (question.length < 10) {
@@ -206,7 +190,7 @@ const FaqForm = () => {
           placeholder="Will there be vegetarian options?"
           value={question}
           label="Your Question"
-          onChance = {(e) => {setQuestion(e.target.value)}}>
+          onChange = {(e) => {setQuestion(e.target.value)}}>
         </TextField>
         {/* <Input type="text"
           multiline={true}

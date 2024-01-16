@@ -37,3 +37,36 @@ export const listFaqs = /* GraphQL */ `
     }
   }
 `;
+
+export const getTune = `
+  query GetTune($id: ID!) {
+    getTune(id: $id) {
+      id
+      name
+      artist
+      createdAt
+      updatedAt
+      __typename
+    }
+  }`;
+
+export const listTunes = /* GraphQL */ `
+  query ListTunes(
+    $filter: ModelTuneFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTunes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        artist
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;

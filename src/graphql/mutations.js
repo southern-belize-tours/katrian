@@ -52,3 +52,49 @@ export const deleteFaq = /* GraphQL */ `
     }
   }
 `;
+export const createTune = /* GraphQL */ `
+  mutation CreateTune(
+    $input: CreateTuneInput!
+    $condition: ModelTuneConditionInput
+  ) {
+    createTune(input: $input, condition: $condition) {
+      id
+      name
+      artist
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateTune = /* GraphQL */ `
+  mutation UpdateTune(
+    $input: UpdateTuneInput!
+    $condition: ModelTuneConditionInput
+  ) {
+    updateTune(input: $input, condition: $condition) {
+      id
+      question
+      name
+      artist
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteTune = /* GraphQL */ `
+  mutation DeleteTune(
+    $input: DeleteTuneInput!
+    $condition: ModelTuneConditionInput
+  ) {
+    deleteTune(input: $input, condition: $condition) {
+      id
+      name
+      artist
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
