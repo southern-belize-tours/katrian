@@ -13,8 +13,7 @@ export default function Cuvier (props) {
         if (props && props.size) {
             setSize(props.size);
         }
-
-    }, []);
+    });
 
     return (
     <div className="cuvierContainer"

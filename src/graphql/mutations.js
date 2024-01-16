@@ -74,7 +74,6 @@ export const updateTune = /* GraphQL */ `
   ) {
     updateTune(input: $input, condition: $condition) {
       id
-      question
       name
       artist
       createdAt
@@ -92,7 +91,7 @@ export const deleteTune = /* GraphQL */ `
       id
       name
       artist
-      createdAt
+     createdAt
       updatedAt
       __typename
     }

@@ -81,7 +81,7 @@ function NavList (props) {
     }
 
     return (
-        <div className="flexed col centered justified padded-top-bottom">
+        <div className="flexed col centered justified">
             <div className="navListContainer">
                 {isOverflowing &&
                     <Tooltip title = {`${translate > 0 ? "Previous Item" : "No Previous Items"}`}> 

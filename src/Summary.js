@@ -12,7 +12,7 @@ function Summary (props) {
         <div>
             <div className="flexed col centered">
                 {/* <img src={clock} alt="clock" className="cakeImg"/> */}
-                <Clock size={400}></Clock>
+                <Clock size={props.size}></Clock>
                 <div className="padded-sides flexed col">
                     <div className="flexed centered">
                         <LocationOnIcon color="primary"/>

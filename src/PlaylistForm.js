@@ -1,14 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useTuneService } from "./Services/TuneService/TuneServiceContext";
 import { ClipLoader } from "react-spinners";
-import { Button, TextField } from "@mui/material";
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
 import './PlaylistForm.css';
 import PlaylistItem from "./PlaylistItem";
 import Music from "./page_art/music/music";
+import { AuthContext } from "./Contexts/AuthContext/AuthContext";
+
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// toast.configure();
 
 export default function PlaylistForm () {
+    const {user, login, logout} = useContext(AuthContext);
     const TuneService = useTuneService();
 
     const [name, setName] = useState("");
@@ -25,9 +32,11 @@ export default function PlaylistForm () {
                 const tunesData = await TuneService.fetchTunes();
                 if (isSubscribed) {
                     setTunes(tunesData);
+                    toast.success("Retrieved Songs Successfully", {autoCloase: 2000});
                 }
             } catch (e) {
                 console.log("Error retrieving tunes", e);
+                toast.error("Failure to Retrieve Songs", {autoCloase: 2000});
             } finally {
                 if (isSubscribed) {
                     setLoading(false);
@@ -48,18 +57,26 @@ export default function PlaylistForm () {
         try {
             const newTunes = await TuneService.updateTune(id, name, artist);
             setTunes(newTunes);
+            toast.success('Song Updated Successfully.', { autoClose: 2000});
         } catch (e) {
             console.log("Error updating tune", e);
+            toast.error("Failure to Update Song", {autoCloase: 2000});
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     }, []);
 
     const deleteCallback = useCallback(async (id) => {
+        setLoading(true);
         try {
             const newTunes = await TuneService.deleteTune(id);
             setTunes(newTunes);
+            toast.success('Song Removed Successfully.', { autoClose: 2000});
         } catch (e) {
             console.log("Error on tune delete callback", e);
+            toast.error("Failure to Remove Song", {autoCloase: 2000});
+        } finally {
+            setLoading(false);
         }
     }, []);
 
@@ -82,6 +99,7 @@ export default function PlaylistForm () {
             setName("");
             setArtist("");
             setError("");
+            toast.success('New Song Added Successfully.', { autoClose: 2000});
         } catch (e) {
             console.log("Error saving tune", e);
         } finally {
@@ -91,6 +109,7 @@ export default function PlaylistForm () {
 
     return (
     <div className="weddingBody">
+        <ToastContainer></ToastContainer>
         <h1>Guest Music Recommendations</h1>
         <Music size = {400}
             loading={loading}>
@@ -126,13 +145,35 @@ export default function PlaylistForm () {
                 </Button>
             </div>
             <div className = "playlistItems">
-            {tunes.map(tune =>
+            <TableContainer component={Paper}>
+                <Table aria-label="playlist table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Title</TableCell>
+                            <TableCell>Artist</TableCell>
+                            {user && user.isSignedIn &&
+                                <TableCell align="right">Update</TableCell>
+                            }
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {tunes.map(tune =>
+                            <PlaylistItem tune = {tune}
+                                key={`playlist-item-${tune.id}`}
+                                updateCallback={updateCallback}
+                                deleteCallback={deleteCallback}>
+                            </PlaylistItem>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            {/* {tunes.map(tune =>
                 <PlaylistItem tune = {tune}
                     key={`playlist-item-${tune.id}`}
                     updateCallback={updateCallback}
                     deleteCallback={deleteCallback}>
                 </PlaylistItem>
-            )}
+            )} */}
             </div>
         </div>
         }

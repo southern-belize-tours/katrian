@@ -2,10 +2,9 @@
 
 import * as React from 'react';
 // import cake from './images/cake.png';
-import Cake from './page_art/cake/cake';
 import Gift from './page_art/gift/gift';
 
-function TimeAndDate() {
+function TimeAndDate(props) {
     return (
       <div className="weddingBody">
         <h1>Donations</h1>
@@ -13,7 +12,7 @@ function TimeAndDate() {
           {/* <img src={cake} alt="cake" className="cakeImg"/> */}
           {/* <Cake size={400}
             doTransition={true}></Cake> */}
-          <Gift size={400}
+          <Gift size={props.size ? props.size : 400}
             doTransition={true}></Gift>
           <div className="padded-sides">
               <p>

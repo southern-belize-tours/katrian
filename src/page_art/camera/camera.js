@@ -47,7 +47,7 @@ function Camera (props) {
                 clearTimeout(thirdTimeoutId);
             }
         }
-    }, []);
+    });
 
     return(
         <div className="cameraContainer"
