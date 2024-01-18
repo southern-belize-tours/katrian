@@ -15,11 +15,7 @@ function Camera (props) {
 
     let timeoutId, secondTimeoutId, thirdTimeoutId = null;
 
-    // Set the size on init
     useEffect(() => {
-        if(props !== null && props.size !== null && props.size > 0) {
-            setSize(props.size);
-        }
         // Determine if the cake will make a transition and set a timeout function if false
         if (props !== null && props.doTransition !==null && props.doTransition == true) {
             setTransition(false);
@@ -47,7 +43,14 @@ function Camera (props) {
                 clearTimeout(thirdTimeoutId);
             }
         }
-    });
+    }, []);
+
+    // Set the size on init and resizing
+    useEffect(() => {
+        if(props !== null && props.size !== null && props.size > 0) {
+            setSize(props.size);
+        }
+    }, [props.size])
 
     return(
         <div className="cameraContainer"

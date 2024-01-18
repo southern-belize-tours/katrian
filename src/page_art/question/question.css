@@ -100,6 +100,10 @@
     top: 72%;
 }
 
+.centerProng.spinning {
+    background: var(--clr-secondary);
+}
+
 .leftProng {
     transform: rotate(15deg);
     right: 52%;

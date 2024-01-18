@@ -12,9 +12,6 @@ function Cake (props) {
     useEffect(() => {
         let timeoutId = null;
 
-        if (!(props == null || props.size == null || props.size <= 0)) {
-            setSize(props.size);
-        }
         // Determine if the cake will make a transition and set a timeout function if false
         if (props !== null && props.doTransition !==null && props.doTransition == true) {
             setTransition(true);
@@ -26,14 +23,22 @@ function Cake (props) {
         if (timeoutId !== null) {
             return () => clearTimeout(timeoutId);
         }
-    });
+    }, []);
+
+    useEffect(() => {
+        if (!(props == null || props.size == null || props.size <= 0)) {
+            setSize(props.size);
+        }
+    }, [props.size])
 
     return (
         <div className={`cakeContainer ${size <= 100 ? "small " : ""}`}
             style={{width: `${size}px`, height: `${size}px`}}>
             <div className={`cakeRings ${transition === true ? "compressed" : ""}`}>
-                <div className={`firstRing ${transition === true ? "compressed" : ""}`}></div>
-                <div className={`secondRing ${transition === true ? "compressed" : ""}`}></div>
+                <div className={`firstRing ${transition === true ? "compressed" : ""}`}
+                    style={{borderWidth: `${size/35}px`}}></div>
+                <div className={`secondRing ${transition === true ? "compressed" : ""}`}
+                    style={{borderWidth: `${size/35}px`}}></div>
             </div>
             <div className={`firstLayer ${transition === true ? "" : "tall"}`}></div>
             <div className={`secondLayer ${transition === true? "" : "tall"}`}></div>

@@ -23,7 +23,7 @@ export default function Question (props) {
             <div className="innerCircle"></div>
         </div>
         {/* <div className="leftProng" style={{width: `${size/100}px`}}></div> */}
-        <div className="centerProng" style={{width: `${size/50}px`}}></div>
+        <div className={`centerProng ${props.loading ? "spinning" : ""}`} style={{width: `${size/50}px`}}></div>
         {/* <div className="rightProng" style={{width: `${size/100}px`}}></div> */}
         <div className="questionDiamond">
             <div className="questionDiamondTop"></div>
