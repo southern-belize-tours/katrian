@@ -23,13 +23,13 @@ function Summary (props) {
                     <div className="flexed centered">
                         <CalendarMonthIcon color="primary"></CalendarMonthIcon>
                         <div>
-                            The anticipated date is Friday, August 23rd, 2025.
+                            The date is Friday, August 22nd, 2025.
                         </div>
                     </div>
                     <div className="flexed centered">
                         <CelebrationIcon color="primary"></CelebrationIcon>
                         <div>
-                            Additionally we are planning weekend activities, such as a Thursday evening rehearsal dinner and a Saturday Brunch and Beach Day. More to come later!
+                            Additionally we are planning weekend activities, such as a <a className="secondary" href = "/rehearsal">Thursday evening rehearsal dinner</a> and a <a className="secondary" href = "/brunch">Saturday Brunch and Beach Day</a>. More to come later!
                         </div>
                     </div>
                     <div className="flexed centered">

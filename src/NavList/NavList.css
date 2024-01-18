@@ -1,5 +1,6 @@
 .navListItem {
     position: relative;
+    cursor: pointer;
 }
 
 .nav-submenu {

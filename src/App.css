@@ -6,6 +6,17 @@
   --clr-secondary: #a7b69d;
 }
 
+.receptionImageContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--default-gap);
+  flex-wrap: wrap;
+}
+
+.receptionImageContainer img{
+  max-height: 20rem;
+}
+
 .pageContainer {
   display: flex;
   flex-direction: column;

@@ -63,7 +63,7 @@
 }
 
 .firstRing::after, .secondRing::after {
-    content: '';
+    /* content: ''; */
     position: absolute;
     border-radius: 50%;
     border: solid 0.4rem white;

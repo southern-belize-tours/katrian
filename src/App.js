@@ -33,16 +33,24 @@ import CuvierClubHistory from './CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
 import Cuvier from './page_art/cuvier/Cuvier.js';
 import { TuneServiceProvider } from './Services/TuneService/TuneServiceContext.js';
+import { AccessTimeFilled, Diversity1, EggAlt, Liquor, MusicNote, Nightlife, Restaurant } from '@mui/icons-material';
+import Rehearsal from './Rehearsal.js';
+import Bachelor from './Bachelor.js';
+import Bachelorette from './Bachelorette.js';
+import Ceremony from './Ceremony.js';
+import Reception from './Reception.js';
+import Brunch from './Brunch.js';
 
 Amplify.configure(awsconfig);
 
 const timeAndPlaceItems = [
-  {text: "Summary", route: "/TimeAndPlace"},
-  {text: "Bachelor Party", route: "/Bachelor"},
-  {text: "Bachelorette Party", route: "/Bachelorette"},
-  {text: "Rehearsal", route: "/Rehearsal"},
-  {text: "Ceremony", route: "/Ceremony"},
-  {text: "Saturday Brunch", route: "/Brunch"},
+  {text: "Summary", route: "/Logistics", component:<AccessTimeFilled color="primary" fontSize="small"></AccessTimeFilled>},
+  {text: "Bachelor Party", route: "/Bachelor", component:<Liquor color="primary" fontSize="small"></Liquor>},
+  {text: "Bachelorette Party", route: "/Bachelorette", component:<Nightlife color="primary" fontSize="small"></Nightlife>},
+  {text: "Rehearsal", route: "/Rehearsal", component: <Restaurant color="primary" fontSize="small"></Restaurant>},
+  {text: "Ceremony", route: "/Ceremony", component: <Diversity1 color="primary" fontSize="small"></Diversity1>},
+  {text: "Reception", route: "/Reception", component: <MusicNote color="primary" fontSize="small"></MusicNote>},
+  {text: "Saturday Brunch", route: "/Brunch", component: <EggAlt color="primary" fontSize="small"></EggAlt>},
 ];
 
 const journeyDescription = [
@@ -136,6 +144,12 @@ function App() {
         <Switch>
           <Route path="/" exact component={() => <Home size={linkSize * 4}></Home>} />
           <Route path="/Logistics" exact component={() => <TimeAndDate size={linkSize * 4}></TimeAndDate>} />
+          <Route path="/Rehearsal" exact component={() => <Rehearsal></Rehearsal>}></Route>
+          <Route path="/Bachelor" exact component={() => <Bachelor></Bachelor>}></Route>
+          <Route path="/Bachelorette" exact component={() => <Bachelorette></Bachelorette>}></Route>
+          <Route path="/Ceremony" exact component={() => <Ceremony></Ceremony>}></Route>
+          <Route path="/Reception" exact component={() => <Reception></Reception>}></Route>
+          <Route path="/Brunch" exact component={() => <Brunch></Brunch>}></Route>
           <Route path="/CuvierClubHistory" exact component={() => <CuvierClubHistory size = {linkSize * 4}></CuvierClubHistory>} />
           <Route path="/Donations" exact component={() => <Donations size = {linkSize * 4}></Donations>} />
           <Route path="/Playlist" component={Playlist}></Route>

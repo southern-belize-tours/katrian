@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useTuneService } from "./Services/TuneService/TuneServiceContext";
-import { ClipLoader } from "react-spinners";
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
@@ -32,11 +31,11 @@ export default function PlaylistForm () {
                 const tunesData = await TuneService.fetchTunes();
                 if (isSubscribed) {
                     setTunes(tunesData);
-                    toast.success("Retrieved Songs Successfully", {autoCloase: 2000});
+                    toast.success("Retrieved Songs Successfully.", {autoClose: 2000});
                 }
             } catch (e) {
                 console.log("Error retrieving tunes", e);
-                toast.error("Failure to Retrieve Songs", {autoCloase: 2000});
+                toast.error("Failure to Retrieve Songs.", {autoClose: 2000});
             } finally {
                 if (isSubscribed) {
                     setLoading(false);
@@ -60,7 +59,7 @@ export default function PlaylistForm () {
             toast.success('Song Updated Successfully.', { autoClose: 2000});
         } catch (e) {
             console.log("Error updating tune", e);
-            toast.error("Failure to Update Song", {autoCloase: 2000});
+            toast.error("Failure to Update Song.", {autoCloase: 2000});
         } finally {
             setLoading(false);
         }
@@ -74,7 +73,7 @@ export default function PlaylistForm () {
             toast.success('Song Removed Successfully.', { autoClose: 2000});
         } catch (e) {
             console.log("Error on tune delete callback", e);
-            toast.error("Failure to Remove Song", {autoCloase: 2000});
+            toast.error("Failure to Remove Song.", {autoClose: 2000});
         } finally {
             setLoading(false);
         }
@@ -102,6 +101,7 @@ export default function PlaylistForm () {
             toast.success('New Song Added Successfully.', { autoClose: 2000});
         } catch (e) {
             console.log("Error saving tune", e);
+            toast.error('Failured to Add New Song.', {autoClose: 2000});
         } finally {
             setLoading(false);
         }

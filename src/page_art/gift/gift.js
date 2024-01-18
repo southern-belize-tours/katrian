@@ -10,13 +10,8 @@ function Gift (props) {
     const [size, setSize] = useState(500);
     const [transition, setTransition] = useState(false);
 
-    // Compute size and on init based on optional props
     useEffect(() => {
         let timeoutId = null;
-
-        if (!(props == null || props.size == null || props.size <= 0)) {
-            setSize(props.size);
-        }
 
         // Determine if the cake will make a transition and set a timeout function if false
         if (props !== null && props.doTransition !==null && props.doTransition == true) {
@@ -29,7 +24,14 @@ function Gift (props) {
         if (timeoutId !== null) {
             return () => clearTimeout(timeoutId);
         }
-    });
+    }, []);
+
+    // Compute size and on init based on optional props, run on resize
+    useEffect(() => {
+        if (!(props == null || props.size == null || props.size <= 0)) {
+            setSize(props.size);
+        }
+    }, [props.size])
 
     return (
         <div>

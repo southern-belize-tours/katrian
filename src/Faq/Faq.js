@@ -1,22 +1,21 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Faq } from "../models";
 
 import { DataStore } from 'aws-amplify/datastore';
-import { Cancel, ContactSupport, Delete, PushPin } from "@mui/icons-material";
-import { Button, CircularProgress, IconButton, Input, TextField } from "@mui/material";
+import { Cancel, ContactSupport } from "@mui/icons-material";
+import { Button, TextField } from "@mui/material";
 
 import './Faq.css';
-import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { FaqItem } from "./FaqItem";
 import { useFaqService } from "../Services/FaqService/FaqServiceContext";
-import { BeatLoader, CircleLoader, ClipLoader } from "react-spinners";
+// import { BeatLoader, CircleLoader, ClipLoader } from "react-spinners";
 import Question from "../page_art/question/question";
+
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FaqForm = (props) => {
   const FaqService = useFaqService();
-
-  // Get current user data for context
-  const {user, login, logout} = useContext(AuthContext);
 
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,15 +31,12 @@ const FaqForm = (props) => {
         const faqsData = await FaqService.fetchFaqs();
         if (isSubscribed) {
           setFaqs(faqsData);
+          toast.success("Retrieved Questions Successfully.", { autoClose: 2000})
         }
 
-        // const faqsData = await DataStore.query(Faq);
-        // console.log('faqs retrieved successfully!', JSON.stringify(faqsData, null, 2));
-        // if (isSubscribed) {
-        //   setFaqs(faqsData);
-        // }
       } catch (error) {
-        console.log('Error retrieving faqs', error);
+        console.log('Error Retrieving Questions.', error);
+        toast.error("Error Retrieving Questions.", { autoClose: 2000});
       } finally {
         if (isSubscribed) {
           setLoading(false);
@@ -63,8 +59,10 @@ const FaqForm = (props) => {
     try {
       const newFaqs = await FaqService.answerFaq(id, answer);
       setFaqs([...newFaqs]);
+      toast.success("Answer Updated Successfully.", { autoClose: 2000 });
     } catch (e) {
       console.log("Error on answer callback ", e);
+      toast.error("Failure to Update Answer.", { autoClose: 2000 });
     }
     setLoading(false);
   }, []);
@@ -77,8 +75,10 @@ const FaqForm = (props) => {
     try {
       const newFaqs = await FaqService.pinFaq(id, pinned)
       setFaqs([...newFaqs]);
+      toast.success(`Question Successfully ${pinned ? "Unpinned" : "Pinned"}.`, { autoClose: 2000});
     } catch (e) {
       console.log("Error on pin callback ", e);
+      toast.error("Failure to Toggle Pin.", { autoClose: 2000 });
     }
     setLoading(false);
   }, []); 
@@ -90,8 +90,10 @@ const FaqForm = (props) => {
     try {
       const newFaqs = await FaqService.deleteFaq(id);
       setFaqs([...newFaqs]);
+      toast.success('Question Deleted Successfully.', { autoClose: 2000});
     } catch (e) {
       console.log("Error on delete callback", e);
+      toast.error("Failure to Delete Question.", { autoClose: 2000});
     }
   }, []);
 
@@ -114,53 +116,19 @@ const FaqForm = (props) => {
       // const newFaqs = await DataStore.query(Faq);
       setFaqs([...newFaqs]);
       setQuestion("");
+      toast.success("New Question Added Successfully", { autoClose: 2000});
       // console.log('Faq saved successfully!', post);
     } catch (error) {
       console.log('Error saving Faq', error);
+      toast.error("Failure to Add New Question", { autoClose: 2000});
     }
     setLoading(false);
     setAsking(false);
   };
 
-  /**
-   * Toggles the pinning of a FAQ
-   * 
-   * @param {Id of the FAQ element} id 
-   * @param {Whether the current FAQ element is currently pinned} pinned 
-   */
-  const pinFaq = async (id, pinned) => {
-    setLoading(true);
-    try {
-      const faqToUpdate = await DataStore.query(Faq, id);
-      const updatedFaq = Faq.copyOf(faqToUpdate, updated => {
-        updated.pinned = !pinned;
-      });
-      const result = await DataStore.save(updatedFaq);
-      const newFaqs = await DataStore.query(Faq);
-      setFaqs([...newFaqs]);
-
-      // Update the tour object with the new data
-      // const updatedTour = Tour.copyOf(originalTour, updated => {
-      //   updated.excursions = tour.excursions;
-      //   updated.price = tour.price;
-      //   updated.priceChild = tour.priceChild;
-      //   updated.url = tour.url;
-      //   updated.whatToBring = tour.whatToBring;
-      //   updated.includes = tour.includes;
-      //   updated.content = tour.content;
-      // });
-  
-      // // Save the updated tour object to the DataStore
-      // const result = await DataStore.save(updatedTour);
-    } catch (error) {
-      console.log("Error pinning question", error);
-    }
-    setLoading(false);
-  }
-
   return (
     <div className="weddingBody">
-      {/* {user!==null && <h1>Signed In!</h1>} */}
+      <ToastContainer></ToastContainer>
       <div className="questionPanel">
         <h1>Frequently Asked Questions</h1>
       </div>
@@ -168,10 +136,10 @@ const FaqForm = (props) => {
       {/* {loading && <CircularProgress></CircularProgress>} */}
       {/* <BeatLoader loading = {loading}></BeatLoader> */}
       {/* <CircleLoader size = {200} loading = {loading}></CircleLoader> */}
-      <ClipLoader size = {0}
+      {/* <ClipLoader size = {0}
         className="faqLoader"
         color = "primary"
-        loading = {loading}></ClipLoader>
+        loading = {loading}></ClipLoader> */}
 
       <Question size = {props.size ? props.size : 400}
         loading = {loading}>
