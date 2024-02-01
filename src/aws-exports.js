@@ -32,7 +32,9 @@ const awsmobile = {
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
-    ]
+    ],
+    "aws_user_files_s3_bucket": "katrian-storage-photo-galleries190522-staging",
+    "aws_user_files_s3_bucket_region": "us-west-1"
 };
 
 

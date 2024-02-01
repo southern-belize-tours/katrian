@@ -1,8 +1,11 @@
-import { ClipLoader } from "react-spinners";
-import Question from "../page_art/question/question";
-import Cuvier from "../page_art/cuvier/Cuvier";
-import Music from "../page_art/music/music";
+// import { ClipLoader } from "react-spinners";
+// import Question from "../page_art/question/question";
+// import Cuvier from "../page_art/cuvier/Cuvier";
+// import Music from "../page_art/music/music";
 import Cake from "../page_art/cake/cake";
+import Camera from "../page_art/camera/camera.js"
+import Gift from "../page_art/gift/gift.js"
+
 
 export default function Sandbox (props) {
 
@@ -22,10 +25,20 @@ export default function Sandbox (props) {
         {/* <Music size = {100} loading = {true}></Music> */}
         {/* <Music size = {50} loading = {true}></Music> */}
 
-        <Cake size = {400}></Cake>
-        <Cake size = {200}></Cake>
-        <Cake size = {100}></Cake>
-        <Cake size = {50}></Cake>
+        <Cake size = {400} doTransition={true}></Cake>
+        <Cake size = {200} doTransition={true}></Cake>
+        <Cake size = {100} doTransition={true}></Cake>
+        <Cake size = {50} doTransition={true}></Cake>
+
+        {/* <Camera size = {400} loading={false}></Camera> */}
+        {/* <Camera size = {200} loading={false}></Camera> */}
+        {/* <Camera size = {100} loading={false}></Camera> */}
+        {/* <Camera size = {50} loading={false}></Camera> */}
+
+        {/* <Gift size = {400}></Gift>
+        <Gift size = {200}></Gift>
+        <Gift size = {100}></Gift>
+        <Gift size = {50}></Gift> */}
 
     </div>
     );

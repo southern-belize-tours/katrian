@@ -10,7 +10,7 @@ export default function Reception (props) {
     <div className="weddingBody">
         <h1>Reception</h1>
         <div className="receptionImageContainer">
-            <img src={cuvierClubOutside}></img>
+            <img alt="The outside area of Cuvier Club where drinks will be held" src={cuvierClubOutside}></img>
             <img src={cuvierClub4}></img>
         </div>
         <div className="padded-sides flexed col">

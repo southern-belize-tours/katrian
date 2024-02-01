@@ -8,7 +8,7 @@ import TimeAndDate from './TimeAndDate.js';
 // import WebsiteNames from './WebsiteNames.js';
 import Donations from './Donations.js';
 import Playlist from './Playlist.js';
-import Gallery from './Gallery.js';
+import Gallery from './Components/Gallery/Gallery.js';
 import FaqForm from './Faq/Faq.js';
 
 import { ThemeProvider } from '@mui/material/styles';
@@ -18,7 +18,6 @@ import NavList from './NavList/NavList.js';
 import Clock from './page_art/clock/clock';
 import Camera from './page_art/camera/camera';
 import Music from './page_art/music/music';
-import GallerySummary from './GallerySummary';
 import Gift from './page_art/gift/gift';
 
 import Sandbox from './Sandbox/Sandbox.js';
@@ -26,31 +25,32 @@ import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports.js';
 
 import { AuthProvider } from './Contexts/AuthContext/AuthContext.js';
-import { FaqServiceProvider, useFaqService } from './Services/FaqService/FaqServiceContext.js';
+import { FaqServiceProvider } from './Services/FaqService/FaqServiceContext.js';
 
 // Spinner
-import CuvierClubHistory from './CuvierClub/CuvierClubHistory.js';
+import CuvierClubHistory from './Components/CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
 import Cuvier from './page_art/cuvier/Cuvier.js';
 import { TuneServiceProvider } from './Services/TuneService/TuneServiceContext.js';
-import { AccessTimeFilled, Diversity1, EggAlt, Liquor, MusicNote, Nightlife, Restaurant } from '@mui/icons-material';
+import { AccessTimeFilled, Diversity1, EggAlt, Hotel, Liquor, MusicNote, Nightlife, Restaurant } from '@mui/icons-material';
 import Rehearsal from './Rehearsal.js';
-import Bachelor from './Bachelor.js';
-import Bachelorette from './Bachelorette.js';
 import Ceremony from './Ceremony.js';
-import Reception from './Reception.js';
 import Brunch from './Brunch.js';
+import { useGalleryService } from './Services/GalleryService/GalleryServiceContext.js';
+import HotelAndTransport from './Components/Hotel_and_Transport/HotelAndTransport.js';
+import GalleryPage from './Components/Gallery/GalleryPage.js';
 
 Amplify.configure(awsconfig);
 
 const timeAndPlaceItems = [
   {text: "Summary", route: "/Logistics", component:<AccessTimeFilled color="primary" fontSize="small"></AccessTimeFilled>},
-  {text: "Bachelor Party", route: "/Bachelor", component:<Liquor color="primary" fontSize="small"></Liquor>},
-  {text: "Bachelorette Party", route: "/Bachelorette", component:<Nightlife color="primary" fontSize="small"></Nightlife>},
+  // {text: "Bachelor Party", route: "/Bachelor", component:<Liquor color="primary" fontSize="small"></Liquor>},
+  // {text: "Bachelorette Party", route: "/Bachelorette", component:<Nightlife color="primary" fontSize="small"></Nightlife>},
   {text: "Rehearsal", route: "/Rehearsal", component: <Restaurant color="primary" fontSize="small"></Restaurant>},
-  {text: "Ceremony", route: "/Ceremony", component: <Diversity1 color="primary" fontSize="small"></Diversity1>},
-  {text: "Reception", route: "/Reception", component: <MusicNote color="primary" fontSize="small"></MusicNote>},
+  {text: "Wedding", route: "/Ceremony", component: <Diversity1 color="primary" fontSize="small"></Diversity1>},
+  // {text: "Reception", route: "/Reception", component: <MusicNote color="primary" fontSize="small"></MusicNote>},
   {text: "Saturday Brunch", route: "/Brunch", component: <EggAlt color="primary" fontSize="small"></EggAlt>},
+  {text: "Hotels and Transport", route: "/Hotels-and-Transport", component: <Hotel color="primary" fontSize="small"></Hotel>}
 ];
 
 const journeyDescription = [
@@ -98,9 +98,23 @@ function debounce(fn, ms) {
 }
 
 function App() {
-  const [linkSize, setLinkSize] = React.useState(100);
+  const GalleryService = useGalleryService();
 
-  const FaqService = useFaqService();
+  const [linkSize, setLinkSize] = React.useState(100);
+  const [galleries, setGalleries] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+
+  const links = [
+    {text: "Home", route: "/", component: <Cake size={linkSize}></Cake>, items: []},
+    {text: "Logistics", route: "/Logistics", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
+    {text: "FAQ", route: "/FAQ", component: <Question size={linkSize}></Question>, items: []},
+    {text: "Galleries", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: []},
+    {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
+    {text: "Playlist", route: "/Playlist", component: <Music size={linkSize}></Music>, items: []},
+    {text: "Registry", route: "/Registry", component: <Gift size={linkSize}></Gift>, items: []},
+  ];
+
+  const [navLinks, setNavLinks] = React.useState([...links]);
 
   React.useEffect(() => {
     const checkMediaSize = () => {
@@ -111,24 +125,61 @@ function App() {
       }
     }
 
+    setLoading(true);
+    let isSubscribed = true;
+
+    const getGalleries = async () => {
+      let galleriesData = -1;
+      try {
+        galleriesData = await GalleryService.fetchGalleries();
+        if (isSubscribed && galleriesData !== -1) {
+          setGalleries(galleriesData);
+
+          let galleryLinks = navLinks[3];
+          galleryLinks.items = [];
+          for (let i = 0; i < galleriesData.length; ++i) {
+            const galleryLink = {text: galleriesData[i].name,
+              route: "/Gallery/" + galleriesData[i].directory,
+              component: <></>
+            }
+            galleryLinks.items.push(galleryLink);
+          }
+          let oldNavs = [...navLinks];
+          oldNavs[3] = galleryLinks;
+          // console.log(galleryLinks);
+          setNavLinks(oldNavs);
+        }
+      } catch (e) {
+        console.log("Error retrieving galleries", e);
+      } finally {
+        if (isSubscribed) {
+          setLoading(false);
+        }
+      }
+    }
+
+    console.log("Galleries: ", galleries)
+    console.log("Gallery service", GalleryService);
+    if (galleries.length === 0 && GalleryService.galleries.length ===0) {
+      getGalleries();
+    } else if (galleries.length === 0 && GalleryService.galleries.length !== 0) {
+      setGalleries(GalleryService.galleries);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+
     // Only check the resizing every 100ms
     const debouncedCheckMediaSize = debounce(checkMediaSize, 100);
 
     debouncedCheckMediaSize();
     window.addEventListener('resize', debouncedCheckMediaSize);
 
-    return () => window.removeEventListener('resize', debouncedCheckMediaSize);
+    return () => {
+      isSubscribed = false;
+      window.removeEventListener('resize', debouncedCheckMediaSize);
+    }
   }, [])
-
-  const links = [
-    {text: "Home", route: "/", component: <Cake size={linkSize}></Cake>, items: []},
-    {text: "Logistics", route: "/Logistics", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
-    {text: "FAQ", route: "/FAQ", component: <Question size={linkSize}></Question>, items: []},
-    {text: "Gallery", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: []},
-    {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
-    {text: "Playlist", route: "/Playlist", component: <Music size={linkSize}></Music>, items: []},
-    {text: "Donations", route: "/Donations", component: <Gift size={linkSize}></Gift>, items: []},
-  ];
 
   return (
     <ThemeProvider theme = {theme}>
@@ -139,24 +190,27 @@ function App() {
       <div className="pageContainer">
       {/* <WeddingToolbar links={links}></WeddingToolbar> */}
       {/* <NavList links={links}></NavList> */}
+      { loading === false ?
       <Router>
-        <NavList links={links}></NavList>
+        <NavList links={navLinks}></NavList>
         <Switch>
           <Route path="/" exact component={() => <Home size={linkSize * 4}></Home>} />
           <Route path="/Logistics" exact component={() => <TimeAndDate size={linkSize * 4}></TimeAndDate>} />
           <Route path="/Rehearsal" exact component={() => <Rehearsal></Rehearsal>}></Route>
-          <Route path="/Bachelor" exact component={() => <Bachelor></Bachelor>}></Route>
-          <Route path="/Bachelorette" exact component={() => <Bachelorette></Bachelorette>}></Route>
+          {/* <Route path="/Bachelor" exact component={() => <Bachelor></Bachelor>}></Route> */}
+          {/* <Route path="/Bachelorette" exact component={() => <Bachelorette></Bachelorette>}></Route> */}
+          <Route path="/Hotels-and-Transport" exact component={() => <HotelAndTransport></HotelAndTransport>}></Route>
           <Route path="/Ceremony" exact component={() => <Ceremony></Ceremony>}></Route>
-          <Route path="/Reception" exact component={() => <Reception></Reception>}></Route>
+          {/* <Route path="/Reception" exact component={() => <Reception></Reception>}></Route> */}
           <Route path="/Brunch" exact component={() => <Brunch></Brunch>}></Route>
           <Route path="/CuvierClubHistory" exact component={() => <CuvierClubHistory size = {linkSize * 4}></CuvierClubHistory>} />
-          <Route path="/Donations" exact component={() => <Donations size = {linkSize * 4}></Donations>} />
+          <Route path="/Registry" exact component={() => <Donations size = {linkSize * 4}></Donations>} />
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries} size = {linkSize * 4}></Gallery>}></Route>
           {galleries.map(gallery => 
-            <Route path={gallery.route} exact component={() => <GallerySummary galleries = {galleries}
-              gallery = {gallery}></GallerySummary>}></Route>
+            <Route path={`/Gallery/${gallery.directory}`} exact component={() => 
+              <GalleryPage gallery = {gallery}></GalleryPage>}>
+            </Route>
           )}
           {/* <Route path = "/Pumpkin" exact component={() => <Pumpkin></Pumpkin>}></Route> */}
           <Route path = "/FAQ" exact component = {() => <FaqForm size = {linkSize * 4}></FaqForm>}></Route>
@@ -166,6 +220,9 @@ function App() {
           <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>
         </Switch>
       </Router>
+      :
+              <div className="loadingSpinner"></div>
+      }
       {/* <NavList links={links}></NavList> */}
       </div>
       </AuthProvider>

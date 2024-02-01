@@ -48,7 +48,7 @@ export default class TuneService {
 
     async deleteTune(id) {
         try {
-            const tuneToDelete = await client.graphql({
+            await client.graphql({
                 query: deleteTune,
                 variables: {
                     input: {
@@ -67,7 +67,7 @@ export default class TuneService {
 
     async updateTune(id, name, artist) {
         try {
-            const tuneToUpdate = await client.graphql({
+            await client.graphql({
                 query: updateTune,
                 variables: {
                     input: {
@@ -87,7 +87,7 @@ export default class TuneService {
 
     async updateTuneName(id, name) {
         try {
-            const tuneToUpdate = await client.graphql({
+            await client.graphql({
                 query: updateTune,
                 variables: {
                     input: {
@@ -96,9 +96,8 @@ export default class TuneService {
                     }
                 }
             });
-            const updatedTunes = this.tunes.map(tune => {if (tune.id == id) tune.name = name;});
-            this.tunes = [...updatedTunes];
-            return [...this.tunes];
+            const newTunes = await this.fetchTunes();
+            return [...newTunes];
         } catch (e) {
             console.log("Error updating tune name", e);
             return [];
@@ -107,7 +106,7 @@ export default class TuneService {
 
     async updateTuneArtist(id, artist) {
         try {
-            const tuneToUpdate = await client.graphql({
+            await client.graphql({
                 query: updateTune,
                 variables: {
                     input: {
@@ -116,9 +115,8 @@ export default class TuneService {
                     }
                 }
             });
-            const updatedTunes = this.tunes.map(tune => {if (tune.id == id) tune.artist = artist;});
-            this.tunes = [...updatedTunes];
-            return [...this.tunes];
+            const newTunes = await this.fetchTunes();
+            return [...newTunes];
         } catch (e) {
             console.log("Error updating tune artist", e);
             return [];

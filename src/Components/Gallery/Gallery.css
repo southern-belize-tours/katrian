@@ -1,0 +1,182 @@
+.galleryForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
+}
+
+.galleryFormRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--default-gap);
+}
+
+.galleryFormField {
+    flex: 1 1 auto;
+}
+
+.thumbnailImageReel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--default-gap);
+}
+
+.thumbnailImageContainer {
+    position: relative;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.thumbnailImage {
+    max-width: 8rem !important;
+}
+
+.thumbnailImageDelete {
+    position: absolute !important;
+    top: 0px;
+    right: 0px;
+}
+
+.gallery-item-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.galleryItemLoadingSpinner {
+    height: 2rem;
+    width: 2rem;
+    border: solid 3px var(--clr-lavender);
+    border-radius: 50%;
+    animation: 0.75s linear 0s infinite normal both running music-load;
+    border-bottom-width: 0px;
+}
+
+.dialogContentImages {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--default-gap);
+    justify-content: center;
+}
+
+.dialogImageContainer {
+    flex: 0 0 32%;
+    position: relative;
+}
+
+.dialogImage {
+    height: 25rem;
+    background-size: cover !important;
+    background-position: center !important;
+    display: flex;
+}
+
+.dialogImageAltField {
+    margin-top: var(--default-gap) !important;
+    margin-left: var(--default-gap) !important;
+    /* background: white !important; */
+}
+
+.dialogImageAltField .MuiInputBase-input {
+    z-index: 1 !important;
+}
+
+.dialogImageAltField .MuiOutlinedInput-notchedOutline {
+    background: white !important;
+    /* color: black !important; */
+}
+
+.dialogImageDelete {
+    position: absolute !important;
+    top: var(--default-gap);
+    right: var(--default-gap);
+    background: rgba(255,255,255, .6) !important;
+}
+
+.addNewImage {
+    border: solid var(--clr-lavender) 1px;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--clr-lavender);
+    font-size: 2rem;
+}
+
+.galleryDescription {
+    max-width: 1024px;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+}
+
+.galleryCardItemsContainer {
+    display: flex;
+    gap: var(--default-gap);
+    flex-wrap: wrap;
+    width: -webkit-fill-available;
+}
+
+.galleryCardContainer {
+    height: 25rem;
+    flex: 0 0 32%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.galleryLine {
+    transform: translateX(-110%);
+    transition: all .3s;
+    height: 3px;
+    width: 110%;
+    background-color: var(--clr-lavender);
+}
+
+.galleryCardContainer:hover > .galleryTitle .galleryLine {
+    transform: translateX(-10%);
+}
+
+.galleryTitle {
+    font-size: 2rem;
+    font-weight: 600;
+    position: absolute;
+    bottom: 0px;
+    color: white;
+    padding: var(--default-gap);
+    background: linear-gradient( to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4) 25%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.4) 75%, rgba(0, 0, 0, 0.1) );
+    /* background: linear-gradient(
+        to right, 
+        rgba(0, 0, 0, 0.7), 
+        rgba(0, 0, 0, 0.4) 25%, 
+        rgba(0, 0, 0, 0) 50%, 
+        rgba(0, 0, 0, 0.4) 75%, 
+        rgba(0, 0, 0, 0.7)
+    ); */
+}
+
+.adminGalleryContainer {
+    width: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
+    align-items: center;
+}
+
+@keyframes music-load {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -1,7 +1,7 @@
-import React from 'react';
+import { createContext, useContext } from 'react';
 import FaqService from './FaqService';
 
-const FaqServiceContext = React.createContext();
+const FaqServiceContext = createContext();
 
 export const FaqServiceProvider = ({ children }) => {
   const faqService = new FaqService();
@@ -11,6 +11,6 @@ export const FaqServiceProvider = ({ children }) => {
       {children}
     </FaqServiceContext.Provider>
   );
-};
+}
 
-export const useFaqService = () => React.useContext(FaqServiceContext);
+export const useFaqService = () => useContext(FaqServiceContext);

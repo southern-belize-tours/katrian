@@ -1,10 +1,7 @@
 // Amplify backend functions
-import { DataStore } from 'aws-amplify/datastore';
-import { Faq } from '../../models';
 import { generateClient } from 'aws-amplify/api';
-import { listFaqs, getFaq } from '../../graphql/queries';
+import { listFaqs } from '../../graphql/queries';
 import { createFaq, deleteFaq, updateFaq } from '../../graphql/mutations';
-
 
 const client = generateClient();
 
@@ -46,22 +43,14 @@ export default class FaqService {
    */
   async createFaq(data) {
     try {
-        const newFaq = await client.graphql({
+        await client.graphql({
             query: createFaq,
             variables: {
                 input: data
             }
         });
-        // this.faqs = [...this.faqs, newFaq];
-        // return [...this.faqs];
         const updatedFaqs = await this.fetchFaqs();
-        return [...updatedFaqs];
-
-        // const post = await DataStore.save(
-        //     new Faq(data)
-        // );
-        // const newFaqs = await DataStore.query(Faq);
-        // this.faqs = [...newFaqs];
+        return updatedFaqs;
     } catch (e) {
         console.log("Error creating new Faq");
         return [];
@@ -76,8 +65,7 @@ export default class FaqService {
    */
   async deleteFaq(id) {
     try {
-        const faqToDelete = await DataStore.query(Faq, id);
-        const deletedFaq = await client.graphql({
+        await client.graphql({
             query: deleteFaq,
             variables: {
                 input: {
@@ -86,8 +74,7 @@ export default class FaqService {
             }
         });
         const updatedFaqs = await this.fetchFaqs();
-        this.faqs = [...updatedFaqs];
-        return [...this.faqs];
+        return updatedFaqs;
     } catch (e) {
         console.log("Error deleting Frequently Asked Question", e);
         return [];
@@ -98,19 +85,12 @@ export default class FaqService {
    * Toggles whether a Faq Item is pinned
    * 
    * @param {ID of FAQ item to be updated} id 
-   * @param {current pinned status of item} pinned 
+   * @param {current pinned status of item, which will be toggled} pinned 
    * @returns 
    */
   async pinFaq(id, pinned) {
     try {
-        const faqToUpdate = await client.graphql({
-            query: getFaq,
-            variables: {
-                id: id
-            }
-        });
-        // console.log(faqToUpdate);
-        const updatedFaq = await client.graphql({
+        await client.graphql({
             query: updateFaq,
             variables: {
                 input: {
@@ -119,7 +99,6 @@ export default class FaqService {
                 }
             }
         });
-        // console.log(updatedFaq);
         return this.fetchFaqs();
     } catch (e) {
         console.log("Error toggling pin ", e);
@@ -136,14 +115,7 @@ export default class FaqService {
    */
   async answerFaq(id, answer) {
     try {
-        const faqToUpdate = await client.graphql({
-            query: getFaq,
-            variables: {
-                id: id
-            }
-        });
-        // console.log(faqToUpdate);
-        const updatedFaq = await client.graphql({
+        await client.graphql({
             query: updateFaq,
             variables: {
                 input: {
@@ -152,18 +124,9 @@ export default class FaqService {
                 }
             }
         });
-        // console.log(updatedFaq);
         return this.fetchFaqs();
-        // const faqToUpdate = await DataStore.query(Faq, id);
-        // const updatedFaq = Faq.copyOf(faqToUpdate, updated => {
-        //     updated.answer = answer;
-        // });
-        // const result = await DataStore.save(updatedFaq);
-        // const newFaqs = await DataStore.query(Faq);
-        // this.faqs = [...newFaqs];
-        return [...this.faqs];
     } catch (e) {
-        console.log("Error toggling pin ", e);
+        console.log("Error answering faq ", e);
         return [];
     }
   }

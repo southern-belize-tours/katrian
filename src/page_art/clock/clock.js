@@ -30,35 +30,40 @@ const computeTransformStyle = (size, angle) => {
 function Clock (props) {
 
     // Size state component can be set from the props, along with hour and minute
-    const [size, setSize] = useState(300);
-    const [hour, setHour] = useState(12);
-    const [minute, setMinute] = useState(0);
+    const [size, setSize] = useState(props.size);
+    const [animationDuration, setAnimationDuration] = useState(2);
 
     // Compute size and time on init based on optional props
     useEffect(() => {
         if (!(props == null || props.size == null || props.size <= 0)) {
             setSize(props.size);
         }
-        if (!(props == null || props.hour == null || props.hour <= 0)) {
-            setHour(props.hour);
+        if (!props.animate) {
+            setAnimationDuration(0);
         }
-        if (!(props == null || props.minute == null || props.minute <= 0)) {
-            setMinute(props.minute);
-        }        
     });
 
     // Compute how much to move the small hand based on the current angle
     const smallHandSize = size * .87 * .20;
     const smallHandAngle = 25;
-    const transform_small_hand_style = computeTransformStyle(smallHandSize, smallHandAngle)
+    
+    const transform_small_hand_style =  {
+        // ...computeTransformStyle(smallHandSize, smallHandAngle),
+        animation: `rotate ${animationDuration}s linear 1`
+    };
+
 
     // Compute how much to move the large hand based on the current angle
     const bigHandSize = size * .87 * .4;
     const bigHandAngle = 15;
-    const transform_big_hand_style = computeTransformStyle(bigHandSize, bigHandAngle);
+    const transform_big_hand_style = {
+        // ...computeTransformStyle(bigHandSize, bigHandAngle),
+        animation: `rotate ${animationDuration/1.4}s linear 1`
+    }
+    // const transform_big_hand_style = computeTransformStyle(bigHandSize, bigHandAngle);
 
     return (<div>
-        <div className={`clockContainer ${size <= 100 ? "small " : ""}`}
+        <div className={`clockContainer ${size <= 100 ? "small " : ""} ${props.fade ? "fading" : ""}`}
             style={{width: `${size}px`, height: `${size}px`}}>
             <div className="clockDiamondTop"></div>
             <div className="clockDiamondBottom"></div>

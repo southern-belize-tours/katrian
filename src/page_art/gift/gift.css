@@ -14,7 +14,7 @@
 }
 
 .giftContainer.small .topBox {
-    height: calc(50% - .6rem);
+    height: 25%;
 }
 
 .giftContainer.small .giftBottom {
@@ -54,7 +54,7 @@
 }
 
 .topBox {
-    height: calc(50% - 2rem);
+    height: 30%;
     width: 100%;
     border: solid #AC9EED 1rem;
     border-radius: 1%;
