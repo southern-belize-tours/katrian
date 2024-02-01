@@ -54,6 +54,11 @@ export default function AddPhotoDialog (props) {
     }
 
     const isValid = () => {
+        for (let i = 0; i  < alts.length; ++i) {
+            if (alts[i].length < 1) {
+                return false;
+            }
+        }
         // Check to see if the alts are all filled out to a certain length
         return true;
     }
