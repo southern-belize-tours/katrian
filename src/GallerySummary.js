@@ -23,7 +23,7 @@ function GallerySummary(props) {
     const [initialImages, setInitialImages] = useState([]);
 
     // const directoryString = `./images${props.gallery.route}/`;
-    const directoryString = './images' + props.gallery.route + '/';
+    // const directoryString = './images' + props.gallery.route + '/';
 
     // Imports all images from the src/images/Gallery directory
     useEffect(() => {
@@ -61,7 +61,7 @@ function GallerySummary(props) {
                     {images.map((item) => (
                       <ImageListItem key={item}>
                         <img
-                          alt="A cute photo"
+                          alt="Cute proposal at mount hood"
                           src={`${initialImages[item]}?w=248&fit=crop&auto=format`}
                           loading="lazy"
                         />

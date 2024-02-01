@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 
 export const FaqItem = ({faq, answerCallback, pinCallback, deleteCallback}) => {
-    const {user, login, logout} = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
     const [answer, setAnswer] = useState(faq.answer ? faq.answer : "");
     const [isEditing, setIsEditing] = useState(false);
 

@@ -5,19 +5,24 @@ import './cake.css';
 function Cake (props) {
 
     // Size state component can be set from the props, along with hour and minute
-    const [size, setSize] = useState(500);
-    const [transition, setTransition] = useState(false);
+    const [size, setSize] = useState(0);
+    const [transition, setTransition] = useState(props.doTransition);
 
     // Compute size and on init based on optional props
     useEffect(() => {
+
+        // if (props && props.doTransition) {
+        //     setTransition(true);
+        // }
+
         let timeoutId = null;
 
-        // Determine if the cake will make a transition and set a timeout function if false
-        if (props !== null && props.doTransition !==null && props.doTransition == true) {
-            setTransition(true);
+        // // Determine if the cake will make a transition and set a timeout function if false
+        if (props.doTransition === true) {
+            // setTransition(true);
             timeoutId = setTimeout(() => {
                 setTransition(false);
-            }, 1000);
+            }, 0);
         }
 
         if (timeoutId !== null) {
@@ -36,9 +41,9 @@ function Cake (props) {
             style={{width: `${size}px`, height: `${size}px`}}>
             <div className={`cakeRings ${transition === true ? "compressed" : ""}`}>
                 <div className={`firstRing ${transition === true ? "compressed" : ""}`}
-                    style={{borderWidth: `${size/35}px`}}></div>
+                    style={{borderWidth: `${size/35}px`, transitionDelay: `${props.doTransition ? "1s" : "0s"}`, transitionDuration: `${props.doTransition ? ".5s" : "0s"}`}}></div>
                 <div className={`secondRing ${transition === true ? "compressed" : ""}`}
-                    style={{borderWidth: `${size/35}px`}}></div>
+                    style={{borderWidth: `${size/35}px`, transitionDelay: `${props.doTransition ? "1s" : "0s"}`, transitionDuration: `${props.doTransition ? ".5s" : "0s"}`}}></div>
             </div>
             <div className={`firstLayer ${transition === true ? "" : "tall"}`}></div>
             <div className={`secondLayer ${transition === true? "" : "tall"}`}></div>

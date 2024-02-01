@@ -70,3 +70,67 @@ export const listTunes = /* GraphQL */ `
     }
   }
 `;
+
+export const listGalleries = /* GraphQL */ `
+  query ListGalleries(
+    $filter: ModelGalleryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGalleries(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        long_description
+        alts
+        directory
+        admin_upload_only
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+
+// export const listGallerys = /* GraphQL */ `
+//   query ListGallerys(
+//     $filter: ModelGalleryFilterInput
+//     $limit: Int
+//     $nextToken: String
+//   ) {
+//     listGallerys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+//       items {
+//         id
+//         name
+//         long_description
+//         alts
+//         directory
+//         admin_upload_only
+//         createdAt
+//         updatedAt
+//         __typename
+//       }
+//       nextToken
+//       __typename
+//     }
+//   }
+// `;
+
+export const getGallery = /* GraphQL */ `
+  query getGallery($id: ID!) {
+    getGallery(id: $id) {
+      id
+      name
+      long_description
+      alts
+      directory
+      admin_upload_only
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;

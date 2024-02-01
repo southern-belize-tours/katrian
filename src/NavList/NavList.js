@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.js';
 import NavListItem from './NavListItem.js'
 import { Tooltip } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import { useGalleryService } from '../Services/GalleryService/GalleryServiceContext.js';
 
 /**
  * Helper function to avoid excessive computation and rerenders when detecting overflow
@@ -23,17 +24,21 @@ function debounce(fn, ms) {
 }
 
 function NavList (props) {
+    const GalleryService = useGalleryService();
+
     const ref = useRef(null);
     const location = useLocation();
     const [isOverflowing, setIsOverflowing] = useState(false);
     // Compute the size of the wedding logos based on the screen width
-    const [iconSize, setIconSize] = useState(100);
+    const [iconSize] = useState(100);
     // How far to move the list when the arrows are clicked
     const [translate, setTranslate] = useState(0);
     const [initialWidth, setInitialWidth] = useState(0);
 
+    const [galleries, setGalleries] = useState([]);
+
     /**
-     * When component is initialized it starts checking for overflow
+     * When component is resized it starts checking for overflow
      */
     useEffect(() => {
         const checkOverflow = () => {
@@ -59,22 +64,51 @@ function NavList (props) {
         debouncedCheckOverflow();
         window.addEventListener('resize', debouncedCheckOverflow);
       
+        let isSubscribed = true;
+        
+        const getGalleries = async () => {
+            let galleriesData = -1;
+            try {
+                galleriesData = await GalleryService.fetchGalleries();
+                if (isSubscribed && galleriesData !== -1) {
+                    setGalleries(galleriesData);
+                }   
+            } catch (e) {
+                console.log("Error retrieving galleries" , e);
+            }
+        }
+
+        getGalleries();
+
         // Cleanup listener
-        return () => window.removeEventListener('resize', debouncedCheckOverflow);
+        return () => {
+            isSubscribed = false;
+            window.removeEventListener('resize', debouncedCheckOverflow);
+        }
       }, [ref]);
+
+    /**
+     * When component is initialized it starts checking for overflow
+     */
+    useEffect(() => {
+        const element = ref.current;
+        if (element) {
+            // Check for horizontal overflow
+            const hasHorizontalOverflow = element.scrollWidth > element.clientWidth;
+            // Check for vertical overflow
+            const hasVerticalOverflow = element.scrollHeight > element.clientHeight;
+            // Set state based on overflow status
+            setIsOverflowing(hasHorizontalOverflow || hasVerticalOverflow);
+            setTranslate(0);
+        }
+      }, []);
 
     const getRefTranslate = () => {
         const element = ref.current;
         if (element) {
-            if (initialWidth == 0) {
+            if (initialWidth === 0) {
                 setInitialWidth(element.scrollWidth);
             }
-            // console.log("Translating right...");
-            // console.log(initialWidth);
-            // console.log(element.clientWidth);
-            // console.log(element.scrollWidth);
-            // console.log(translate);
-            // return element.clientWidth + translate < element.scrollWidth;
             return element.clientWidth + translate < initialWidth;
         }
         return false;
@@ -96,7 +130,7 @@ function NavList (props) {
                     <div className="flexed navList"
                         style={{transform: `translateX(-${translate}px)`}}>
                         {props.links.map(link =>
-                            location.pathname !== link.route &&
+                            (location.pathname !== link.route || link.route === "/Logistics") &&
                             <NavListItem key={`nav-list-item-${link.route}`} 
                                 link={link}></NavListItem>
                         )}
@@ -106,7 +140,7 @@ function NavList (props) {
                 <Tooltip title = {`${getRefTranslate() ? "Next Item" : "No Further Items"}`}>
                         <div className = {`rightNavArrow ${getRefTranslate() ? "" : "disabled"}`}
                             onClick = {() => {
-                                if (translate == 0) {
+                                if (translate === 0) {
                                     setInitialWidth(ref.current.scrollWidth);
                                 }
                                 if (getRefTranslate()) {

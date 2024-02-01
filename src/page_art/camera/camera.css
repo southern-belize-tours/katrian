@@ -5,6 +5,12 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
+
+    transition: all .5s;
+}
+
+.cameraContainer.opaque {
+    opacity: 0;
 }
 
 .cameraTop {
@@ -36,6 +42,9 @@
     position: relative;
     height: 32%;
     width: 40%;
+
+    position: absolute;
+    top: -10%;
 }
 
 .diamondTop {
@@ -46,16 +55,42 @@
     position: relative;
 }
 
+.cameraSquare.small .diamondTop::before, .cameraSquare.small .diamondTop::after {
+    height: 120%;
+    width: 30%;
+}
+
+.cameraSquare.small .diamondTop::before {
+    left: -32%;
+    height: 70%;
+    top: -4%;
+    width: 62%;
+    transform: rotate(-50deg);
+}
+
+.cameraSquare.small .diamondTop::after {
+    right: -32%;
+    height: 70%;
+    top: -4%;
+    width: 62%;
+    transform: rotate(50deg);
+}
+
 .diamondTop::before, .diamondTop::after {
     content: '';
     position: absolute;
     background: white;
     height: 200%;
     width: 123%;
+
+    height: 141%;
+    width: 71%;
 }
 
 .diamondTop::before {
-    left: -97%;
+    /* left: -97%; */
+    left: -51%;
+    top: -53%;
     transform: rotate(-50deg);
 }
 
@@ -63,7 +98,12 @@
     right: -89%;
     transform: rotate(45deg);
     right: -97%;
+
+    right: -51%;
+    top: -53%;
     transform: rotate(50deg);
+
+    
 }
 
 .diamondBottom {
@@ -95,23 +135,24 @@
 }
 
 .cameraSquare {
-    width: calc(100% - 3rem);
-    height: 70%;
+    /* width: calc(100% - 3rem); */
+    width: 80%;
+    height: 62.5%;
     border: solid 1.5rem #AC9EED;
     border-radius: 15%;
     position: relative;
     display: flex;
-    /* align-items: center; */
     justify-content: center;
 }
 
 .cameraSquare.small {
     border-width: .3rem;
-    width: calc(100% - .6rem);
+    /* width: calc(100% - .6rem); */
+    width: 75%;
 }
 
 .ringContainer {
-    top: 10%;
+    top: 20%;
     position: relative;
     height: 60%;
     width: 35%;
@@ -125,7 +166,7 @@
 .ringContainer.small {
     height: 75%;
     width: 45%;
-    top: 5%;
+    top: 11%;
 }
 
 .ringContainer.expanded {
@@ -135,6 +176,10 @@
 
 .ringContainer.spin {
     transform: rotate(360deg)
+}
+
+.ringContainer.loading {
+    animation: 0.75s linear 0s infinite normal both running music-load;
 }
 
 .cameraTopGap {
@@ -174,11 +219,20 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: #a7b69d;
+    /* background: #a7b69d; */
     position: relative;
+
+    height: 75%;
+
+    height: 52%;
+    width: 70%;
+
+    border: solid var(--clr-lavender);
+    /* border-color: var(--clr-lavender); */
+
 }
 
-.ringCircle::after {
+/* .ringCircle::after {
     content: '';
     position: absolute;
     background-color: white;
@@ -194,4 +248,16 @@
     width: 80%;
     top: 10%;
     left: 10%;
+} */
+
+@keyframes music-load {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

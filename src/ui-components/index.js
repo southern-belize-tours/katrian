@@ -6,6 +6,8 @@
 
 export { default as FaqCreateForm } from "./FaqCreateForm";
 export { default as FaqUpdateForm } from "./FaqUpdateForm";
+export { default as GalleryCreateForm } from "./GalleryCreateForm";
+export { default as GalleryUpdateForm } from "./GalleryUpdateForm";
 export { default as TuneCreateForm } from "./TuneCreateForm";
 export { default as TuneUpdateForm } from "./TuneUpdateForm";
 export { default as studioTheme } from "./studioTheme";

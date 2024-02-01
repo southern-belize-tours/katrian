@@ -10,7 +10,7 @@ function NavList (props) {
         <div className="flexed col centered justified">
             <div className="flexed navList">
                 {props.links.map(link => 
-                    pathname !== link.route &&
+                    pathname !== link.route || link.route === "/Logistics" && 
                     <a href={link.route}
                         className="flexed col centered justified navListItem">
                         <div>{link.component}</div>

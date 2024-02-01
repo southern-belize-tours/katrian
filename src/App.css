@@ -6,6 +6,35 @@
   --clr-secondary: #a7b69d;
 }
 
+.MuiImageListItemBar-title {
+  font-size: .9rem !important;
+  font-weight: 60;
+}
+
+.logisticsText {
+  font-size: 2.5rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: ease-in-out 2s;
+  font-family: 'Great Vibes', cursive;
+  font-family: 'Dancing Script', cursive;
+  gap: 2rem !important;
+  max-width: 1024px;
+  margin: 0px;
+}
+
+.logisticsItem {
+  font-size: 1.8rem;
+}
+
+.logisticsText.fading {
+  opacity: 1;
+}
+
+.fill {
+  width: -webkit-fill-available;
+}
+
 .receptionImageContainer {
   display: flex;
   flex-direction: row;
@@ -74,6 +103,7 @@ a {
   flex-direction: row;
   align-items: center;
   max-width: -webkit-fill-available;
+  padding: 0 var(--default-padding);
 }
 
 .rightNavArrow, .leftNavArrow {
@@ -178,6 +208,16 @@ a {
   padding-bottom: var(--default-padding);
 }
 
+.padded-right {
+  padding: 0;
+  padding-right: var(--default-padding);
+}
+
+.padded-left {
+  padding: 0;
+  padding-left: var(--default-padding);
+}
+
 .padded-top-bottom {
   padding: var(--default-padding) 0;
 }
@@ -221,6 +261,27 @@ a {
 
 .App-link {
   color: #61dafb;
+}
+
+.loadingSpinner {
+  left: 35vw;
+  top: 5vw;
+  position: absolute;
+  height: 30vw;
+  width: 30vw;
+  border: solid 1rem var(--clr-lavender);
+  border-radius: 50%;
+  /* animation:  */
+  animation: 0.75s linear 0s infinite normal both running App-logo-spin;
+}
+
+.loadingSpinner::after {
+  position: absolute;
+  background: var(--clr-background);
+  height: 40vw;
+  width: 40vw;
+  bottom: -30vw;
+  content: '';
 }
 
 @keyframes App-logo-spin {

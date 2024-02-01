@@ -2,10 +2,10 @@ import { useContext, useState } from 'react';
 import './PlaylistForm.css';
 import { AuthContext } from './Contexts/AuthContext/AuthContext';
 import { Button, IconButton, TableCell, TableRow, TextField, Tooltip } from '@mui/material';
-import { Cancel, Delete, Edit, EditOff, Save } from '@mui/icons-material';
+import { Delete, Edit, EditOff, Save } from '@mui/icons-material';
 
 export default function PlaylistItem ({tune, updateCallback, deleteCallback}) {
-    const {user, login, logout} = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
     const [name, setName] = useState(tune.name ? tune.name : "");
     const [artist, setArtist] = useState(tune.artist ? tune.artist : "");
     const [isEditing, setIsEditing] = useState(false);
@@ -23,6 +23,7 @@ export default function PlaylistItem ({tune, updateCallback, deleteCallback}) {
                 label="Name"
                 multiline = {false}
                 value={name}
+                error = {error}
                 onChange = {(e) => {setName(e.target.value)}}
                 variant="outlined">
             </TextField>
@@ -33,6 +34,7 @@ export default function PlaylistItem ({tune, updateCallback, deleteCallback}) {
                 label="Artist"
                 multiline = {false}
                 value={artist}
+                error = {error}
                 onChange = {(e) => {setArtist(e.target.value)}}
                 variant="outlined">
             </TextField>

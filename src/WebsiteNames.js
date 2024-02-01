@@ -6,7 +6,7 @@ function WebsiteNames() {
       <div className="weddingBody">
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <img src={cake} alt="cake" className="cakeImg"/>
+          <img src={cake} alt="wedding cake" className="cakeImg"/>
           <div className="padded-sides">
               <p>
                 Please notify us at ianfeekes@gmail.com if you come up with fun website names we can use for a formal wedding site when the time comes.

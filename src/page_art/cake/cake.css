@@ -11,8 +11,9 @@
     overflow: visible;
 }
 
-.cakeContainer.small .firstRing, .cakeContainer.small .secondRing {
-    border-width: .2rem !important;
+.cakeContainer.small .cakeRings {
+    position: absolute;
+    margin-bottom: 100%;
 }
 
 .cakeContainer.small .firstRing {
@@ -44,14 +45,20 @@
     width: 100%;
     z-index: 3;
     position: relative;
-    transition: all .5s;
-    transition-delay: 1s;
+    /* transition: all .5s; */
+    /* transition-delay: 1s; */
+    /* transform: translateY(0px);r */
 }
 
 .cakeRings.compressed {
     margin-bottom: -20%;
+    /* transform: translateY(0px); */
+    /* transform: translateY(50px); */
     transition: all .5s;
-    transition-delay: 1s;
+    /* transition-delay: 3s; */
+    transition-delay: 5s;
+    height: 0%;
+    width: 0%;
 }
 
 .firstRing, .secondRing {
@@ -62,14 +69,19 @@
     transition-delay: 1s;
 }
 
-.firstRing::after, .secondRing::after {
-    /* content: ''; */
+.cakeRings.compressed > .firstRing, .cakeRings.compressed > .secondRing {
+    /* transition: all .5s;
+    transition-delay: 2s; */
+}
+
+/* .firstRing::after, .secondRing::after {
+    content: '';
     position: absolute;
     border-radius: 50%;
     border: solid 0.4rem white;
     transition: all .5s;
     transition-delay: 1s;
-}
+} */
 
 .firstRing {
     height: 36%;
@@ -94,15 +106,16 @@
 
 .firstRing.compressed, .secondRing.compressed {
     border: solid .6rem #AC9EED;
+    border-width: 0px !important;
     top: 17%;
 }
 
-.firstRing.compressed::after, .secondRing.compressed::after {
+/* .firstRing.compressed::after, .secondRing.compressed::after {
     opacity: 0;
     z-index: -1;
     transition: all .5s;
     transition-delay: 1s;
-}
+} */
 
 .secondRing {
     height: 53%;
@@ -111,20 +124,21 @@
     left: 45%;
 }
 
-.secondRing::after {
+/* .secondRing::after {
     height: 70%;
     width: 70%;
     top: 0%;
     left: 0%;
-}
+} */
 
 .secondRing.compressed {
     left: 41%;
+    width: 14%;
     height: 35%;
 }
 
 .firstRing.compressed, .secondRing.compressed {
-    transition-delay: 2s;
+    /* transition-delay: 2s; */
 }
 
 .firstLayer {

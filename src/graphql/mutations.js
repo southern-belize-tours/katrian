@@ -97,3 +97,59 @@ export const deleteTune = /* GraphQL */ `
     }
   }
 `;
+
+export const createGallery = `
+mutation CreateGallery(
+  $input: CreateGalleryInput!
+  $condition: ModelGalleryConditionInput
+) {
+  createGallery(input: $input, condition: $condition) {
+    id
+    name
+    long_description
+    alts
+    directory
+    admin_upload_only
+    createdAt
+    updatedAt
+    __typename
+  }
+}`;
+
+export const updateGallery = `
+  mutation UpdateGallery(
+    $input: UpdateGalleryInput!
+    $condition: ModelGalleryConditionInput
+  ) {
+    updateGallery(input: $input, condition: $condition) {
+      id
+      name
+      long_description
+      alts
+      directory
+      admin_upload_only
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`
+
+export const deleteGallery = `
+  mutation DeleteGallery(
+    $input: DeleteGalleryInput!
+    $condition: ModelGalleryConditionInput
+  ) {
+    deleteGallery(input: $input, condition: $condition) {
+      id
+      name
+      long_description
+      alts
+      directory
+      admin_upload_only
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;

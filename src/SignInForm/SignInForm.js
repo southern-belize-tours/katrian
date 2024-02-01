@@ -1,9 +1,7 @@
 import { useState, useContext } from "react";
-// import { AuthContext } from './AuthContext'; // Assuming you have an AuthContext
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { signIn, signUp, signOut  } from 'aws-amplify/auth';
-import { Button, Input, TextField } from "@mui/material";
-import { Label } from "@mui/icons-material";
+import { Button, TextField } from "@mui/material";
 
 export function SignInForm (props) {
     // const { setUser } = useContext(AuthContext); // Using Context API

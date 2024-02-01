@@ -46,12 +46,6 @@ function NavListItem ({link}) {
             </div>
         </a>
         {(link.items && link.items.length > 0) &&
-
-// <div className = "nav-submenu">
-//     {link.items.map(item =>
-//         <div className = "nav-submenu-item">{item.text}</div>    
-//     )}
-// </div>
                         <Menu 
                         // id={`nav-submenu-${link.route}`}
                         id={`nav-submenu-${link.route}`}

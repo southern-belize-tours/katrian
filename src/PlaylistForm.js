@@ -11,10 +11,8 @@ import { AuthContext } from "./Contexts/AuthContext/AuthContext";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// toast.configure();
-
 export default function PlaylistForm () {
-    const {user, login, logout} = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
     const TuneService = useTuneService();
 
     const [name, setName] = useState("");
@@ -31,7 +29,6 @@ export default function PlaylistForm () {
                 const tunesData = await TuneService.fetchTunes();
                 if (isSubscribed) {
                     setTunes(tunesData);
-                    toast.success("Retrieved Songs Successfully.", {autoClose: 2000});
                 }
             } catch (e) {
                 console.log("Error retrieving tunes", e);
@@ -93,8 +90,9 @@ export default function PlaylistForm () {
         }
         setLoading(true);
         try {
-            const newTunes = await TuneService.createTune({"name": name, "artist": artist});
-            setTunes(newTunes);
+            await TuneService.createTune({"name": name, "artist": artist});
+            const allTunes = await TuneService.fetchTunes();
+            setTunes(allTunes);
             setName("");
             setArtist("");
             setError("");
@@ -110,73 +108,75 @@ export default function PlaylistForm () {
     return (
     <div className="weddingBody">
         <ToastContainer></ToastContainer>
-        <h1>Guest Music Recommendations</h1>
+        <h1>Playlist Recommendations</h1>
         <Music size = {400}
             loading={loading}>
         </Music>
-        <p>
-            We hope to play music that will make it difficult to sit down.
-            Please feel free to request collaborator access on our <a target="_blank" href="https://open.spotify.com/playlist/05qaofCfEVNM02kdE81AEy?si=447cd6af3d7b47f2">Spotify Playlist</a>.
-        </p>
-        {!loading &&
-        <div className="playlistFormContainer">
-            <div className="playlistAddForm">
-                <TextField multiline = {false}
-                    className="playlistFormField"
-                    placeholder="Gimme! Gimme! Gimme! (A Man After Midnight)"
-                    value = {name}
-                    label = "Song Name"
-                    error = {error}
-                    required = {true}
-                    onChange = {(e) => {setName(e.target.value)}}>
-                </TextField>
-                <TextField multiline = {false}
-                    className="playlistFormField"
-                    placeholder="ABBA"
-                    value = {artist}
-                    label = "Artist"
-                    error = {error}
-                    required = {true}
-                    onChange = {(e) => {setArtist(e.target.value)}}>
-                </TextField>
-                <Button variant="outlined"
-                    onClick = {() => {createTune();}}>
-                    <Add></Add> Add Tune
-                </Button>
+        <div className="padded-sides">
+            <p>
+                We hope to play music that will make it difficult to sit down.
+                Please feel free to request collaborator access on our <a target="_blank" rel="noreferrer" href="https://open.spotify.com/playlist/05qaofCfEVNM02kdE81AEy?si=447cd6af3d7b47f2">Spotify Playlist</a>.
+            </p>
+            {!loading &&
+            <div className="playlistFormContainer">
+                <div className="playlistAddForm">
+                    <TextField multiline = {false}
+                        className="playlistFormField"
+                        placeholder="Gimme! Gimme! Gimme! (A Man After Midnight)"
+                        value = {name}
+                        label = "Song Name"
+                        error = {error}
+                        required = {true}
+                        onChange = {(e) => {setName(e.target.value)}}>
+                    </TextField>
+                    <TextField multiline = {false}
+                        className="playlistFormField"
+                        placeholder="ABBA"
+                        value = {artist}
+                        label = "Artist"
+                        error = {error}
+                        required = {true}
+                        onChange = {(e) => {setArtist(e.target.value)}}>
+                    </TextField>
+                    <Button variant="outlined"
+                        onClick = {() => {createTune();}}>
+                        <Add></Add> Add Tune
+                    </Button>
+                </div>
+                <div className = "playlistItems">
+                <TableContainer component={Paper}>
+                    <Table aria-label="playlist table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Title</TableCell>
+                                <TableCell>Artist</TableCell>
+                                {user && user.isSignedIn &&
+                                    <TableCell align="right">Update</TableCell>
+                                }
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {tunes.map(tune =>
+                                <PlaylistItem tune = {tune}
+                                    key={`playlist-item-${tune.id}`}
+                                    updateCallback={updateCallback}
+                                    deleteCallback={deleteCallback}>
+                                </PlaylistItem>
+                            )}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                {/* {tunes.map(tune =>
+                    <PlaylistItem tune = {tune}
+                        key={`playlist-item-${tune.id}`}
+                        updateCallback={updateCallback}
+                        deleteCallback={deleteCallback}>
+                    </PlaylistItem>
+                )} */}
+                </div>
             </div>
-            <div className = "playlistItems">
-            <TableContainer component={Paper}>
-                <Table aria-label="playlist table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Artist</TableCell>
-                            {user && user.isSignedIn &&
-                                <TableCell align="right">Update</TableCell>
-                            }
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tunes.map(tune =>
-                            <PlaylistItem tune = {tune}
-                                key={`playlist-item-${tune.id}`}
-                                updateCallback={updateCallback}
-                                deleteCallback={deleteCallback}>
-                            </PlaylistItem>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            {/* {tunes.map(tune =>
-                <PlaylistItem tune = {tune}
-                    key={`playlist-item-${tune.id}`}
-                    updateCallback={updateCallback}
-                    deleteCallback={deleteCallback}>
-                </PlaylistItem>
-            )} */}
-            </div>
+            }
         </div>
-        }
     </div>
     )
 }
