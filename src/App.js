@@ -32,7 +32,7 @@ import CuvierClubHistory from './Components/CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
 import Cuvier from './page_art/cuvier/Cuvier.js';
 import { TuneServiceProvider } from './Services/TuneService/TuneServiceContext.js';
-import { AccessTimeFilled, Diversity1, EggAlt, Hotel, Liquor, MusicNote, Nightlife, Restaurant } from '@mui/icons-material';
+import { AccessTimeFilled, Collections, Diversity1, EggAlt, Hotel, Liquor, MusicNote, Nightlife, Restaurant } from '@mui/icons-material';
 import Rehearsal from './Rehearsal.js';
 import Ceremony from './Ceremony.js';
 import Brunch from './Brunch.js';
@@ -51,6 +51,10 @@ const timeAndPlaceItems = [
   // {text: "Reception", route: "/Reception", component: <MusicNote color="primary" fontSize="small"></MusicNote>},
   {text: "Saturday Brunch", route: "/Brunch", component: <EggAlt color="primary" fontSize="small"></EggAlt>},
   {text: "Hotels and Transport", route: "/Hotels-and-Transport", component: <Hotel color="primary" fontSize="small"></Hotel>}
+];
+
+const galleryItems = [
+  {text: "All Galleries", route: "/Gallery", component:<Collections color="primary" fontSize="small"></Collections>},
 ];
 
 const journeyDescription = [
@@ -79,13 +83,6 @@ const eurotripDescription = [
   "",
 ];
 
-const galleries = [
-  {text: "The Journey", route: "/Gallery/journey", description: journeyDescription},
-  {text: "The Bamboozling", route: "/Gallery/bamboozling", description: bamboozlingDescription},
-  {text: "The Proposal", route: "/Gallery/proposal", description: proposalDescription},
-  {text: "The Eurotrip", route: "/Gallery/eurotrip", description: eurotripDescription}
-];
-
 function debounce(fn, ms) {
   let timer;
   return () => {
@@ -108,7 +105,7 @@ function App() {
     {text: "Home", route: "/", component: <Cake size={linkSize}></Cake>, items: []},
     {text: "Logistics", route: "/Logistics", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
     {text: "FAQ", route: "/FAQ", component: <Question size={linkSize}></Question>, items: []},
-    {text: "Galleries", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: []},
+    {text: "Galleries", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: galleryItems},
     {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
     {text: "Playlist", route: "/Playlist", component: <Music size={linkSize}></Music>, items: []},
     {text: "Registry", route: "/Registry", component: <Gift size={linkSize}></Gift>, items: []},
@@ -136,7 +133,7 @@ function App() {
           setGalleries(galleriesData);
 
           let galleryLinks = navLinks[3];
-          galleryLinks.items = [];
+          // galleryLinks.items = ;
           for (let i = 0; i < galleriesData.length; ++i) {
             const galleryLink = {text: galleriesData[i].name,
               route: "/Gallery/" + galleriesData[i].directory,
@@ -158,8 +155,8 @@ function App() {
       }
     }
 
-    console.log("Galleries: ", galleries)
-    console.log("Gallery service", GalleryService);
+    // console.log("Galleries: ", galleries)
+    // console.log("Gallery service", GalleryService);
     if (galleries.length === 0 && GalleryService.galleries.length ===0) {
       getGalleries();
     } else if (galleries.length === 0 && GalleryService.galleries.length !== 0) {

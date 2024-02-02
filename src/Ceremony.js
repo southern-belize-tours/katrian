@@ -3,7 +3,7 @@ import cuvierClub3 from './images/Cuvier/CuvierClub3.jpg';
 import cuvierClub4 from './images/Cuvier/CuvierClub4.avif';
 import cuvierClubOutside from './images/Cuvier/cuvier_club_outside.webp';
 
-import { AccessTime, CalendarMonth, Deck, Dining, DirectionsWalk, Diversity1, EditNote, Liquor, LocalParking, LocationOn, MenuBook, MusicNote, Nightlife, Park, QuestionMark, WbShade } from "@mui/icons-material";
+import { AccessTime, CalendarMonth, Deck, Dining, DirectionsWalk, Diversity1, EditNote, Liquor, LocalParking, LocationOn, MenuBook, MusicNote, Nightlife, Park, QuestionMark, Thermostat, WbShade, WbSunny } from "@mui/icons-material";
 
 export default function Ceremony (props) {
     const [fade, setFade] = useState(true);
@@ -54,10 +54,16 @@ export default function Ceremony (props) {
                         <LocalParking color="primary"></LocalParking> La Jolla street parking is first-come-first-served and will be competitive. We recommend walking from hotel and parking early, if possible.
                     </div>
                     <div className="padded-left logisticsItem">
+                        <WbSunny color="primary"></WbSunny> The ceremony will be fully outdoors on a grassy coastal cliff.
+                    </div>
+                    <div className="padded-left logisticsItem">
                         <Deck color="primary"></Deck> The cocktail hour (open bar) will be in a semi-covered outdoor area.
                     </div>
                     <div className='padded-left logisticsItem'>
                         <WbShade color="primary"></WbShade> The reception will be indoors.
+                    </div>
+                    <div className="padded-left logisticsItem">
+                        <Thermostat color="primary"></Thermostat> The average La Jolla weather has daily high temperatures around 76 F. Weather rarely exceeds 84 F and rarely dips below 68 F at this time of year. Augusts is quite dry and averages 3 days with rain each year.
                     </div>
                     <div className="padded-left logisticsItem">
                         <QuestionMark color="primary"></QuestionMark> Looking for things to do during the day? Look at our <a href="/FAQ#San-Diego-Activities" className="secondary">San Diego Activities</a> section of the FAQ page.

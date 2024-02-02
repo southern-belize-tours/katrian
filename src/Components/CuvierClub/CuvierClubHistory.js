@@ -1,5 +1,4 @@
-// import cuvierClub1 from '../../images/Cuvier/cuvierClub1.webp';
-// import cuvierClub2 from '../../images/Cuvier/CuvierClub2.webp';
+import { useEffect, useState } from 'react';
 import cuvierClub3 from '../../images/Cuvier/CuvierClub3.jpg';
 import cuvierClub4 from '../../images/Cuvier/CuvierClub4.avif'
 import cuvierClub5 from '../../images/Cuvier/CuvierClub6.jpeg';
@@ -36,11 +35,29 @@ const cuvierText = [
 ];
 
 export default function CuvierClubHistory (props) {
+    const [fade, setFade] = useState(true);
+    const [initialized, setInitialized] = useState(false);
+
+    /**
+     * Starts a fade animation to make logo disappear and the text fade in when initialized
+     */
+    useEffect(() => {
+        setInitialized(true);
+
+        setTimeout(() => {
+            setFade(false);
+        }, 500);
+    }, []);
+
     return (
     <div className="weddingBody">
-        <h1>Cuvier Club History</h1>
-        <Cuvier size = {props.size}></Cuvier>
-        <div className="cuvierClubHistory">
+        {fade &&
+            <Cuvier size = {props.size}
+                opaque={initialized}>
+            </Cuvier>
+        }
+        <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Cuvier Club History</h1>
+        <div className={`logisticsText ${fade ? "" : "fading"}`}>
             {cuvierText.map(block =>
                 <p>{block}</p>    
             )}

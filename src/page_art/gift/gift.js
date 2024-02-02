@@ -26,7 +26,7 @@ function Gift (props) {
 
     return (
         <div>
-            <div className={`giftContainer ${props.size <= 100 ? "small" : ""}`}
+            <div className={`giftContainer ${props.size <= 100 ? "small" : ""} ${props.opaque ? "opaque" : ""}`}
                 style={{height: `${props.size}px`, width: `${props.size}px`}}>
                 <div className="giftTop">
                     <div className="leftBow" style={{borderWidth: `${props.size/20}px`}}></div>
