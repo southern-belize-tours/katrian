@@ -100,22 +100,22 @@ export default function GalleryPage (props) {
         { ((props.gallery.admin_upload_only === true && user && user.isSignedIn) || (props.gallery.admin_upload_only === false) && (loading === false)) &&
             <AddPhotoDialog gallery={props.gallery}></AddPhotoDialog>
         }
-        <ImageList variant="masonry" cols={3} gap={8}>
-        {photos.map(photo =>
-            <ImageListItem key={photo.key}>
-                <img srcSet={`${photo.url}`}
-                    src={`${photo.url}`}
-                    alt={props.gallery.alts.find(alt=>alt.split('-')[0] === photo.key.split('-')[1]).split('-')[1]}
-                    loading="lazy"/>
-                <ImageListItemBar 
-                    // position="below"
-                    title={props.gallery.alts.find(alt=>alt.split('-')[0] === photo.key.split('-')[1]).split('-')[1]}>
-                </ImageListItemBar>
-            </ImageListItem>
-        )
+            <ImageList variant="masonry" cols={3} gap={8}>
+            {photos.map(photo =>
+                <ImageListItem key={photo.key}>
+                    <img srcSet={`${photo.url}`}
+                        src={`${photo.url}`}
+                        alt={props.gallery.alts.find(alt=>alt.split('-')[0] === photo.key.split('-')[1]).split('-')[1]}
+                        loading="lazy"/>
+                    <ImageListItemBar 
+                        // position="below"
+                        title={props.gallery.alts.find(alt=>alt.split('-')[0] === photo.key.split('-')[1]).split('-')[1]}>
+                    </ImageListItemBar>
+                </ImageListItem>
+            )
 
-        }
-        </ImageList>
+            }
+            </ImageList>
         {/* {photos.map(photo =>
         <>
             <img src={photo.url}></img>

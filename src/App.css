@@ -6,6 +6,13 @@
   --clr-secondary: #a7b69d;
 }
 
+.registryItems {
+  display: flex;
+  flex-direction: row;
+  gap: var(--default-padding);
+  flex-wrap: wrap;
+}
+
 .MuiImageListItemBar-title {
   font-size: .9rem !important;
   font-weight: 60;

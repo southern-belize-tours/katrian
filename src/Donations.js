@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import Gift from './page_art/gift/gift';
+import RegistryItem from './Components/Registry/RegistryItem';
+
+import sealImage from './images/Gallery/seals.png';
 
 function TimeAndDate(props) {
   const [fade, setFade] = useState(true);
@@ -21,11 +24,12 @@ function TimeAndDate(props) {
           doTransition={true}></Gift>
       }
       <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Registry</h1>
-      <div className={`logisticsText ${fade ? "" : "fading"}`}>
-          <div>This is a dummy registry item 1</div>
-          <div>This is a dummy registry item 2</div>
-          <div>This is a dummy registry item 3</div>
-          <div>This is a dummy registry item 4</div>
+      <div className={`logisticsText ${fade ? "" : "fading"} registryItems`}>
+          <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
+          <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
+          <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
+          <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
+          <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
           <p>
             If you would like to fortify our honeymoon quality, we gladly and most-graciously accept donations on our <a target="_blank" rel="noreferrer" href="https://www.paypal.com/donate/?hosted_button_id=V3GYH73CW9HN6">paypal link</a>.
           </p>

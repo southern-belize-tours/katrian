@@ -46,6 +46,9 @@ code {
 .sanDiegoTitle {
   font-weight: 600; 
   font-size: 3rem;
+  display: flex;
+  align-items: center;
+  gap: var(--default-gap);
 }
 
 @media(max-width: 768px) {

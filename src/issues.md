@@ -1,7 +1,6 @@
 # Issues
 
 ## Current
-* Remove the dropdown menu from logistics and make items appear on the page, make clicking the icon take you to general logistics
 
 ## Features
 scripps - put the location and say that the rooms are beautiful. You get 10% off by booking directly on their website (rather than their booking). There are no blocks allowed. "Luxury"
@@ -9,16 +8,19 @@ scripps - put the location and say that the rooms are beautiful. You get 10% off
 - note on the top "recommend to book early as august is a very busy month in la jolla" put it in red
 
 ## Open
-* Implement gallery
+* Add description to wedding parties, add katrina's cropped photos once I have connectivity
+* "Check out the seals" add link
 * consider making navList items that are being overflowed just vanish. Low priority since it may be slighly challenging to implement for a minor cosmetic improvement
 * fix all warnings
-* 
-* Make the bachelor party and bachelorette party into galleries
-* Add "Additional Details to note" item in logistics (parking, traffic, etc.) which takes you to FAQ
-* Fix cake animation
-* make the registry dummy items look a little nicer
 
 ## Resolved
+* make the registry dummy items look a little nicer **fix** created new ```registryitem``` component that looks like a nice image card and does absolutely nothing.
+* Implement gallery **fix** very complex - added a new data model and storage item on backend. Added new service ```galleryservice``` that implements both. Addded plenty of UI components taht use the service.
+* Remove the dropdown menu from logistics and make items appear on the page, make clicking the icon take you to general logistics **fix** this was determined to be unnecessary
+* Fix cake animation **fix** lots of messing around in cake.css. idr tbh
+* Add "Additional Details to note" item in logistics (parking, traffic, etc.) which takes you to FAQ **fix** trivial
+* San Diego Activities add emojis **fix** trivial
+* tooltips for transportation and hotel options should be unique per accordion **fix** simple change to the titles, manual
 * Time and place summary: make a clock animation, have it ghost away, and make the wording fade in: "-august 21st rehearsal (see details) - august 22nd Cuvier wedding day (see details), -august 23rd Brunch & Beach Day (see details), .etc **fix** made changes to `clock.js` component to enable animation and added some effecs to the ```summary.js``` component.
 * combine ceremony and reception items **fix** pasted jsx code from reception component into ceremony, removed reception from router
 * Add "Hotels" Item to Logistics **fix** created new component that doesn't really have anything at the moment

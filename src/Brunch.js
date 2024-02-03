@@ -28,7 +28,7 @@ export default function Brunch (props) {
                         <LocationOn color="primary"></LocationOn> <a href="https://www.covehouselajolla.com/" target="_blank" rel="noreferrer" className="secondary">La Jolla Covehouse</a>, 8030 Girard Ave, La Jolla, CA 92037
                     </div>
                     <div className="padded-left logisticsItem">
-                        <DirectionsWalk color="primary"></DirectionsWalk> This is an 8 minute walk from the venue. The best walk is along the La Jolla coast where you can check out the seals with their pups at Seal Rock.
+                        <DirectionsWalk color="primary"></DirectionsWalk> This is an 8 minute walk from the venue. The best walk is along the La Jolla coast where you can see the seals with their pups at Seal Rock.
                     </div>
                     <div className="padded-left logisticsItem">
                         <Dining color="primary"></Dining> There will be a continental breakfast with assorted pastries, yogurt parfaits, seasonal fruit, scrambled eggs, breakfast potatoes, bacon, and a coffee and tea station

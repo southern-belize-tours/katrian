@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { Cancel, Close, ContactSupport, ExpandMore } from "@mui/icons-material";
+import { BeachAccess, Cancel, Castle, Close, ContactSupport, DirectionsBike, EggAlt, EmojiNature, ExpandMore, GolfCourse, Kayaking, LiquorOutlined, LocalDining, Pets, ScubaDiving, SportsBar, SportsScore, Waves, WineBar, Yard } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Button, TextField, Tooltip } from "@mui/material";
 
-import sealImage from '../images/Gallery/seals.png'
+// import sealImage from '../images/Gallery/seals.png'
 
 import './Faq.css';
 import { FaqItem } from "./FaqItem";
@@ -170,66 +170,66 @@ const FaqForm = (props) => {
           <AccordionDetails>
             <div className="flexed col">
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">See the Seals</div> La Jolla Cove is home to seals that migrate with their pups during the summer and will be there during the wedding weekend.
+                <div className="sanDiegoTitle"><BeachAccess fontSize="2rem" color="primary"></BeachAccess> See the Seals</div> La Jolla Cove is home to seals that migrate with their pups during the summer and will be there during the wedding weekend.
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Swim with the leopard sharks</div>
+                <div className="sanDiegoTitle"><ScubaDiving fontSize="2rem" color="primary"></ScubaDiving> Swim with the leopard sharks</div>
                 The south side of La Jolla Shores beach has tons of leopard sharks that migrate there for mating during this time of year. They are perfectly safe to swim with.
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Del Mar Horse Races</div>
+                <div className="sanDiegoTitle"><SportsScore fontSize="2rem" color="primary"></SportsScore>Del Mar Horse Races</div>
                 The Del Mar Horse Races are always a unique and fantastic experience. August 2025, Del Mar will be hosting the world championships for the "Breeder's Cup," which is a seriosly big deal. The races will no doubt be very busy, but will likely be an unforgettable time. During the week after opening on a typical summer, traffic getting into Del Mar can take up to 30 minutes of driving. So one can imagine that it would be best to get into town quite early if you plan on going to the races on Saturday.
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Kayak or Paddleboard</div>
+                <div className="sanDiegoTitle"><Kayaking fontSize="2rem" color="primary"></Kayaking> Kayak or Paddleboard</div>
                 La Jolla has plenty of affordable rentals for kayaking or paddleboarding where you can adventure and see the marine life that visits during the late summer.
               </div>
               <div className="padded-left logisticsItem flexed col">
-              <div className="sanDiegoTitle">Brunch</div>
+              <div className="sanDiegoTitle"><EggAlt fontSize="2rem" color="primary"></EggAlt> Brunch</div>
                 La Jolla Cove has plenty of great brunch spots, aside from our Saturday Brunch location. "Sugar and Scribe" is one of our favorite brunch spots.
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Mexican Food</div>
+                <div className="sanDiegoTitle"><LocalDining fontSize="2rem" color="primary"></LocalDining> Mexican Food</div>
                 San Diego and La Jolla have some of the greatest Mexican food north of the border. La Jolla Cove has our favorite place in town, "The Taco Stand." Downtown "Tacos El Gordo" and "TJ Tacos" have the Tijuana-style meats that are unbeatable.
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Party</div>
+                <div className="sanDiegoTitle"><LiquorOutlined fontSize="2rem" color="primary"></LiquorOutlined> Party</div>
                 San Diego has plenty of beach towns, each with their own unique party scenes. La Jolla and Del Mar are best for enjoying a fancy cocktail while watching the sunset. Pacific Beach has lots of great places, especially for younger crowds - "PB Waterbar" and "Backyard" are fun places to grab a drink and dance. Downtown Gaslamp Quarter is ideal for a bar crawl: our favorite places are "The Tipsy Crow" and "Moonshine Flats".
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Breweries</div>
+                <div className="sanDiegoTitle"><SportsBar fontSize="2rem" color="primary"></SportsBar> Breweries</div>
                 There are lots of great breweries in San Diego. Miramar is closest to La Jolla and is home to some of our favorite spots like "Mikeller,", and "Juneshine." Downtown Gaslamp District has some good ones too, like "Bolt Brewing."
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Wine Tasting</div>
+                <div className="sanDiegoTitle"> <WineBar fontSize="2rem" color="primary"></WineBar> Wine Tasting</div>
                 If you have a half-day or full-day to spend in town, there are some great wine tasting areas less than an hour away. Temecula, Julian, and Ramona all offer some great wine-tasting experiences. Julian will also have apple picking and pies to try if you can make it out there!
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Bike/walk Mission Bay</div>
+                <div className="sanDiegoTitle"><DirectionsBike fontSize="2rem" color="primary"></DirectionsBike> Bike/walk Mission Bay</div>
                 Between Pacific Beach and Ocean Beach is a large picturesque beach strip that is a wonderful afternoon walk. There will always be something interesting going on, with plenty of places to explore, eat, or drink.
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Golf</div>
+                <div className="sanDiegoTitle"><GolfCourse fontSize="2rem" color="primary"></GolfCourse> Golf</div>
                 Torrey Pines is world-reknowned and very close to La Jolla Cove. For a more affordable/less well-planned teeing, Miramar is also a nice place to golf. A farther location that balances quality with affordability is the Rancho Bernardo Country Club. 
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">See the Coast</div>
+                <div className="sanDiegoTitle"><Waves fontSize="2rem" color="primary"></Waves> See the Coast</div>
                 San Diego is home to some of the most picturesque coastline in southern California. For some awe-inspiring beauty, it is always worth a visit to Sunset Cliffs, or to the top of Black's Beach.
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Visit Balboa Park</div>
+                <div className="sanDiegoTitle"><Yard fontSize="2rem" color="primary"></Yard> Visit Balboa Park</div>
                 Balboa Park is a massive largest public park and it is well worth spending at least a half-day walking through the park itself. Inside the park is a theatre, exotic garden, japanese garden, and museum - all of which are well-worth checking out!
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">See the Zoos</div>
+                <div className="sanDiegoTitle"><EmojiNature fontSize="2rem" color="primary"></EmojiNature> See the Zoos</div>
                  If you have an extra day in San Diego, the San Diego Zoo is one of the largest Zoos around and is very worth visiting. A little farther away is the San Diego safari park, where you can see huge enclosures where all the savannah animals roam freely. It is one of the only zoos where you can see a platypus, and walk with the wallabies.  
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Dog Beaches</div>
+                <div className="sanDiegoTitle"><Pets fontSize="2rem" color="primary"></Pets> Dog Beaches</div>
                 San Diego is ranked the most dog-friendly city in the US and is home to some great dog beaches. One of our favorite sunday morning activities is to grab a fantastic coffee and sandwich at Achilles Coffee and walk to the Del Mar Dog Beach.
               </div>
               <div className="padded-left logisticsItem flexed col">
-                <div className="sanDiegoTitle">Coronado Island</div>
+                <div className="sanDiegoTitle"><Castle fontSize="2rem" color="primary"></Castle> Coronado Island</div>
                 This is one of the iconic sites of California and should not be skipped if you have the time. The Hotel Coronado has beautifull authentic architecture, and the beaches along the island are impeccable and perfect. The island is stunning and completely unique.
               </div>
             </div>
@@ -305,7 +305,7 @@ const FaqForm = (props) => {
         </div>
       }
       </Tooltip>
-      
+
     </div>
   );
 };

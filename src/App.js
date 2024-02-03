@@ -32,13 +32,14 @@ import CuvierClubHistory from './Components/CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
 import Cuvier from './page_art/cuvier/Cuvier.js';
 import { TuneServiceProvider } from './Services/TuneService/TuneServiceContext.js';
-import { AccessTimeFilled, Collections, Diversity1, EggAlt, Hotel, Liquor, MusicNote, Nightlife, Restaurant } from '@mui/icons-material';
+import { AccessTimeFilled, BrunchDining, Collections, Diversity1, EggAlt, Hotel, Liquor, MusicNote, Nightlife, Restaurant } from '@mui/icons-material';
 import Rehearsal from './Rehearsal.js';
 import Ceremony from './Ceremony.js';
 import Brunch from './Brunch.js';
 import { useGalleryService } from './Services/GalleryService/GalleryServiceContext.js';
 import HotelAndTransport from './Components/Hotel_and_Transport/HotelAndTransport.js';
 import GalleryPage from './Components/Gallery/GalleryPage.js';
+import WeddingParties from './Components/Gallery/WeddingParties.js';
 
 Amplify.configure(awsconfig);
 
@@ -55,6 +56,7 @@ const timeAndPlaceItems = [
 
 const galleryItems = [
   {text: "All Galleries", route: "/Gallery", component:<Collections color="primary" fontSize="small"></Collections>},
+  {text: "Wedding Party", route: "/Gallery/WeddingParty", component: <BrunchDining color="primary" fontSize="small"></BrunchDining>},
 ];
 
 const journeyDescription = [
@@ -204,15 +206,13 @@ function App() {
           <Route path="/Registry" exact component={() => <Donations size = {linkSize * 4}></Donations>} />
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries} size = {linkSize * 4}></Gallery>}></Route>
+          <Route path="/Gallery/WeddingParty" exact component={() => <WeddingParties size = {linkSize * 4}></WeddingParties>}></Route>
           {galleries.map(gallery => 
             <Route path={`/Gallery/${gallery.directory}`} exact component={() => 
               <GalleryPage gallery = {gallery}></GalleryPage>}>
             </Route>
           )}
-          {/* <Route path = "/Pumpkin" exact component={() => <Pumpkin></Pumpkin>}></Route> */}
           <Route path = "/FAQ" exact component = {() => <FaqForm size = {linkSize * 4}></FaqForm>}></Route>
-          {/* <Route path = "/test" exact component = {() => <FaqCreateForm></FaqCreateForm>}></Route> */}
-          {/* <Route path="/contact" component={Contact} /> */}
           <Route path = "/Sandbox" exact component = {() => <Sandbox></Sandbox>}></Route>
           <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>
         </Switch>
