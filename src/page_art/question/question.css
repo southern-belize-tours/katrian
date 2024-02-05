@@ -5,6 +5,11 @@
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
+    transition: all .5s;
+}
+
+.questionContainer.opaque {
+    opacity: 0;
 }
 
 .bigCircle {

@@ -29,7 +29,7 @@ export default function HotelAndTransport (props) {
                             Late august will be a very busy month and rooms will book out early - we highly recommend booking in advance if at all possible
                         </div>
                     </div>
-                    <Tooltip title={`${innBySeaExpanded ? "" :  "View More Details"}`}>
+                    <Tooltip title={`${innBySeaExpanded ? "" :  "View Inn By the Sea Details"}`}>
                     <Accordion expanded={innBySeaExpanded}>
                         <AccordionSummary onClick = {() => {setInnBySeaExpanded(!innBySeaExpanded)}}
                             expandIcon={innBySeaExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
@@ -82,7 +82,7 @@ export default function HotelAndTransport (props) {
                         </AccordionDetails>
                     </Accordion>
                     </Tooltip>
-                    <Tooltip title={`${scrippsExpanded ? "" :  "View More Details"}`}>
+                    <Tooltip title={`${scrippsExpanded ? "" :  "View Scripps Inn Details"}`}>
                     <Accordion expanded={scrippsExpanded}>
                         <AccordionSummary onClick = {() => {setScrippsExpanded(!scrippsExpanded)}}
                             expandIcon={scrippsExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
@@ -117,7 +117,7 @@ export default function HotelAndTransport (props) {
                         </AccordionDetails>
                     </Accordion>
                     </Tooltip>
-                    <Tooltip title={`${hotelsExpanded ? "" : "View More Details"}`}>
+                    <Tooltip title={`${hotelsExpanded ? "" : "View List of Other Proximate Hotels"}`}>
                         <Accordion expanded={hotelsExpanded}>
                             <AccordionSummary onClick = {() => {setHotelsExpanded(!hotelsExpanded)}}
                                 expandIcon = {hotelsExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
@@ -190,7 +190,7 @@ export default function HotelAndTransport (props) {
                             </AccordionDetails>
                         </Accordion>
                     </Tooltip>
-                    <Tooltip title={`${transportExpanded ? "" : "View More Details"}`}>
+                    <Tooltip title={`${transportExpanded ? "" : "View Full List of Transportation Options"}`}>
                         <Accordion expanded={transportExpanded}>
                             <AccordionSummary onClick = {() => {setTransportExpanded(!transportExpanded)}}
                                 expandIcon = {transportExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>

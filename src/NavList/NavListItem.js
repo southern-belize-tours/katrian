@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './NavList.css';
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { LinkedCamera } from '@mui/icons-material';
 
 function NavListItem ({link}) {
     let history = useHistory();
@@ -25,6 +26,22 @@ function NavListItem ({link}) {
             aria-controls = {open ? `nav-submenu-${link.route}` : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
+            // onMouseEnter={(e) => {
+            //     // If there are items and the user is on something larger than most tablets
+            //     if (link.items &&
+            //         link.items.length > 0 &&
+            //         window.innerWidth > 768) {
+            //         handleClick(e);
+            //     }
+            // }}
+            // onMouseLeave={() => {
+            //     console.log("leaving");
+            // }}
+            // onMouseLeave={(e) => {
+            //     if (link.items && link.items.length > 0) {
+            //         handleClose();
+            //     }
+            // }}
             onClick={(e) => {
                 if (link.items && link.items.length > 0) {
                     handleClick(e);

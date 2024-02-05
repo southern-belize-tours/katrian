@@ -3,6 +3,12 @@
     overflow: hidden;
     display: flex;
     align-items: center;
+
+    transition: all .5s;
+}
+
+.cuvierContainer.opaque {
+    opacity: 0;
 }
 
 .cuvierCircle {

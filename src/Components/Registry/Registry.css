@@ -1,0 +1,39 @@
+.registryItemContainer {
+    height: 22rem;
+    flex: 0 0 31%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-family: fantasy;
+    color: var(--clr-background);
+    font-weight: 600;
+
+    min-width: 20rem;
+}
+
+.registryItemTitle {
+    position: absolute;
+    top: var(--default-gap);
+    left: var(--default-gap);
+    background: rgba(0, 0, 0, .3);
+}
+
+.registryItemDescription {
+    font-size: 1rem;
+    background: rgba(0, 0, 0, .3);
+    position: absolute;
+    top: calc(5 * var(--default-gap));
+    padding: 0 var(--default-gap);
+}
+
+.registryItemCost {
+    position: absolute;
+    background: rgba(0, 0, 0, .3);
+    width: 100%;
+    justify-content: center;
+    bottom: var(--default-gap);
+    text-align: center;
+}

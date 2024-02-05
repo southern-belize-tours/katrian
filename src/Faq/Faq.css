@@ -4,6 +4,8 @@
     gap: var(--default-gap);
     /* padding: 0 var(--default-padding); */
     /* width: -webkit-fill-available; */
+
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .faqItem {
@@ -35,6 +37,7 @@
     overflow: hidden;
     width: -webkit-fill-available;
     padding: 0 var(--default-padding);
+    max-width: 1024px;
 }
 
 .questionForm.closed {
@@ -69,6 +72,9 @@
     flex-direction: row;
     gap: var(--default-gap);
     flex-wrap: wrap;
+
+    font-weight: 500;
+    font-size: 1.5rem;
 }
 
 .faqAnswerText {
@@ -77,6 +83,8 @@
 
 .faqQuestion {
     font-weight: bold;
+
+    font-size: 1.8rem;
 }
 
 .faqLoader {

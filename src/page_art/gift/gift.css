@@ -6,6 +6,12 @@
     justify-content: center;
     flex-direction: column;
     /* border: solid 1px black; */
+
+    transition: all .5s;
+}
+
+.giftContainer.opaque {
+    opacity: 0;
 }
 
 .giftContainer.small .leftBow, .giftContainer.small .rightBow,

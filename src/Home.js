@@ -21,7 +21,7 @@ function Home(props) {
     return (
       <div className="weddingBody">
           <Cake doTransition={true} size={props.size ? props.size : 400}></Cake>
-          <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Ian and Katrina's Wedding</h1>
+          <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Katrina and Ian's Wedding</h1>
       </div>
     );
   } export default Home;
