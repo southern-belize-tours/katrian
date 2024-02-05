@@ -45,9 +45,12 @@ export default function Brunch (props) {
                     <div className="padded-left logisticsItem">
                         <Info color="primary"></Info> This is not a funded event, but everyone is invited
                     </div>
-                    <div className="padded-left logisticsItem">
-                        <QuestionMark color="primary"></QuestionMark> Looking for things to do during the day? Look at our <a href="/FAQ#San-Diego-Activities" className="secondary">San Diego Activities</a> section of the FAQ page.
+                    <div className="flexed centered">
+                        <div><QuestionMark fontSize="2rem" color="primary"></QuestionMark> Looking for things to do during the day? Look at our <a href="/FAQ#San-Diego-Activities" className="secondary">San Diego Activities</a> section of the FAQ page.</div>
                     </div>
+                    {/* <div className="padded-left logisticsItem">
+                        <QuestionMark color="primary"></QuestionMark> Looking for things to do during the day? Look at our <a href="/FAQ#San-Diego-Activities" className="secondary">San Diego Activities</a> section of the FAQ page. */}
+                    {/* </div> */}
                 </div>
             </div>
         </div>
