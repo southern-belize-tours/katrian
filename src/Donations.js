@@ -29,7 +29,7 @@ function TimeAndDate(props) {
           <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
           <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
           <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
-          <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it looks like a large marble the better"></RegistryItem>
+          <RegistryItem photo={sealImage} title="A real life Seal" cost={500} description="A round one, the more it look  s like a large marble the better"></RegistryItem>
           <p>
             If you would like to fortify our honeymoon quality, we gladly and most-graciously accept donations on our <a target="_blank" rel="noreferrer" href="https://www.paypal.com/donate/?hosted_button_id=V3GYH73CW9HN6">paypal link</a>.
           </p>

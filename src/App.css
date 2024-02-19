@@ -311,7 +311,21 @@ a {
     width: 1rem;
   }
 
+  .galleryPageImageList {
+    column-count: 1 !important;
+  }
+
   .navListItemText {
     font-size: .7rem;
+  }
+
+  .logisticsText {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .logisticsText {
+    font-size: 1.6rem;
   }
 }
