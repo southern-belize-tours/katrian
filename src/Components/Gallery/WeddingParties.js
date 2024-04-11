@@ -14,6 +14,7 @@ import botfeld from '../../images/Gallery/weddingParties/botfeld.jpg';
 // The grils
 import smita from '../../images/Gallery/weddingParties/8210.jpeg';
 import gianna from '../../images/Gallery/weddingParties/2BF2CDD3-A8FE-4718-BF5D-5DE561022BD9.JPG';
+// src/images/Gallery/weddingParties/2BF2CDD3-A8FE-4718-BF5D-5DE561022BD9.JPG
 import marissa from '../../images/Gallery/weddingParties/marissa2.jpeg';
 import ray from '../../images/Gallery/weddingParties/3830.jpeg';
 import jordan from '../../images/Gallery/weddingParties/20181110_162837.jpg';
