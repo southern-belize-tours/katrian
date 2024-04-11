@@ -74,7 +74,9 @@ export default function WeddingParties (props) {
             </div>
         </div>
 
-        <ImageList cols={7} gap={8}>
+        <ImageList cols={7}
+            id='wedding-parties-image-list'
+            gap={8}>
         { weddingPartyImages.map((photo, idx) =>
             <ImageListItem key={`wedding-party-image-${idx}`}>
                 <img src={`${photo}`}
