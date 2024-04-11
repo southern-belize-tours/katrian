@@ -2,9 +2,14 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, 
 import { VisuallyHiddenInput } from "./AdminGallery";
 import { Add, Close, CloudUpload, Delete, Save } from "@mui/icons-material";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import './Gallery.css';
 import { useGalleryService } from "../../Services/GalleryService/GalleryServiceContext";
+
+const toasterConfig = {
+    autoClose: 2000
+};
 
 export default function AddPhotoDialog (props) {
     const GalleryService = useGalleryService();
@@ -56,7 +61,7 @@ export default function AddPhotoDialog (props) {
     const isValid = () => {
         for (let i = 0; i  < alts.length; ++i) {
             if (alts[i].length < 1) {
-                return false;
+                // return false;
             }
         }
         // Check to see if the alts are all filled out to a certain length
@@ -88,11 +93,17 @@ export default function AddPhotoDialog (props) {
             // Do some error setting here
             return;
         }
-        console.log(files);
+        // console.log(files);
         let databaseAlts = buildAlts(alts, files);
         await GalleryService.addNewFilesAlts(props.gallery.id, props.gallery.directory, databaseAlts, files);
-
         setLoading(false);
+
+        // close the dialog
+        setDialogOpen(false);
+
+        // toast to your success
+        toast.success("New Photo(s) Added Successfully", toasterConfig);
+        props.saveCallback();
     }
 
     const updateAlt = (e, idx) => {
@@ -121,84 +132,85 @@ export default function AddPhotoDialog (props) {
 
     return (
     <div>
-        <Button component="label"
-            variant="outlined"
-            startIcon={<CloudUpload/>}>
-            Add Photos
-            <VisuallyHiddenInput type="file"
-                multiple={true}
-                onChange = {(e) => {handleFileInputChange(e)}}>
-            </VisuallyHiddenInput>
-        </Button>
-        <Dialog fullWidth={true}
-            open={open}
-            maxWidth = {'xl'}
-            onClose = {() => {setDialogOpen(false);}}>
-            <DialogTitle>Add Photos</DialogTitle>
-            <DialogContent>
-            {/* <VisuallyHiddenInput type="file"
-                multiple={true}
-                onChange = {(e) => {handleFileInputChange(e)}}>
-            </VisuallyHiddenInput> */}
-            <div className="dialogContentImages">
-                {files.map((file, idx) =>
-                    <div className="dialogImageContainer">
-                        <div className="dialogImage" 
-                            style={{backgroundImage: `url(${file.url})`}}>
-                            <TextField id = {`image-alt-input-${idx}`}
-                                label = "Description"
-                                className="dialogImageAltField"
-                                placeholder = "Girl's trip to San Luis Obispo"
-                                value={alts[idx]}
-                                required={true}
-                                variant="outlined"
-                                onChange={(e) => updateAlt(e, idx)}>
-                            </TextField>
-                            <Tooltip title="Delete Added Photo">
-                                <IconButton variant="outlined"
-                                    onClick = {() => {deleteImage(idx);}}
-                                    className="dialogImageDelete"
-                                    color="primary">
-                                    <Delete></Delete>
-                                </IconButton>
-                            </Tooltip>
+        <ToastContainer></ToastContainer>
+            <Button component="label"
+                variant="outlined"
+                startIcon={<CloudUpload/>}>
+                Add Photos
+                <VisuallyHiddenInput type="file"
+                    multiple={true}
+                    onChange = {(e) => {handleFileInputChange(e)}}>
+                </VisuallyHiddenInput>
+            </Button>
+            <Dialog fullWidth={true}
+                open={open}
+                maxWidth = {'xl'}
+                onClose = {() => {setDialogOpen(false);}}>
+                <DialogTitle>Add Photos</DialogTitle>
+                <DialogContent>
+                {/* <VisuallyHiddenInput type="file"
+                    multiple={true}
+                    onChange = {(e) => {handleFileInputChange(e)}}>
+                </VisuallyHiddenInput> */}
+                <div className="dialogContentImages">
+                    {files.map((file, idx) =>
+                        <div className="dialogImageContainer">
+                            <div className="dialogImage" 
+                                style={{backgroundImage: `url(${file.url})`}}>
+                                <TextField id = {`image-alt-input-${idx}`}
+                                    label = "Description"
+                                    className="dialogImageAltField"
+                                    placeholder = "Girl's trip to San Luis Obispo"
+                                    value={alts[idx]}
+                                    required={true}
+                                    variant="outlined"
+                                    onChange={(e) => updateAlt(e, idx)}>
+                                </TextField>
+                                <Tooltip title="Delete Added Photo">
+                                    <IconButton variant="outlined"
+                                        onClick = {() => {deleteImage(idx);}}
+                                        className="dialogImageDelete"
+                                        color="primary">
+                                        <Delete></Delete>
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
                         </div>
-                    </div>
-                )}
-                <Button variant="outlined"
-                    component="label"
-                    className="dialogImageContainer addNewImage">
-                    <div className="flexed centered">
-                        <Add fontSize="2rem" color="primary"></Add> Add More Images
-                    </div>
-                    {/* Add More Photos */}
-                    <VisuallyHiddenInput type="file"
-                        multiple={true}
-                        onChange = {(e) => {handleFileInputChange(e)}}>
-                    </VisuallyHiddenInput>
-                </Button>
-                {/* <div className="dialogImageContainer addNewImage">
-                    <div className="flexed centered">
-                        <Add fontSize="2rem" color="primary"></Add> Add More Images
-                    </div>
-                    <VisuallyHiddenInput type="file"
-                        multiple={true}
-                        onChange = {(e) => {handleFileInputChange(e)}}>
-                    </VisuallyHiddenInput>
-                </div> */}
-            </div>
-            </DialogContent>
-            <DialogActions>
-                <Button variant="outlined"
-                    onClick = {() => {setDialogOpen(false);}}>
-                    <Close></Close> Close
-                </Button>
-                <Button variant="outlined"
-                    onClick = {handleSave}>
-                    <Save></Save> Save
-                </Button>
-            </DialogActions>
-        </Dialog>
+                    )}
+                    <Button variant="outlined"
+                        component="label"
+                        className="dialogImageContainer addNewImage">
+                        <div className="flexed centered">
+                            <Add fontSize="2rem" color="primary"></Add> Add More Images
+                        </div>
+                        {/* Add More Photos */}
+                        <VisuallyHiddenInput type="file"
+                            multiple={true}
+                            onChange = {(e) => {handleFileInputChange(e)}}>
+                        </VisuallyHiddenInput>
+                    </Button>
+                    {/* <div className="dialogImageContainer addNewImage">
+                        <div className="flexed centered">
+                            <Add fontSize="2rem" color="primary"></Add> Add More Images
+                        </div>
+                        <VisuallyHiddenInput type="file"
+                            multiple={true}
+                            onChange = {(e) => {handleFileInputChange(e)}}>
+                        </VisuallyHiddenInput>
+                    </div> */}
+                </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="outlined"
+                        onClick = {() => {setDialogOpen(false);}}>
+                        <Close></Close> Close
+                    </Button>
+                    <Button variant="outlined"
+                        onClick = {handleSave}>
+                        <Save></Save> Save
+                    </Button>
+                </DialogActions>
+            </Dialog>
     </div>
     )
 };
