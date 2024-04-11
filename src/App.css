@@ -296,6 +296,10 @@ a {
   content: '';
 }
 
+.galleryPageImageList {
+  max-width: 90vw !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
