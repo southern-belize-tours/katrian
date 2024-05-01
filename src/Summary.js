@@ -139,7 +139,7 @@ function Summary (props) {
                                 expandIcon={weddingNotesExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
                                 Wedding Notes
                             </AccordionSummary>
-                            <AccordionDetails>
+                            <AccordionDetails className="logisticsAccordion">
                                 <div className="logisticsItem">
                                     <DirectionsWalk color="primary"></DirectionsWalk>
                                     <div>
@@ -253,7 +253,7 @@ function Summary (props) {
                                 expandIcon={brunchNotesExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
                                 Brunch & Chill Day Notes
                             </AccordionSummary>
-                            <AccordionDetails>
+                            <AccordionDetails className="logisticsAccordion">
                                 <div className="logisticsItem">
                                     <DirectionsWalk color="primary"></DirectionsWalk> 
                                     <div>
