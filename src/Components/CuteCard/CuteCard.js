@@ -1,6 +1,6 @@
 import './CuteCard.css';
 import keukenkofPhoto from './Photos/keukenhof.jpg';
-import chamonixPhoto from './Photos/chamonix.JPG';
+import chamonixPhoto from './Photos/chamonix.jpg';
 // import neuschwansteinPhoto from './Photos/neuschwanstein.jpg';
 import matterhornPhoto from './Photos/matterhorn.jpg';
 import tulipPhoto from './Photos/tulip.jpg';
