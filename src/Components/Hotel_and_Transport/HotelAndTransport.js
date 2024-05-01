@@ -1,4 +1,4 @@
-import { AirportShuttle, Balcony, Bed, Bolt, CalendarMonth, Call, Close, Coffee, DirectionsWalk, DoDisturb, ExpandMore, Info, InfoOutlined, Link, LocalOffer, LocalParking, LocalTaxi, LocationOn, PhotoAlbum, PriorityHigh, Schedule, Star, TapAndPlay } from "@mui/icons-material";
+import { AirportShuttle, Balcony, Bed, Bolt, CalendarMonth, Call, Close, Coffee, DirectionsWalk, DoDisturb, ExpandMore, Info, InfoOutlined, Link, LocalOffer, LocalParking, LocalTaxi, LocationOn, PhotoAlbum, PriorityHigh, PriorityHighOutlined, Schedule, Star, TapAndPlay } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -24,10 +24,17 @@ export default function HotelAndTransport (props) {
             <div className="flexed centered">
                 <div className="flexed col">
                     <div className="flexed logisticsItem centered">
-                        <PriorityHigh fontSize="4rem" style={{fontSize: "3rem"}} color="secondary"></PriorityHigh> 
                         <div>
+                            <PriorityHighOutlined color="secondary" style={{fontSize: "1.1rem"}}></PriorityHighOutlined>
+                        {/* <PriorityHigh fontSize="4rem" */}
+                            {/* // style={{fontSize: "3rem"}} */}
+                            {/* color="secondary"> */}
+                        {/* </PriorityHigh>  */}
+                        {/* <div> */}
                             Late august will be a very busy month and rooms will book out early - we highly recommend booking in advance if at all possible
+                        {/* </div> */}
                         </div>
+
                     </div>
                     <Tooltip title={`${innBySeaExpanded ? "" :  "View Inn By the Sea Details"}`}>
                     <Accordion expanded={innBySeaExpanded}>
@@ -35,7 +42,7 @@ export default function HotelAndTransport (props) {
                             className="transitAccordion"
                             expandIcon={innBySeaExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
                             <div className="flexed col">
-                        <div className="flexed centered">
+                        <div className="flexed centered logisticsAccordionSummary">
                             Inn by The Sea at La Jolla
                         </div>
                         <div className="padded-left logisticsItem">
@@ -92,7 +99,7 @@ export default function HotelAndTransport (props) {
                             className="transitAccordion"
                             expandIcon={scrippsExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
                         <div className="flexed col">
-                            <div className="flexed centered">
+                            <div className="flexed centered logisticsAccordionSummary">
                                 Scripps Inn La Jolla Cove
                             </div>
                             <div className="padded-left logisticsItem">
@@ -131,7 +138,7 @@ export default function HotelAndTransport (props) {
                                 className="transitAccordion"
                                 expandIcon = {hotelsExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
                                 <div className="flexed col">
-                                    <div className="flexed centered">
+                                    <div className="flexed centered logisticsAccordionSummary">
                                         Other Walking-Distance Hotels in La Jolla
                                     </div>
                                     <div className="padded-left logisticsItem">
@@ -203,7 +210,7 @@ export default function HotelAndTransport (props) {
                         <Accordion expanded={transportExpanded}>
                             <AccordionSummary onClick = {() => {setTransportExpanded(!transportExpanded)}}
                                 expandIcon = {transportExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
-                                <div className="flexed centered">
+                                <div className="flexed centered logisticsAccordionSummary">
                                     Transportation Options
                                 </div>
                             </AccordionSummary>

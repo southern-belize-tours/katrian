@@ -17,6 +17,7 @@
 
 .summaryItemHeading {
   justify-content: center;
+  margin-bottom: calc(.5* var(--default-padding));
 }
 
 .summaryItemTitle {
@@ -447,5 +448,5 @@ a {
   .summaryItemLocation {
     gap: 0px;
   }
-  
+
 }
