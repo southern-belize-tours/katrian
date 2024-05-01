@@ -6,6 +6,10 @@
   --clr-secondary: #a7b69d;
 }
 
+.transitAccordion {
+  align-items: baseline !important;
+}
+
 .logisticsAccordionSummary {
   font-family: 'Times New Roman', Times, serif;
   font-size: 1.5rem;
@@ -39,7 +43,8 @@
   flex-direction: row;
   gap: var(--default-gap);
   border-top: solid 1px var(--clr-lavender);
-  padding: var(--default-padding);
+  padding: var(--default-padding) 0;
+  padding-left: var(--default-padding);
 }
 
 .summaryItemMore {
@@ -322,7 +327,8 @@ a {
 
 .flexed {
   display: flex !important;
-  gap: var(--default-gap)
+  gap: var(--default-gap);
+  max-width: 100%;
 }
 
 .col {
@@ -437,4 +443,9 @@ a {
     flex-direction: column;
     gap: var(--default-gap);
   }
+
+  .summaryItemLocation {
+    gap: 0px;
+  }
+  
 }

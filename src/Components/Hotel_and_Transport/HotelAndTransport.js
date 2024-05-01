@@ -32,6 +32,7 @@ export default function HotelAndTransport (props) {
                     <Tooltip title={`${innBySeaExpanded ? "" :  "View Inn By the Sea Details"}`}>
                     <Accordion expanded={innBySeaExpanded}>
                         <AccordionSummary onClick = {() => {setInnBySeaExpanded(!innBySeaExpanded)}}
+                            className="transitAccordion"
                             expandIcon={innBySeaExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
                             <div className="flexed col">
                         <div className="flexed centered">
@@ -44,7 +45,10 @@ export default function HotelAndTransport (props) {
                             <LocalOffer color="primary"></LocalOffer> $199.00/night + tax for Standard Room, $289.00/night + tax for Ocean View Room
                         </div>
                         <div className="padded-left logisticsItem">
-                            <Call color="primary"></Call> To book, call the hotel directly at <a className="secondary">1-800-526-4545</a> and ask for the rate for "Strawick - Feekes Wedding"
+                            <Call color="primary"></Call>
+                            <div>
+                                To book, call the hotel directly at <a className="secondary">1-800-526-4545</a> and ask for the rate for "Strawick - Feekes Wedding"
+                            </div>
                         </div>
                         </div>
                         </AccordionSummary>
@@ -85,6 +89,7 @@ export default function HotelAndTransport (props) {
                     <Tooltip title={`${scrippsExpanded ? "" :  "View Scripps Inn Details"}`}>
                     <Accordion expanded={scrippsExpanded}>
                         <AccordionSummary onClick = {() => {setScrippsExpanded(!scrippsExpanded)}}
+                            className="transitAccordion"
                             expandIcon={scrippsExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
                         <div className="flexed col">
                             <div className="flexed centered">
@@ -94,7 +99,10 @@ export default function HotelAndTransport (props) {
                                 <LocationOn color="primary"></LocationOn> 555 Coast S Blvd, La Jolla, CA 92037
                             </div>
                             <div className="padded-left logisticsItem">
-                                <LocalOffer color="primary"></LocalOffer> 10% discount by booking on their <a href="https://scrippsinn.com" className="secondary" target="_blank" rel="noreferrer">hotel website</a> (rather than on booking.com)
+                                <LocalOffer color="primary"></LocalOffer>
+                                <div>
+                                    10% discount by booking on their <a href="https://scrippsinn.com" className="secondary" target="_blank" rel="noreferrer">hotel website</a> (rather than on booking.com)
+                                </div>
                             </div>
                             <div className="padded-left logisticsItem">
                                 <Star color="primary"></Star> This is the luxury hotel option. The rooms all have ocean views
@@ -120,6 +128,7 @@ export default function HotelAndTransport (props) {
                     <Tooltip title={`${hotelsExpanded ? "" : "View List of Other Proximate Hotels"}`}>
                         <Accordion expanded={hotelsExpanded}>
                             <AccordionSummary onClick = {() => {setHotelsExpanded(!hotelsExpanded)}}
+                                className="transitAccordion"
                                 expandIcon = {hotelsExpanded ? <Close fontSize="2rem" color="primary"></Close> : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
                                 <div className="flexed col">
                                     <div className="flexed centered">
@@ -203,9 +212,13 @@ export default function HotelAndTransport (props) {
                                     <TapAndPlay color="primary"></TapAndPlay> Uber and Lyft ridesharing applications are prominent in San Diego, with Uber being generally more available
                                 </div>
                                 <div className="padded-left logisticsItem">
-                                    <AirportShuttle color="primary"></AirportShuttle> For private shuttles, we recommend "Marina's Transportation". Their website is <a className="secondary" href="www.marinastransportation.com" target="_blank" rel="noreferrer">www.marinastransportation.com</a>. Their email is info@marinastransportation.com and their cell is 858-401-0877
+                                    <AirportShuttle color="primary"></AirportShuttle> 
+                                    <div>
+                                        For private shuttles, we recommend "Marina's Transportation". Their website is <a className="secondary" href="www.marinastransportation.com" target="_blank" rel="noreferrer">www.marinastransportation.com</a>. Their email is info@marinastransportation.com and their cell is 858-401-0877
+                                    </div>
                                 </div><div className="padded-left logisticsItem flexed">
-                                    <LocalTaxi color="primary"></LocalTaxi> <div className="flexed col">
+                                    <LocalTaxi color="primary"></LocalTaxi> 
+                                    <div>
                                         <div>La Jolla Ride (Monty's) 858-405-0877</div>
                                         <div>Yellow Cab 1-619-234-6161</div>
                                         <div>Orange Cab 1-619-223-5555</div>
