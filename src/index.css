@@ -41,6 +41,9 @@ code {
 
 .weddingBody img {
   max-width: 100%;
+  /* border-radius: 50%; */
+  border-radius: 15%;
+
 }
 
 .sanDiegoTitle {
@@ -74,12 +77,16 @@ code {
 
 @media(max-width: 768px) {
   #wedding-parties-image-list {
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .weddingBody {
+    margin-top: calc(70px + var(--default-padding));
   }
 }
-
+/* 
 @media(max-width: 425px) {
   #wedding-parties-image-list {
     grid-template-columns: repeat(1, 1fr) !important;
   }
-}
+} */

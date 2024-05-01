@@ -15,7 +15,7 @@ export default function Rehearsal (props) {
     
     return(
     <div className="weddingBody">
-        <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Wedding Rehearsal, Thursday, August 21st, 2025</h1>
+        <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Wedding Rehearsal, Thursday, August 21st, 2025 (Invite Only)</h1>
         <div className={`padded-sides flexed col logisticsText ${fade ? "" : "fading"}`}>
             <div className="flexed centered">
                 <div className="flexed col">

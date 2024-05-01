@@ -40,49 +40,24 @@ import { useGalleryService } from './Services/GalleryService/GalleryServiceConte
 import HotelAndTransport from './Components/Hotel_and_Transport/HotelAndTransport.js';
 import GalleryPage from './Components/Gallery/GalleryPage.js';
 import WeddingParties from './Components/Gallery/WeddingParties.js';
+import BobsBurger from './Components/BobsBurger/BobsBurger.js';
 
 Amplify.configure(awsconfig);
 
 const timeAndPlaceItems = [
-  {text: "Summary", route: "/Logistics", component:<AccessTimeFilled color="primary" fontSize="small"></AccessTimeFilled>},
+  // {text: "Summary", route: "/Logistics", component:<AccessTimeFilled color="primary" fontSize="small"></AccessTimeFilled>},
   // {text: "Bachelor Party", route: "/Bachelor", component:<Liquor color="primary" fontSize="small"></Liquor>},
   // {text: "Bachelorette Party", route: "/Bachelorette", component:<Nightlife color="primary" fontSize="small"></Nightlife>},
-  {text: "Rehearsal", route: "/Rehearsal", component: <Restaurant color="primary" fontSize="small"></Restaurant>},
-  {text: "Wedding", route: "/Ceremony", component: <Diversity1 color="primary" fontSize="small"></Diversity1>},
+  // {text: "Rehearsal (Invite Only)", route: "/Rehearsal", component: <Restaurant color="primary" fontSize="small"></Restaurant>},
+  // {text: "Wedding", route: "/Ceremony", component: <Diversity1 color="primary" fontSize="small"></Diversity1>},
   // {text: "Reception", route: "/Reception", component: <MusicNote color="primary" fontSize="small"></MusicNote>},
-  {text: "Saturday Brunch", route: "/Brunch", component: <EggAlt color="primary" fontSize="small"></EggAlt>},
-  {text: "Hotels and Transport", route: "/Hotels-and-Transport", component: <Hotel color="primary" fontSize="small"></Hotel>}
+  // {text: "Saturday Brunch", route: "/Brunch", component: <EggAlt color="primary" fontSize="small"></EggAlt>},
+  // {text: "Hotels and Transport", route: "/Hotels-and-Transport", component: <Hotel color="primary" fontSize="small"></Hotel>}
 ];
 
 const galleryItems = [
   {text: "All Galleries", route: "/Gallery", component:<Collections color="primary" fontSize="small"></Collections>},
   {text: "Wedding Party", route: "/Gallery/WeddingParty", component: <BrunchDining color="primary" fontSize="small"></BrunchDining>},
-];
-
-const journeyDescription = [
-  "Ian and Katrina met and dated in Oakridge High School Junior and Senior Year",
-  "They reunited as College Sophomores, met abroad and fell in love in Torino Italy, and dated long-distance between Santa Cruz and San Luis Obispo",
-  "After graduating, they moved to San Diego, where they lived for 4 years and got engaged",
-  "They now live happily in Zurich, Switzerland together"
-];
-
-const bamboozlingDescription = [
-  "Katrina's hawkish senses immediately pick up red flags in the unnatural occurence of Ian making structured plans",
-  "Ian created an elaborate web of lies and smoke prior to prosing in order to ensure she never saw it coming",
-  "He asked for her fathers blessing prior to a New Year's trip to Japan, where they spent time looking at diamonds.",
-  "Empty ring boxes were scattered around the house, and Ian disappeared inexplicably for strange chores throughout the days",
-  "Katrina was surprised with a weekend trip to Hawaii, where all her bags were packed with nice clothes and her makeup supplies. She was too nervous to stand up in a 5 star restaurant to look at the sunset."
-];
-
-const proposalDescription = [
-  "Ian proposed to Katrina on March 25th, 2023.",
-  "He proposed on top of Bishop's Peak, San Luis Obispo, one of Katrina's favorite college hiking spots, during a \"girl's trip\".",
-  "After convincing her that natural geodes were present on the volcanic mountain, he revealed the ring in a geode hidden at the top of the peak.",
-  "Many thanks to the great friends who hiked the muddy peak beforehand and helped to circumvent katrina's vigilance. Thank You Melissa, Smita, Matt, Seabass, and Dana."
-];
-
-const eurotripDescription = [
-  "",
 ];
 
 function debounce(fn, ms) {
@@ -99,13 +74,22 @@ function debounce(fn, ms) {
 function App() {
   const GalleryService = useGalleryService();
 
-  const [linkSize, setLinkSize] = React.useState(100);
+  const initializeLinkSize = () => {
+    if (window.innerWidth <= 768) {
+      return 35;
+    } else {
+      return 100;
+    }
+  }
+
+  const [linkSize, setLinkSize] = React.useState(initializeLinkSize());
+  const [size, setSize] = React.useState(window.innerWidth);
   const [galleries, setGalleries] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   const links = [
     {text: "Home", route: "/", component: <Cake size={linkSize}></Cake>, items: []},
-    {text: "Logistics", route: "/Logistics", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
+    {text: "Hotels and Transport", route: "/Hotels-and-Transport", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
     {text: "FAQ", route: "/FAQ", component: <Question size={linkSize}></Question>, items: []},
     {text: "Galleries", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: galleryItems},
     {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
@@ -118,10 +102,11 @@ function App() {
   React.useEffect(() => {
     const checkMediaSize = () => {
       if (window.innerWidth <= 768) {
-        setLinkSize(50);
+        setLinkSize(35);
       } else {
         setLinkSize(100);
       }
+      setSize(window.innerWidth);
     }
 
     setLoading(true);
@@ -133,9 +118,7 @@ function App() {
         galleriesData = await GalleryService.fetchGalleries();
         if (isSubscribed && galleriesData !== -1) {
           setGalleries(galleriesData);
-
           let galleryLinks = navLinks[3];
-          // galleryLinks.items = ;
           for (let i = 0; i < galleriesData.length; ++i) {
             const galleryLink = {text: galleriesData[i].name,
               route: "/Gallery/" + galleriesData[i].directory,
@@ -145,7 +128,6 @@ function App() {
           }
           let oldNavs = [...navLinks];
           oldNavs[3] = galleryLinks;
-          // console.log(galleryLinks);
           setNavLinks(oldNavs);
         }
       } catch (e) {
@@ -156,11 +138,8 @@ function App() {
         }
       }
     }
-
-    // console.log("Galleries: ", galleries)
-    // console.log("Gallery service", GalleryService);
     if (galleries.length === 0 && GalleryService.galleries.length ===0) {
-      getGalleries();
+      // getGalleries();
     } else if (galleries.length === 0 && GalleryService.galleries.length !== 0) {
       setGalleries(GalleryService.galleries);
       setLoading(false);
@@ -185,17 +164,21 @@ function App() {
       <FaqServiceProvider>
       <TuneServiceProvider>
       <AuthProvider>
-        {/* <BeatLoader loading = {FaqService.isLoading()}></BeatLoader> */}
       <div className="pageContainer">
-      {/* <WeddingToolbar links={links}></WeddingToolbar> */}
-      {/* <NavList links={links}></NavList> */}
-      { loading === false ?
+      {/* { loading === false ? */}
       <Router>
+        {/* <NavList links={navLinks}></NavList> */}
+        {size > 768 ? 
         <NavList links={navLinks}></NavList>
+        : 
+        // <div>Foo</div>
+        <BobsBurger links={navLinks}></BobsBurger>
+        }
         <Switch>
-          <Route path="/" exact component={() => <Home size={linkSize * 4}></Home>} />
+          {/* <Route path="/" exact component={() => <Home size={linkSize * 4}></Home>} /> */}
+          <Route path="/" exact component={() => <Home></Home>} />
           <Route path="/Logistics" exact component={() => <TimeAndDate size={linkSize * 4}></TimeAndDate>} />
-          <Route path="/Rehearsal" exact component={() => <Rehearsal></Rehearsal>}></Route>
+          {/* <Route path="/Rehearsal" exact component={() => <Rehearsal></Rehearsal>}></Route> */}
           {/* <Route path="/Bachelor" exact component={() => <Bachelor></Bachelor>}></Route> */}
           {/* <Route path="/Bachelorette" exact component={() => <Bachelorette></Bachelorette>}></Route> */}
           <Route path="/Hotels-and-Transport" exact component={() => <HotelAndTransport></HotelAndTransport>}></Route>
@@ -217,9 +200,9 @@ function App() {
           <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>
         </Switch>
       </Router>
-      :
-              <div className="loadingSpinner"></div>
-      }
+      {/* : */}
+              {/* <div className="loadingSpinner"></div> */}
+      {/* } */}
       {/* <NavList links={links}></NavList> */}
       </div>
       </AuthProvider>

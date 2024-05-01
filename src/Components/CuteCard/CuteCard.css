@@ -1,0 +1,149 @@
+.cuteCardContainer {
+    /* background-color: red; */
+    display: flex;
+    flex-direction: row;
+    width: 70vw;
+    gap: var(--default-gap);
+    position: relative;
+    height: 70vh;
+    overflow: hidden;
+    /* transition: all .3s; */
+    /* transition-delay: 1s; */
+}
+
+.cuteCardMid {
+    flex: 1 1 auto;
+    /* background-color: green; */
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
+}
+
+.cuteCardSegment {
+    display: flex;
+    flex-direction: row;
+    gap: var(--default-gap);
+    width: 100%;
+    flex: 1 1 auto;
+    /* background-color: gray; */
+    transition: .3s;
+    transition-delay: .1s;
+    overflow: hidden;
+}
+
+.cuteCardMid .cuteCardImage {
+    /* height: 20px; */
+    /* height: 8em; */
+    /* background-color: yellow; */
+    flex: 1 1 auto;
+    transition: .3s;
+    transition-delay: .4s;
+}
+
+.cuteCardLeftBar, .cuteCardRightBar {
+    /* background-color: blue; */
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    transition: .3s;
+    transition-delay: .7s;
+}
+
+.cuteCardImage {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.cuteCardLeftBar .cuteCardImage,
+.cuteCardRightBar .cuteCardImage {
+    height: 70%;
+}
+
+.cuteCardTitleText, .cuteCardDateText {
+    font-family: 'Great Vibes', cursive;
+    font-family: 'Dancing Script', cursive;
+    margin: 0px;
+    transition: 1s;
+}
+
+.cuteCardTitleText {
+    font-size: 2.5rem;    
+    transition-delay: 1s;
+}
+
+.cuteCardDateText {
+    font-size: 1rem;
+    transition-delay: 1.5s;
+    text-align: center;
+}
+
+.cuteCardContainer.transition {
+    /* background: red; */
+}
+
+.cuteCardContainer.transition .cuteCardLeftBar {
+    transform: translateX(-101%);
+}
+
+.cuteCardContainer.transition .cuteCardRightBar {
+    transform: translateX(101%);
+}
+
+.cuteCardContainer.transition .cuteCardSegment.top {
+    transform: translateY(-101%)
+}
+
+.cuteCardContainer.transition .cuteCardSegment.bottom {
+    transform: translateY(101%)
+}
+
+/* .cuteCardContainer.transition .cuteCardMid .cuteCardSegment.top:nth-child(1) {
+    transform: translateX(-101%);
+} */
+
+.cuteCardContainer.transition .cuteCardMid .cuteCardSegment.top .cuteCardImage:nth-child(2) {
+    transform: translateX(-107.5%);
+    /* transform: translateX(-215%); */
+}
+
+.cuteCardContainer.transition .cuteCardMid .cuteCardSegment.bottom .cuteCardImage:nth-child(1) {
+    transform: translateX(107.5%);
+    /* transform: translateX(215%); */
+}
+
+.cuteCardContainer.transition .cuteCardTitleText,
+.cuteCardContainer.transition .cuteCardDateText {
+    opacity: 0;
+}
+
+@media (max-width: 768px) {
+    .cuteCardLeftBar, .cuteCardRightBar {
+        display: none;
+    }
+
+    .cuteCardTitleText {
+        font-size: 1.8rem;
+    }
+
+    .cuteCardDateText {
+        font-size: .8rem;
+    }
+
+    .cuteCardContainer {
+        width: 80vw;
+    }
+}
+
+@media (max-width: 425px) {
+    .cuteCardContainer {
+        height: 62vh;
+        width: 88vw;
+    }
+
+    .cuteCardTitleText {
+        font-size: 1.5rem;
+    }
+}

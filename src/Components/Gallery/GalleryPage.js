@@ -110,7 +110,7 @@ export default function GalleryPage (props) {
                 saveCallback={photoAddedCallback}>
             </AddPhotoDialog>
         }
-            <ImageList variant="masonry"
+            <ImageList variant="masonry"    
                 className = "galleryPageImageList"
                 cols={3}
                 gap={8}>
