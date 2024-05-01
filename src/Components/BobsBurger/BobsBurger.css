@@ -1,0 +1,52 @@
+.bobsBurger{
+    color: white !important;
+    font-size: 2.5rem !important;
+}
+
+.bobsBurgerItem {
+    display: flex;
+    flex-direction: row;
+    gap: var(--default-gap);
+    /* justify-content: center; */
+    text-decoration: none;
+    color: black;
+    /* padding-left: calc(4* var(--default-padding)); */
+    /* padding-left: 20vw; */
+    padding: 0 var(--default-padding);
+}
+
+.bobsBurgerItemContent {
+    display: flex;
+    flex-direction: row;
+    gap: var(--default-gap);
+    align-items: center;
+}
+
+.bobsBurgerLinkText {
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+.bobsBurgerItemList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
+    min-width: 50vw;
+    padding: var(--default-padding) 0;
+}
+
+#bobsBurgerBox .MuiPaper-root {
+    /* top: 55px;   */
+}
+
+.bobsBurgerClose {
+    background: var(--clr-lavender);
+    height: 56px;
+    align-content: center;
+    /* padding-left: var(--default-padding); */
+}
+
+.bobsCloseIcon {
+    color: white !important;
+    font-size: 2.5rem !important;
+}

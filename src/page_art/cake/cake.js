@@ -5,17 +5,14 @@ import './cake.css';
 function Cake (props) {
 
     // Size state component can be set from the props, along with hour and minute
-    const [size, setSize] = useState(0);
+    const [size, setSize] = useState(props && props.size ? props.size : 0);
     const [transition, setTransition] = useState(props.doTransition);
+    const [disappearing, setDisappearing] = useState(false);
 
     // Compute size and on init based on optional props
     useEffect(() => {
 
-        // if (props && props.doTransition) {
-        //     setTransition(true);
-        // }
-
-        let timeoutId = null;
+        let timeoutId, disappearTimeoutId, minimizeTimeoutId = null;
 
         // // Determine if the cake will make a transition and set a timeout function if false
         if (props.doTransition === true) {
@@ -25,9 +22,27 @@ function Cake (props) {
             }, 0);
         }
 
-        if (timeoutId !== null) {
-            return () => clearTimeout(timeoutId);
+        if (props.disappearing && props.disappearing === true) {
+            disappearTimeoutId = setTimeout(() => {
+                setDisappearing(true);
+            }, 3000);
+            minimizeTimeoutId = setTimeout(() => {
+                setSize(0);
+            }, 3300)
         }
+
+        return () => {
+            if (timeoutId !== null) {
+                clearTimeout(timeoutId);
+            }
+            if (disappearTimeoutId !== null) {
+                clearTimeout(disappearTimeoutId);
+            }
+            if (minimizeTimeoutId !== null) {
+                clearTimeout(minimizeTimeoutId);
+            }
+        }
+
     }, []);
 
     useEffect(() => {
@@ -37,7 +52,8 @@ function Cake (props) {
     }, [props.size])
 
     return (
-        <div className={`cakeContainer ${size <= 100 ? "small " : ""}`}
+        // !disappearing &&
+        <div className={`cakeContainer ${size <= 100 ? "small " : ""} ${disappearing ? "fadeOut" : ""}`}
             style={{width: `${size}px`, height: `${size}px`}}>
             <div className={`cakeRings ${transition === true ? "compressed" : ""}`}>
                 <div className={`firstRing ${transition === true ? "compressed" : ""}`}
@@ -49,5 +65,6 @@ function Cake (props) {
             <div className={`secondLayer ${transition === true? "" : "tall"}`}></div>
             <div className="thirdLayer"></div>
         </div>
+        
     )
 } export default Cake;

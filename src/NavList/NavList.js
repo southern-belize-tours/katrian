@@ -130,10 +130,11 @@ function NavList (props) {
                     <div className="flexed navList"
                         style={{transform: `translateX(-${translate}px)`}}>
                         {props.links.map(link =>
-                            (location.pathname !== link.route || link.route === "/Logistics" || link.route === "/Gallery") &&
+                            // (location.pathname !== link.route || link.route === "/Logistics" || link.route === "/Gallery") &&
                             <NavListItem key={`nav-list-item-${link.route}`} 
                                 link={link}></NavListItem>
-                        )}
+                        )
+                        }
                     </div>
                 </div>
                 {isOverflowing &&

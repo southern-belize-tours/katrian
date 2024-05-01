@@ -25,10 +25,12 @@ export default function Sandbox (props) {
         {/* <Music size = {100} loading = {true}></Music> */}
         {/* <Music size = {50} loading = {true}></Music> */}
 
-        <Cake size = {400} doTransition={true}></Cake>
-        <Cake size = {200} doTransition={true}></Cake>
-        <Cake size = {100} doTransition={true}></Cake>
-        <Cake size = {50} doTransition={true}></Cake>
+        <Cake size = {400}
+            disappearing={true}
+            doTransition={true}></Cake>
+        {/* <Cake size = {200} doTransition={true}></Cake> */}
+        {/* <Cake size = {100} doTransition={true}></Cake> */}
+        {/* <Cake size = {50} doTransition={true}></Cake> */}
 
         {/* <Camera size = {400} loading={false}></Camera> */}
         {/* <Camera size = {200} loading={false}></Camera> */}

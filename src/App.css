@@ -6,6 +6,70 @@
   --clr-secondary: #a7b69d;
 }
 
+.logisticsAccordionSummary {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.5rem;
+}
+
+.summaryItemHeading {
+  justify-content: center;
+}
+
+.summaryItemTitle {
+  font-size: 2.3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.summaryItemTime {
+  font-size: 1.3rem;
+  text-align: center;
+  font-weight: 400;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.summaryItems {
+  display: flex;
+  /* gap: var(--default-gap); */
+  flex-direction: column;
+}
+
+.summaryItemInfo {
+  display: flex;
+  flex-direction: row;
+  gap: var(--default-gap);
+  border-top: solid 1px var(--clr-lavender);
+  padding: var(--default-padding);
+}
+
+.summaryItemMore {
+  display: flex;
+  gap: var(--default-gap);
+  flex-direction: column;
+}
+
+.summaryItemName, .summaryItemLocation {
+  font-weight: 400;
+  font-size: 1.5rem;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.summaryItemLocation {
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  gap: var(--default-gap);
+  align-items: center;
+}
+
+.summaryItemLocation .MuiSvgIcon-root {
+  font-size: 1rem;
+}
+
+.summaryItemName {
+  font-weight: 600;
+}
+
 .registryItems {
   display: flex;
   flex-direction: row;
@@ -36,7 +100,13 @@
 }
 
 .logisticsItem {
-  font-size: 1.8rem;
+  /* font-size: 1.8rem; */
+  font-size: 1.3rem;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 400;
+  display: flex;
+  gap: var(--default-gap);
+  align-items: center;
 }
 
 .logisticsText.fading {
@@ -331,5 +401,22 @@ a {
 @media (max-width: 425px) {
   .logisticsText {
     font-size: 1.6rem;
+    gap: 1rem !important;
+  }
+
+  .summaryItemTitle {
+    font-size: 1.3rem;
+  }
+
+  .summaryItemTime {
+    font-size: .8rem;
+  }
+
+  .summaryItemName {
+    font-size: 1rem;
+  }
+
+  .summaryItemLocation {
+    font-size: .8rem;
   }
 }
