@@ -65,6 +65,7 @@ function Summary (props) {
                             <div><a href="/rehearsal" className="secondary">Rehearsal</a></div>
                         </div>
                     </div> */}
+                    <div>
                     <div className = "flexed centered summaryItemHeading">
                         {/* <Diversity1 fontSize="2rem" color="primary"></Diversity1> */}
                         <div>
@@ -184,7 +185,9 @@ function Summary (props) {
                         </Accordion>
                         </Tooltip>
                     </div>
+                    </div>
 
+                    <div>
                     <div className = "flexed centered summaryItemHeading">
                         {/* <Diversity1 fontSize="2rem" color="primary"></Diversity1> */}
                         <div>
@@ -295,6 +298,8 @@ function Summary (props) {
                         </Accordion>
                         </Tooltip>
                     </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
