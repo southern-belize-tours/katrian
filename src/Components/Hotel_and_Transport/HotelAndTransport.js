@@ -19,7 +19,7 @@ export default function HotelAndTransport (props) {
 
     return (
     <div className="weddingBody">
-        <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Hotel and Transport</h1>
+        <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Travel</h1>
         <div className={`padded-sides flexed col logisticsText ${fade ? "" : "fading"}`}>
             <div className="flexed centered">
                 <div className="flexed col">
@@ -236,8 +236,12 @@ export default function HotelAndTransport (props) {
                     </Tooltip>
                 </div>
             </div>
+            <div className="flexed logisticsItem">
+                <div>
+                    For any additional information, please feel free to take a look at the <a className="secondary" href="/FAQ">FAQ Page</a> and pop the question to us!
+                </div>
+            </div>
         </div>
-        <p>For any additional information, please feel free to take a look at the <a className="secondary" href="/FAQ">FAQ Page</a> and pop the question to us!</p>
     </div>
     );
 }

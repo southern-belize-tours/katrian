@@ -21,6 +21,18 @@ code {
     monospace;
 }
 
+.thingsToDoImage {
+  width: 60%;
+  border-radius: 2rem !important;
+}
+
+.thingsToDoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--default-gap);
+}
+
 .cakeImg {
   max-height: 30rem;
   max-width: 30rem;
@@ -54,6 +66,19 @@ code {
   gap: var(--default-gap);
 }
 
+.summaryDay {
+  background: #fafafa;
+  /* padding: var(--default-padding) 0; */
+  padding: var(--default-padding);
+  border-radius: 1rem;
+}
+
+.logisticsAccordion {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--default-gap) !important;
+}
+
 @media(max-width: 768px) {
   :root {
     --default-padding: 1rem !important;
@@ -67,6 +92,11 @@ code {
   h2 {
     font-size: .9rem;
   }
+
+  .sanDiegoTitle {
+    font-size: 1.5rem;
+  }
+
 }
 
 @media(max-width: 1024px) {
@@ -84,9 +114,9 @@ code {
     margin-top: calc(70px + var(--default-padding));
   }
 }
-/* 
+
 @media(max-width: 425px) {
   #wedding-parties-image-list {
     grid-template-columns: repeat(1, 1fr) !important;
   }
-} */
+}

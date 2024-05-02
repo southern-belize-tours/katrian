@@ -14,7 +14,7 @@ export default function CuteCard (props) {
     const [transition, setTransition] = useState(true);
 
     useEffect( () => {
-        setTimeout(() => {setTransition(false)}, 100);
+        setTimeout(() => {setTransition(false)}, 0);
     }, [])
 
     return (
