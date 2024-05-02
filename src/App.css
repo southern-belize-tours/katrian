@@ -13,10 +13,18 @@
 .logisticsAccordionSummary {
   font-family: 'Times New Roman', Times, serif;
   font-size: 1.5rem;
+  display: flex !important;
+  justify-content: flex-start !important;
+  gap: var(--default-gap) !important;
+}
+
+.logisticsAccordionSummary .MuiAccordionSummary-content {
+  flex: 0 0 auto;
 }
 
 .summaryItemHeading {
   justify-content: center;
+  margin-bottom: calc(.5* var(--default-padding));
 }
 
 .summaryItemTitle {
@@ -438,14 +446,10 @@ a {
     font-size: .8rem;
   }
   
-  .logisticsAccordion {
-    display: flex;
-    flex-direction: column;
-    gap: var(--default-gap);
-  }
+
 
   .summaryItemLocation {
     gap: 0px;
   }
-  
+
 }

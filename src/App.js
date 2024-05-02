@@ -57,7 +57,7 @@ const timeAndPlaceItems = [
 
 const galleryItems = [
   {text: "All Galleries", route: "/Gallery", component:<Collections color="primary" fontSize="small"></Collections>},
-  {text: "Wedding Party", route: "/Gallery/WeddingParty", component: <BrunchDining color="primary" fontSize="small"></BrunchDining>},
+  {text: "Wedding Party", route: "/Gallery/WeddingParties", component: <BrunchDining color="primary" fontSize="small"></BrunchDining>},
 ];
 
 function debounce(fn, ms) {
@@ -89,12 +89,12 @@ function App() {
 
   const links = [
     {text: "Home", route: "/", component: <Cake size={linkSize}></Cake>, items: []},
-    {text: "Hotels and Transport", route: "/Hotels-and-Transport", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
+    {text: "Travel", route: "/Hotels-and-Transport", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
     {text: "FAQ", route: "/FAQ", component: <Question size={linkSize}></Question>, items: []},
     {text: "Galleries", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: galleryItems},
     {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
     {text: "Playlist", route: "/Playlist", component: <Music size={linkSize}></Music>, items: []},
-    {text: "Registry", route: "/Registry", component: <Gift size={linkSize}></Gift>, items: []},
+    {text: "Registry", route: "https://www.theknot.com/us/ian-feekes-and-katrina-strawick-aug-2025/registry", component: <Gift size={linkSize}></Gift>, items: []},
   ];
 
   const [navLinks, setNavLinks] = React.useState([...links]);
@@ -116,35 +116,37 @@ function App() {
       let galleriesData = -1;
       try {
         galleriesData = await GalleryService.fetchGalleries();
-        if (isSubscribed && galleriesData !== -1) {
-          setGalleries(galleriesData);
-          let galleryLinks = navLinks[3];
-          for (let i = 0; i < galleriesData.length; ++i) {
-            const galleryLink = {text: galleriesData[i].name,
-              route: "/Gallery/" + galleriesData[i].directory,
-              component: <></>
-            }
-            galleryLinks.items.push(galleryLink);
-          }
-          let oldNavs = [...navLinks];
-          oldNavs[3] = galleryLinks;
-          setNavLinks(oldNavs);
-        }
+        // if (isSubscribed && galleriesData !== -1) {
+        //   // setGalleries(galleriesData);
+        //   let galleryLinks = navLinks[3];
+        //   for (let i = 0; i < galleriesData.length; ++i) {
+        //     const galleryLink = {text: galleriesData[i].name,
+        //       route: "/Gallery/" + galleriesData[i].directory,
+        //       component: <></>
+        //     }
+        //     galleryLinks.items.push(galleryLink);
+        //   }
+        //   let oldNavs = [...navLinks];
+        //   oldNavs[3] = galleryLinks;
+          // setNavLinks(oldNavs);
+        // }
       } catch (e) {
         console.log("Error retrieving galleries", e);
       } finally {
         if (isSubscribed) {
-          setLoading(false);
+          // setLoading(false);
+          setGalleries(GalleryService.galleries);
         }
       }
     }
-    if (galleries.length === 0 && GalleryService.galleries.length ===0) {
-      // getGalleries();
+    if (GalleryService.getGalleries().length === 0) {
+      getGalleries();
+      // setGalleries(GalleryService.getGalleries());
     } else if (galleries.length === 0 && GalleryService.galleries.length !== 0) {
-      setGalleries(GalleryService.galleries);
-      setLoading(false);
+      // setGalleries(GalleryService.galleries);
+      // setLoading(false);
     } else {
-      setLoading(false);
+      // setLoading(false);
     }
 
     // Only check the resizing every 100ms
@@ -165,6 +167,8 @@ function App() {
       <TuneServiceProvider>
       <AuthProvider>
       <div className="pageContainer">
+        {/* {console.log(GalleryService.getGalleries())} */}
+        {/* {console.log(galleries)} */}
       {/* { loading === false ? */}
       <Router>
         {/* <NavList links={navLinks}></NavList> */}
@@ -176,7 +180,10 @@ function App() {
         }
         <Switch>
           {/* <Route path="/" exact component={() => <Home size={linkSize * 4}></Home>} /> */}
-          <Route path="/" exact component={() => <Home></Home>} />
+          {galleries.length > 0 &&
+            <Route path="/" exact component={() => <Home></Home>} />
+          }
+          {/* <Route path="/" exact component={() => <Home></Home>} /> */}
           <Route path="/Logistics" exact component={() => <TimeAndDate size={linkSize * 4}></TimeAndDate>} />
           {/* <Route path="/Rehearsal" exact component={() => <Rehearsal></Rehearsal>}></Route> */}
           {/* <Route path="/Bachelor" exact component={() => <Bachelor></Bachelor>}></Route> */}
@@ -189,12 +196,17 @@ function App() {
           <Route path="/Registry" exact component={() => <Donations size = {linkSize * 4}></Donations>} />
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries} size = {linkSize * 4}></Gallery>}></Route>
-          <Route path="/Gallery/WeddingParty" exact component={() => <WeddingParties size = {linkSize * 4}></WeddingParties>}></Route>
+          <Route path="/Gallery/WeddingParties" exact component={() => <WeddingParties size = {linkSize * 4}></WeddingParties>}></Route>
           {galleries.map(gallery => 
             <Route path={`/Gallery/${gallery.directory}`} exact component={() => 
               <GalleryPage gallery = {gallery}></GalleryPage>}>
             </Route>
           )}
+          {/* {GalleryService.getGalleries().map(gallery => 
+            <Route path={`/Gallery/${gallery.directory}`} exact component={() => 
+              <GalleryPage gallery = {gallery}></GalleryPage>}>
+            </Route>
+          )} */}
           <Route path = "/FAQ" exact component = {() => <FaqForm size = {linkSize * 4}></FaqForm>}></Route>
           <Route path = "/Sandbox" exact component = {() => <Sandbox></Sandbox>}></Route>
           <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>

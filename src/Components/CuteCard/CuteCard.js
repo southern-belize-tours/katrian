@@ -1,6 +1,7 @@
 import './CuteCard.css';
 import keukenkofPhoto from './Photos/keukenhof.jpg';
-import chamonixPhoto from './Photos/chamonix.jpg';
+// import chamonixPhoto from './Photos/chamonix.jpg';
+import chamonixPhoto from './Photos/chamonix.JPG';
 // import neuschwansteinPhoto from './Photos/neuschwanstein.jpg';
 import matterhornPhoto from './Photos/matterhorn.jpg';
 import tulipPhoto from './Photos/tulip.jpg';
@@ -13,7 +14,7 @@ export default function CuteCard (props) {
     const [transition, setTransition] = useState(true);
 
     useEffect( () => {
-        setTimeout(() => {setTransition(false)}, 100);
+        setTimeout(() => {setTransition(false)}, 0);
     }, [])
 
     return (

@@ -200,6 +200,10 @@ export default class GalleryService {
         }
     }
 
+    getGalleries () {
+        return [...this.galleries]
+    }
+
     async deleteGallery (id) {
         try {
             // First reset the aws bucket to be empty for files starting with the gallery directory

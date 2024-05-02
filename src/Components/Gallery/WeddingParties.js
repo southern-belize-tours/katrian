@@ -68,7 +68,7 @@ export default function WeddingParties (props) {
         }
         <div className={`logisticsText ${textFade ? "fading" : ""}`}>
             <div className="flexed col centered">
-                Wedding Parties
+                Wedding Party
                 <div>
                     {/* Put the long description here once you get connection */}
                 </div>
@@ -83,7 +83,8 @@ export default function WeddingParties (props) {
                 <img src={`${photo}`}
                     loading="lazy">
                 </img>
-                <ImageListItemBar position="below"
+                <ImageListItemBar
+                    position="below"
                     title={weddingPartyTitles[idx]}>
                 </ImageListItemBar>
             </ImageListItem>
