@@ -163,12 +163,23 @@
     ); */
 }
 
+.galleryText {
+    font-family:'Times New Roman', Times, serif;
+    font-size: 1rem;
+}
+
 .adminGalleryContainer {
     width: -webkit-fill-available;
     display: flex;
     flex-direction: column;
     gap: var(--default-gap);
     align-items: center;
+}
+
+@media (max-width: 425px) {
+    .galleryCardContainer {
+        min-width: -webkit-fill-available;
+    }
 }
 
 @keyframes music-load {

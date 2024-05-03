@@ -55,7 +55,7 @@ function Summary (props) {
                 {clock ? <Clock animate={true} size={props.size} fade={fade}></Clock> : <></>}
                 {/* <h1 className={`logisticsText ${textFade ? "" : "fading"}`}>Time and Place Summary</h1> */}
                 {/* <h1 className={`logisticsText ${textFade ? "" : "fading"}`}>Join us for a weekend of celebration and love</h1> */}
-                <div className={`padded-sides flexed col logisticsText ${textFade ? "" : "fading"}`}>
+                <div className={`flexed col logisticsText ${textFade ? "" : "fading"}`}>
                     {/* <div className = "flexed centered">
                         <Restaurant fontSize="2rem" color="primary"></Restaurant>
                         <div>
@@ -88,14 +88,14 @@ function Summary (props) {
                                 </div>
                                 <div className="summaryItemLocation">
                                     <Tooltip title={`${text == "590 Coast S Blvd, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                                        <IconButton onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}>
+                                        {/* <IconButton onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}> */}
                                         {
                                         text == "590 Coast S Blvd, La Jolla, CA 92037" ?
                                         <CheckOutlined color="primary"></CheckOutlined>
                                         :
-                                        <LocationOn color="primary"></LocationOn>
+                                        <LocationOn color="primary" onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}></LocationOn>
                                         }
-                                    </IconButton>
+                                    {/* </IconButton> */}
                                     </Tooltip>
                                     <div>
                                         The Wedding Bowl - <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/Ha4L8fiTvzPPKuKn8" target="_blank" rel="noreferrer" className='secondary'>590 Coast S Blvd, La Jolla, CA 92037</a></Tooltip>
@@ -113,14 +113,14 @@ function Summary (props) {
                                 </div>
                                 <div className="summaryItemLocation">
                                 <Tooltip title={`${text == "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                                    <IconButton onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}>
+                                    {/* <IconButton onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}> */}
                                         {
                                         text == "7776 Eads Ave, La Jolla, CA 92037" ?
                                         <CheckOutlined color="primary"></CheckOutlined>
                                         :
-                                        <LocationOn color="primary"></LocationOn>
+                                        <LocationOn color="primary" onClick = {() => copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}></LocationOn>
                                         }
-                                    </IconButton>
+                                    {/* </IconButton> */}
                                     </Tooltip>
                                     {/* <LocationOn color="primary"></LocationOn>  */}
                                     <div>
@@ -210,14 +210,14 @@ function Summary (props) {
                                 </div>
                                 <div className="summaryItemLocation">
                                     <Tooltip title={`${text == "8030 Girard Ave, La Jolla, La Jolla, CA, 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                                        <IconButton onClick = {() => {copyTextToClipBoard("8030 Girard Ave, La Jolla, La Jolla, CA, 92037")}}>
+                                        {/* <IconButton onClick = {() => {copyTextToClipBoard("8030 Girard Ave, La Jolla, La Jolla, CA, 92037")}}> */}
                                         {
                                         text == "8030 Girard Ave, La Jolla, La Jolla, CA, 92037" ?
-                                        <CheckOutlined color="primary"></CheckOutlined>
+                                        <CheckOutlined color="primary" onClick = {() => {copyTextToClipBoard("8030 Girard Ave, La Jolla, La Jolla, CA, 92037")}}></CheckOutlined>
                                         :
                                         <LocationOn color="primary"></LocationOn>
                                         }
-                                    </IconButton>
+                                    {/* </IconButton> */}
                                     </Tooltip>
                                     {/* <LocationOn color="primary"></LocationOn> */}
                                     <div>

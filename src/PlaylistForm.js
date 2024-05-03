@@ -108,7 +108,7 @@ export default function PlaylistForm () {
     return (
     <div className="weddingBody">
         <ToastContainer></ToastContainer>
-        <h1>Playlist Recommendations</h1>
+        <h1 className="logisticsText fading">Playlist Recommendations</h1>
         <Music size = {400}
             loading={loading}>
         </Music>
