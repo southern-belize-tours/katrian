@@ -256,7 +256,7 @@ export default function AdminGallery (props) {
             <h1 className={`logisticsText ${textFade ? "fading" : ""}`}>
                 Galleries
             </h1>
-            <p className={`logisticsText ${textFade ? "fading" : ""}`}>
+            <p className={`logisticsText ${textFade ? "fading" : ""} galleryText`}>
                 We are thrilled to share our story with you, and to have been a part of your lives. 
                 If you have any photos of our times together we would be ecstatic if you shared them with us on our guest gallery!
             </p>

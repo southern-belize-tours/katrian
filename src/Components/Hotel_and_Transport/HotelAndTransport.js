@@ -20,7 +20,7 @@ export default function HotelAndTransport (props) {
     return (
     <div className="weddingBody">
         <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Travel</h1>
-        <div className={`padded-sides flexed col logisticsText ${fade ? "" : "fading"}`}>
+        <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
             <div className="flexed centered">
                 <div className="flexed col">
                     <div className="flexed logisticsItem centered">
@@ -45,13 +45,13 @@ export default function HotelAndTransport (props) {
                         <div className="flexed centered logisticsAccordionSummary">
                             Inn by The Sea at La Jolla
                         </div>
-                        <div className="padded-left logisticsItem">
+                        <div className="logisticsItem">
                             <LocationOn color="primary"></LocationOn> 7830 Fay Avenue, La Jolla, CA 92037
                         </div>
-                        <div className="padded-left logisticsItem">
+                        <div className="logisticsItem">
                             <LocalOffer color="primary"></LocalOffer> $199.00/night + tax for Standard Room, $289.00/night + tax for Ocean View Room
                         </div>
-                        <div className="padded-left logisticsItem">
+                        <div className="logisticsItem">
                             <Call color="primary"></Call>
                             <div>
                                 To book, call the hotel directly at <a className="secondary">1-800-526-4545</a> and ask for the rate for "Strawick - Feekes Wedding"
@@ -60,34 +60,34 @@ export default function HotelAndTransport (props) {
                         </div>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <DirectionsWalk color="primary"></DirectionsWalk> 1 minute walk to reception venue, 6 minute walk to ceremony site
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <PhotoAlbum color="primary"></PhotoAlbum> <a href="https://www.innbytheseaatlajolla.com/gallery" target="_blank" rel="noreferrer" className="secondary">Official Website Gallery</a>
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <Bed color="primary"></Bed> Choice of a Single King Bed, or Two Queen Beds
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <Balcony color="primary"></Balcony> Balconies/Patios are included with all rooms
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <DoDisturb color="primary"></DoDisturb> 24 hour cancellation policy prior to arrival
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <CalendarMonth color="primary"></CalendarMonth> The hotel can be booked for any/all days August 21st and August 23rd (and a day before or afterwards) at the discounted rate if you are planning on staying just a night, or for the entire weekend.
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <Coffee color="primary"></Coffee> Complimentary Coffee, Tea, Hot Chocolate Daily
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <LocalParking color="primary"></LocalParking> Discounted $10/day parking fee
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <Schedule color="primary"></Schedule> Check-in is 4pm. Check-out is Noon.
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <Info color="primary"></Info> The hotel is in the heart of La Jolla Village and 2 blocks from the ocean. It is walking distance to over 100 restaurants, museums, and shops. There is free wifi throughout the hotel. There is no resort fee. The hotel comes with a heated outdoor swimming pool. Rooms all come with coffee makers, ironing boards and refrigerators. There is no smoking and no pets allowed in the hotel.
                             </div>
                         </AccordionDetails>
@@ -102,31 +102,31 @@ export default function HotelAndTransport (props) {
                             <div className="flexed centered logisticsAccordionSummary">
                                 Scripps Inn La Jolla Cove
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <LocationOn color="primary"></LocationOn> 555 Coast S Blvd, La Jolla, CA 92037
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <LocalOffer color="primary"></LocalOffer>
                                 <div>
                                     10% discount by booking on their <a href="https://scrippsinn.com" className="secondary" target="_blank" rel="noreferrer">hotel website</a> (rather than on booking.com)
                                 </div>
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <Star color="primary"></Star> This is the luxury hotel option. The rooms all have ocean views
                             </div>
                         </div>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <DirectionsWalk color="primary"></DirectionsWalk> 5 minute walk to reception venue, 1 minute walk to ceremony site
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <PhotoAlbum color="primary"></PhotoAlbum> <a href="https://www.scrippsinn.com/gallery"  target="_blank" rel="noreferrer" className="secondary">Official Website Gallery</a>
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <Bed color="primary"></Bed> Choice of a Single King Bed, or Two Queen Beds
                             </div>
-                            <div className="padded-left logisticsItem">
+                            <div className="logisticsItem">
                                 <CalendarMonth color="primary"></CalendarMonth> The hotel does not have any specific blocks for our wedding, and can be booked for any available dates
                             </div>
                         </AccordionDetails>
@@ -141,13 +141,13 @@ export default function HotelAndTransport (props) {
                                     <div className="flexed centered logisticsAccordionSummary">
                                         Other Walking-Distance Hotels in La Jolla
                                     </div>
-                                    <div className="padded-left logisticsItem">
+                                    <div className="logisticsItem">
                                         <InfoOutlined color="primary"></InfoOutlined> These hotels do not have blocks or special discounts for our wedding
                                     </div>
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <a href="https://direct-book.com/properties/RedwoodHollowDirect"
                                         target="_blank"
                                         rel = "noreferrer"
@@ -155,7 +155,7 @@ export default function HotelAndTransport (props) {
                                         Redwood Hollow Cottages
                                     </a>
                                 </div>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <a href="https://stayorli.com/"
                                         target="_blank"
                                         rel = "noreferrer"
@@ -163,7 +163,7 @@ export default function HotelAndTransport (props) {
                                         Orli La Jolla
                                     </a>
                                 </div>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <a href="https://www.empress-hotel.com/"
                                         target="_blank"
                                         rel = "noreferrer"
@@ -171,7 +171,7 @@ export default function HotelAndTransport (props) {
                                         Empress Hotel La Jolla
                                     </a>
                                 </div>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <a href="https://pantai.com/"
                                         target="_blank"
                                         rel = "noreferrer"
@@ -179,7 +179,7 @@ export default function HotelAndTransport (props) {
                                         Pantai Inn
                                     </a>
                                 </div>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <a href="https://cormorantlajolla.com/"
                                         target="_blank"
                                         rel = "noreferrer"
@@ -187,7 +187,7 @@ export default function HotelAndTransport (props) {
                                         Cormorante Boutique Hotel, La Jolla
                                     </a>
                                 </div>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <a href="https://www.lavalencia.com/"
                                         target="_blank"
                                         rel = "noreferrer"
@@ -195,7 +195,7 @@ export default function HotelAndTransport (props) {
                                         La Valencia Hotel
                                     </a>
                                 </div>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <a href="https://www.lajollacove.com/"
                                         target="_blank"
                                         rel = "noreferrer"
@@ -215,15 +215,15 @@ export default function HotelAndTransport (props) {
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <TapAndPlay color="primary"></TapAndPlay> Uber and Lyft ridesharing applications are prominent in San Diego, with Uber being generally more available
                                 </div>
-                                <div className="padded-left logisticsItem">
+                                <div className="logisticsItem">
                                     <AirportShuttle color="primary"></AirportShuttle> 
                                     <div>
                                         For private shuttles, we recommend "Marina's Transportation". Their website is <a className="secondary" href="www.marinastransportation.com" target="_blank" rel="noreferrer">www.marinastransportation.com</a>. Their email is info@marinastransportation.com and their cell is 858-401-0877
                                     </div>
-                                </div><div className="padded-left logisticsItem flexed">
+                                </div><div className="logisticsItem flexed">
                                     <LocalTaxi color="primary"></LocalTaxi> 
                                     <div>
                                         <div>La Jolla Ride (Monty's) 858-405-0877</div>

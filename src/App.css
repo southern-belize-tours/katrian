@@ -428,10 +428,12 @@ a {
 
   .summaryItemTime {
     font-size: .8rem;
+    /* font-size: 1rem; */
   }
 
   .summaryItemName {
-    font-size: 1rem;
+    /* font-size: 1rem; */
+    font-size: .8rem;
   }
 
   .summaryItemLocation {
@@ -445,11 +447,15 @@ a {
   .logisticsItem {
     font-size: .8rem;
   }
+
+  .logisticsAccordionSummary .MuiAccordionSummary-content {
+    font-size: .8rem;
+  }
   
 
 
   .summaryItemLocation {
-    gap: 0px;
+    /* gap: 0px; */
   }
 
 }
