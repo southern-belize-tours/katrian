@@ -80,7 +80,7 @@ function Summary (props) {
                     <div className="summaryItems">
                         <div className="summaryItemInfo">
                             <div className="summaryItemTime">
-                                4:00pm
+                                5:00pm
                             </div>
                             <div className="summaryItemMore">
                                 <div className="summaryItemName">
@@ -105,7 +105,7 @@ function Summary (props) {
                         </div>
                         <div className="summaryItemInfo">
                             <div className="summaryItemTime">
-                                4:30pm
+                                5:30pm
                             </div>
                             <div className="summaryItemMore">
                                 <div className="summaryItemName">
