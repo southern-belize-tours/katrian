@@ -180,6 +180,14 @@
     .galleryCardContainer {
         min-width: -webkit-fill-available;
     }
+
+    .dialogImageContainer {
+        flex: 1 1 auto;
+    }
+
+    .addPhotoDialogContent {
+        padding: 0 var(--default-padding) !important;
+    }
 }
 
 @keyframes music-load {

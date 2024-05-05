@@ -137,21 +137,29 @@ export default function AddPhotoDialog (props) {
                 variant="outlined"
                 startIcon={<CloudUpload/>}>
                 Add Photos
-                <VisuallyHiddenInput type="file"
+                <Button variant="outlined"
+                        component="label"
+                        className="dialogImageContainer addNewImage">
+                        <div className="flexed centered">
+                            <Add fontSize="2rem" color="primary"></Add> Add Images
+                        </div>
+                        {/* Add More Photos */}
+                        <VisuallyHiddenInput type="file"
+                            multiple={true}
+                            onChange = {(e) => {handleFileInputChange(e)}}>
+                        </VisuallyHiddenInput>
+                    </Button>
+                {/* <VisuallyHiddenInput type="file"
                     multiple={true}
                     onChange = {(e) => {handleFileInputChange(e)}}>
-                </VisuallyHiddenInput>
+                </VisuallyHiddenInput> */}
             </Button>
             <Dialog fullWidth={true}
                 open={open}
                 maxWidth = {'xl'}
                 onClose = {() => {setDialogOpen(false);}}>
                 <DialogTitle>Add Photos</DialogTitle>
-                <DialogContent>
-                {/* <VisuallyHiddenInput type="file"
-                    multiple={true}
-                    onChange = {(e) => {handleFileInputChange(e)}}>
-                </VisuallyHiddenInput> */}
+                <DialogContent className="addPhotoDialogContent">
                 <div className="dialogContentImages">
                     {files.map((file, idx) =>
                         <div className="dialogImageContainer">
@@ -177,18 +185,7 @@ export default function AddPhotoDialog (props) {
                             </div>
                         </div>
                     )}
-                    <Button variant="outlined"
-                        component="label"
-                        className="dialogImageContainer addNewImage">
-                        <div className="flexed centered">
-                            <Add fontSize="2rem" color="primary"></Add> Add More Images
-                        </div>
-                        {/* Add More Photos */}
-                        <VisuallyHiddenInput type="file"
-                            multiple={true}
-                            onChange = {(e) => {handleFileInputChange(e)}}>
-                        </VisuallyHiddenInput>
-                    </Button>
+
                     {/* <div className="dialogImageContainer addNewImage">
                         <div className="flexed centered">
                             <Add fontSize="2rem" color="primary"></Add> Add More Images
