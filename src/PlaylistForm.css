@@ -3,6 +3,10 @@
     gap: var(--default-gap);
     flex-wrap: wrap;
     justify-content: center;
+    background: #f8f8f8;
+    padding: var(--default-padding);
+    border-radius: 1rem;
+    flex-direction: column;;
 }
 
 .playlistFormField {
@@ -23,6 +27,22 @@
     flex-wrap: wrap;
     gap: var(--default-gap);
     flex: 1 1 auto;
+}
+
+.errorMessage {
+    font-size: .8rem;
+    color: #d32f2f;
+}
+
+.formFields {
+    display: flex;
+    gap: var(--default-gap);
+    flex-wrap: wrap;
+}
+
+.formActions {
+    display: flex;
+    justify-content: center;
 }
 
 .tuneArtist {

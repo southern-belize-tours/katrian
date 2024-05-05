@@ -94,7 +94,7 @@ function App() {
     {text: "Galleries", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: galleryItems},
     {text: "Cuvier Club", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
     {text: "Playlist", route: "/Playlist", component: <Music size={linkSize}></Music>, items: []},
-    {text: "Registry", route: "https://www.theknot.com/us/ian-feekes-and-katrina-strawick-aug-2025/registry", component: <Gift size={linkSize}></Gift>, items: []},
+    {text: "Registry", route: "/Registry", component: <Gift size={linkSize}></Gift>, items: []},
   ];
 
   const [navLinks, setNavLinks] = React.useState([...links]);

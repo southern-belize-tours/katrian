@@ -85,9 +85,13 @@
 
 .registryItems {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: var(--default-padding);
   flex-wrap: wrap;
+  font-size: 1.3rem !important;
+  font-family: 'Times New Roman', Times, serif !important;
+  font-weight: 400 !important;
+  gap: var(--default-gap) !important;
 }
 
 .MuiImageListItemBar-title {
@@ -107,7 +111,7 @@
   transition: ease-in-out 2s;
   font-family: 'Great Vibes', cursive;
   font-family: 'Dancing Script', cursive;
-  gap: 2rem !important;
+  /* gap: 2rem !important; */
   max-width: 1024px;
   margin: 0px;
 }
