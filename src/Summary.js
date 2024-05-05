@@ -144,7 +144,7 @@ function Summary (props) {
                                 <div className="logisticsItem">
                                     <DirectionsWalk color="primary"></DirectionsWalk>
                                     <div>
-                                        The walk between the ceremony and reception is about <Tooltip title="View Walk on Google Maps"><a href="https://maps.app.goo.gl/9Wikbfou6GdPAasf8" rel="noreferrer" className="secondary" target="_blank">5 minutes long</a></Tooltip>, which includes some stairs and uneven grass. Please plan your shoe choices accordingly.
+                                        The walk between the ceremony and reception is about <Tooltip title="View Walk on Google Maps"><a href="https://maps.app.goo.gl/9Wikbfou6GdPAasf8" rel="noreferrer" className="secondary" target="_blank">5 minutes long</a></Tooltip>, which includes some stairs and uneven grass. Please plan  accordingly.
                                     </div>
                                 </div>
                                 <div className='logisticsItem'>
