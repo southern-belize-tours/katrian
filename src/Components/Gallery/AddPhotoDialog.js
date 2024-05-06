@@ -17,7 +17,7 @@ export default function AddPhotoDialog (props) {
     const [open, setDialogOpen] = useState(false);
     const [files, setFiles] = useState([]);
     const [alts, setAlts] = useState([]);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     const handleFileInputChange = (event) => {
         let newFiles = Array.from(event.target.files);
@@ -88,7 +88,7 @@ export default function AddPhotoDialog (props) {
     }
 
     const handleSave = async () => {
-        setLoading(true);
+        // setLoading(true);
         if (!isValid()) {
             // Do some error setting here
             return;
@@ -96,7 +96,7 @@ export default function AddPhotoDialog (props) {
         // console.log(files);
         let databaseAlts = buildAlts(alts, files);
         await GalleryService.addNewFilesAlts(props.gallery.id, props.gallery.directory, databaseAlts, files);
-        setLoading(false);
+        // setLoading(false);
 
         // close the dialog
         setDialogOpen(false);
@@ -137,22 +137,21 @@ export default function AddPhotoDialog (props) {
                 variant="outlined"
                 startIcon={<CloudUpload/>}>
                 Add Photos
-                <Button variant="outlined"
+                {/* <Button variant="outlined"
                         component="label"
                         className="dialogImageContainer addNewImage">
                         <div className="flexed centered">
                             <Add fontSize="2rem" color="primary"></Add> Add Images
                         </div>
-                        {/* Add More Photos */}
                         <VisuallyHiddenInput type="file"
                             multiple={true}
                             onChange = {(e) => {handleFileInputChange(e)}}>
                         </VisuallyHiddenInput>
-                    </Button>
-                {/* <VisuallyHiddenInput type="file"
+                    </Button> */}
+                <VisuallyHiddenInput type="file"
                     multiple={true}
                     onChange = {(e) => {handleFileInputChange(e)}}>
-                </VisuallyHiddenInput> */}
+                </VisuallyHiddenInput>
             </Button>
             <Dialog fullWidth={true}
                 open={open}

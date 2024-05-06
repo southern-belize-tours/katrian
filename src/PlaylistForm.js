@@ -46,7 +46,7 @@ export default function PlaylistForm () {
             isSubscribed = false;
             setLoading(false);
         }
-    }, []);
+    }, [TuneService]);
 
     const updateCallback = useCallback(async (id, name, artist) => {
         setLoading(true);
@@ -60,7 +60,7 @@ export default function PlaylistForm () {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [TuneService]);
 
     const deleteCallback = useCallback(async (id) => {
         setLoading(true);
@@ -74,7 +74,7 @@ export default function PlaylistForm () {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [TuneService]);
 
     const createTune = async () => {
         if (name.length < 1 || artist.length < 1) {

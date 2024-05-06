@@ -99,6 +99,12 @@ code {
 
 }
 
+.disclaimer {
+  /* font-size: .8rem; */
+  color: #4d4d4d;
+  font-style: italic;
+}
+
 @media(max-width: 1024px) {
   #wedding-parties-image-list {
     grid-template-columns: repeat(4, 1fr) !important;
