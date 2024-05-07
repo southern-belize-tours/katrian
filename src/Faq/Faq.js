@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { BeachAccess, Cancel, Castle, Close, ContactSupport, DirectionsBike, EggAlt, EmojiNature, ExpandMore, GolfCourse, Kayaking, LiquorOutlined, LocalDining, Pets, ScubaDiving, SportsBar, SportsScore, Waves, WineBar, Yard } from "@mui/icons-material";
+import { BeachAccess, Cancel, Castle, Check, Close, ContactSupport, DirectionsBike, EggAlt, EmojiNature, ExpandMore, GolfCourse, Kayaking, LiquorOutlined, LocalDining, Pets, ScubaDiving, SportsBar, SportsScore, Waves, WineBar, Yard } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Button, TextField, Tooltip } from "@mui/material";
 
 import sd_brewing_image from '../images/FAQ/sd_brewing_map.jpg';
@@ -32,6 +32,7 @@ const FaqForm = (props) => {
   const FaqService = useFaqService();
 
   const [fade, setFade] = useState(true);
+  const [error, setError] = useState("");
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState("");
@@ -121,6 +122,7 @@ const FaqForm = (props) => {
 
   const createFaq = async () => {
     if (question.length < 10) {
+      setError("Please specify at least 10 characters of text for your question.")
       return;
     }
     setLoading(true);
@@ -132,6 +134,7 @@ const FaqForm = (props) => {
       });
       setFaqs([...newFaqs]);
       setQuestion("");
+      setError("");
       toast.success("New Question Added Successfully", { autoClose: 2000});
     } catch (error) {
       toast.error("Failure to Add New Question", { autoClose: 2000});
@@ -150,7 +153,7 @@ const FaqForm = (props) => {
         </Question> 
       }
       <h1 className={`logisticsText ${fade ? "" : "fading"}`}>Frequently Asked Questions</h1>
-      {!loading && <Button variant="outlined"
+      {(!loading && !asking) && <Button variant="outlined"
           onClick = {() => {setAsking(!asking)}}>
           {asking ? <><Cancel></Cancel> Cancel</>
           : <><ContactSupport></ContactSupport> Ask a Question</>
@@ -163,13 +166,30 @@ const FaqForm = (props) => {
         <TextField multiline={true}
           placeholder="Will there be vegetarian options?"
           value={question}
+          error={error}
           label="Your Question"
           onChange = {(e) => {setQuestion(e.target.value)}}>
         </TextField>
-        <Button variant="outlined"
-          onClick = {() => {createFaq();}}>
-          Submit Question
-        </Button>
+        {error.length > 0 &&
+          <div className="errorMessage">
+            {error}
+          </div>
+        }
+        <div className="questionFormButtons">
+          <Button variant="outlined"
+            onClick = {() => {createFaq();}}>
+            <Check></Check> Submit Question
+          </Button>
+          <Button variant="outlined"
+            color="secondary"
+            onClick = {() => {
+              setQuestion("");
+              setError("");
+              setAsking(false);
+            }}>
+              <Cancel></Cancel> Cancel
+          </Button>
+        </div>
       </div>
 
       {/* San Diego */}

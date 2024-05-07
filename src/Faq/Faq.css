@@ -36,12 +36,31 @@
     transition: all .3s ease-in-out;
     overflow: hidden;
     width: -webkit-fill-available;
-    padding: 0 var(--default-padding);
+    padding: var(--default-padding);
+    background: #fafafa;
     max-width: 1024px;
+    border-radius: 1rem;
+}
+
+.questionFormButtons {
+    display: flex;
+    gap: var(--default-gap);
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.questionFormButtons button {
+    flex: 1 1 auto; 
+}
+
+.questionForm .MuiInputBase-root,
+.questionForm button {
+    background: white;
 }
 
 .questionForm.closed {
     max-height: 0px;
+    padding: 0; 
     overflow: hidden;
 }
 

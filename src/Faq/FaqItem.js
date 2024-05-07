@@ -12,9 +12,11 @@ export const FaqItem = ({faq, answerCallback, pinCallback, deleteCallback}) => {
     return (
     <div key={`faq-item-${faq.answer && faq.answer.length ? "answered" : "unanswered"}-${faq.id}`}
         className="faqItem">
-        <PushPin color="primary"
-            className = {`faqPin ${faq.pinned ? "pinned" : ""}`}>
-        </PushPin>
+        <Tooltip title={`${faq.pinned ? "The Planners have Pinned this Question." : ""}`}>
+            <PushPin color="primary"
+                className = {`faqPin ${faq.pinned ? "pinned" : ""}`}>
+            </PushPin>
+        </Tooltip>
         <div className="faqBody">
             <div className="faqQuestion">{faq.question}</div>
             {faq.answer && faq.answer.length &&

@@ -315,7 +315,8 @@ export default function AdminGallery (props) {
                     { files.length > 0 &&
                         <div className="thumbnailImageReel">
                             {files.map((file, idx) => 
-                                <div className="thumbnailImageContainer">
+                                <div className="thumbnailImageContainer"
+                                    key={`gallery-thumbnail-${idx}`}>
                                     <img className="thumbnailImage" src={file.url} alt={`thumbnail-${idx}`}/>
                                     <Tooltip title="Edit Image Description">
                                         <IconButton variant="outlined"
@@ -354,6 +355,7 @@ export default function AdminGallery (props) {
             {galleries.map(gallery =>
                 user && user.isSignedIn ?
                 <GalleryItem gallery = {gallery}
+                    key={`Gallery-item-${gallery.id}`}
                     editing = {gallery.id === editing}
                     setEditingCallback = {setEditingCallback}
                     updateCallback = {updateCallback}
@@ -362,6 +364,7 @@ export default function AdminGallery (props) {
                 </GalleryItem>
                 :
                 <GalleryCard gallery = {gallery}
+                    key={`Gallery-card-${gallery.id}`}
                     loading = {loading}>
                 </GalleryCard>
                 // <div className="padded-top-bottom">

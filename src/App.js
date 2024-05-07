@@ -31,7 +31,7 @@ import CuvierClubHistory from './Components/CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
 import Cuvier from './page_art/cuvier/Cuvier.js';
 import { TuneServiceProvider } from './Services/TuneService/TuneServiceContext.js';
-import {BrunchDining, Collections } from '@mui/icons-material';
+import {AutoStories, BrunchDining, CloudUploadOutlined, Collections, DiamondOutlined } from '@mui/icons-material';
 import Ceremony from './Ceremony.js';
 import Brunch from './Brunch.js';
 import { useGalleryService } from './Services/GalleryService/GalleryServiceContext.js';
@@ -55,7 +55,11 @@ const timeAndPlaceItems = [
 
 const galleryItems = [
   {text: "All Galleries", route: "/Gallery", component:<Collections color="primary" fontSize="small"></Collections>},
+  {text: "Our Story", route: "/Gallery/Story", component: <AutoStories color="primary" fontSize="small"></AutoStories>},
+  {text: "Proposal", route: "/Gallery/Proposal", component: <DiamondOutlined color="primary" fontSize="small"></DiamondOutlined>},
   {text: "Wedding Party", route: "/Gallery/WeddingParties", component: <BrunchDining color="primary" fontSize="small"></BrunchDining>},
+  {text: "Guest Uploads", route: "/Gallery/GuestUploads", component: <CloudUploadOutlined color="primary" fontSize="small"></CloudUploadOutlined>},
+
 ];
 
 function debounce(fn, ms) {
@@ -140,10 +144,10 @@ function App() {
     }
 
     if (galleries.length === 0) {
-      getGalleries();
+      // getGalleries();
       // setGalleries(GalleryService.fetchGalleryLinks());
     } else if (galleries.length === 0 && GalleryService.galleries.length !== 0) {
-      getGalleries();
+      // getGalleries();
       // setGalleries(GalleryService.galleries);
       // setLoading(false);
     } else {
@@ -178,9 +182,9 @@ function App() {
         }
         <Switch>
           {/* <Route path="/" exact component={() => <Home size={linkSize * 4}></Home>} /> */}
-          {galleries.length > 0 &&
+          {/* {galleries.length > 0 && */}
             <Route path="/" exact component={() => <Home></Home>} />
-          }
+          {/* // } */}
           {/* <Route path="/" exact component={() => <Home></Home>} /> */}
           <Route path="/Logistics" exact component={() => <TimeAndDate size={linkSize * 4}></TimeAndDate>} />
           {/* <Route path="/Rehearsal" exact component={() => <Rehearsal></Rehearsal>}></Route> */}
@@ -192,13 +196,16 @@ function App() {
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries} size = {linkSize * 4}></Gallery>}></Route>
           <Route path="/Gallery/WeddingParties" exact component={() => <WeddingParties size = {linkSize * 4}></WeddingParties>}></Route>
-          {galleries.map(gallery => 
-            <Route path={`/Gallery/${gallery.directory}`}
-              key = {`gallery-route-${gallery.directory}`}
-              exact component={() => 
-              <GalleryPage gallery = {gallery}></GalleryPage>}>
-            </Route>
-          )}
+
+          <Route path="/Gallery/Proposal"
+            exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
+          </Route>
+          <Route path="/Gallery/GuestUploads"
+            exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
+          </Route>
+          <Route path="/Gallery/Story"
+            exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
+          </Route>
           <Route path = "/FAQ" exact component = {() => <FaqForm size = {linkSize * 4}></FaqForm>}></Route>
           <Route path = "/Sandbox" exact component = {() => <Sandbox></Sandbox>}></Route>
           <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>
