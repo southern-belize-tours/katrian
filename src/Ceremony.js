@@ -60,7 +60,7 @@ export default function Ceremony (props) {
                         <WbShade color="primary"></WbShade> The reception will be indoors.
                     </div>
                     <div className="padded-left logisticsItem">
-                        <Thermostat color="primary"></Thermostat> The average La Jolla weather has daily high temperatures around 76 F. Weather rarely exceeds 84 F and rarely dips below 68 F at this time of year. Augusts is quite dry and averages 3 days with rain each year.
+                        <Thermostat color="primary"></Thermostat> The average La Jolla weather has daily high temperatures around 76 F. Weather rarely exceeds 84 F and rarely dips below 68 F at this time of year. August is quite dry and averages 3 days with rain each year.
                     </div>
                     <div className="padded-left logisticsItem">
                         <QuestionMark color="primary"></QuestionMark> Looking for things to do during the day? Look at our <a href="/FAQ#San-Diego-Activities" className="secondary">San Diego Activities</a> section of the FAQ page.
