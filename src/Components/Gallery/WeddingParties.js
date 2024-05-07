@@ -34,7 +34,6 @@ const weddingPartyTitles = [
     "Anshuman Kowtha - Groomsman",
     "Samuel Mandel - Groomsman",
     "Michael Botfeld - Groomsman",
-
     "Smita Carvalho - Maid of Honor",
     "Gianna Memo - Bridesmaid",
     "Marissa Quilici - Bridesmaid",
@@ -56,7 +55,7 @@ export default function WeddingParties (props) {
         setTimeout(() => {
             setTextFade(true);
         }, 500);
-    })
+    }, [])
 
     return (
     <div className="weddingBody">
@@ -81,6 +80,7 @@ export default function WeddingParties (props) {
         { weddingPartyImages.map((photo, idx) =>
             <ImageListItem key={`wedding-party-image-${idx}`}>
                 <img src={`${photo}`}
+                    alt={`Wedding Party ${idx}`}
                     loading="lazy">
                 </img>
                 <ImageListItemBar

@@ -10,7 +10,7 @@ export default function GalleryCard (props) {
     const history = useHistory();
 
     const [photos, setPhotos] = useState([]);
-    const [loading, setLoading] = useState(props.loading);
+    const [, setLoading] = useState(props.loading);
 
     useEffect(() => {
         let isSubscribed = true;
@@ -36,19 +36,17 @@ export default function GalleryCard (props) {
             isSubscribed = false;
             setLoading(false);
         }
-    }, []);
+    }, [GalleryService, props.gallery.directory]);
 
     return (
     <Tooltip title = {`Navigate to ${props.gallery.name}`}>
         <div className="galleryCardContainer"
             onClick = {() => {history.push("/Gallery/" + props.gallery.directory)}}
             style={{backgroundImage: `url(${photos[0] ? photos[0].url: ""})`}}>
-            {/* Gallery Card Works */}
             <div className="galleryTitle">
                 {props.gallery.name}
                 <div className="galleryLine"></div>
             </div>
-            {/* <div className="galleryLine"></div> */}
         </div>
     </Tooltip>
     )

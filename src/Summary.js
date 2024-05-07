@@ -1,13 +1,8 @@
-// import clock from './images/clock.png'
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-// import { Add } from '@mui/icons-material';
-import CelebrationIcon from '@mui/icons-material/Celebration';
 import Clock from './page_art/clock/clock.js'
 import { useEffect, useState } from 'react';
-import { AttachMoney, Check, CheckOutlined, Close, Deck, Dining, DirectionsWalk, Diversity1, Diversity2, EggAlt, ExpandMore, LocalParking, LocationOn, Nightlife, QuestionMark, Restaurant, Thermostat, WbShade, WbSunny } from '@mui/icons-material';
-import { Accordion, AccordionDetails, AccordionSummary, IconButton, Tooltip } from '@mui/material';
+import { AttachMoney, CheckOutlined, Close, Deck, Dining, DirectionsWalk, ExpandMore, LocalParking,
+    LocationOn, Nightlife, QuestionMark, Thermostat, WbShade, WbSunny } from '@mui/icons-material';
+import { Accordion, AccordionDetails, AccordionSummary, Tooltip } from '@mui/material';
 
 function Summary (props) {
     const [fade, setFade] = useState(false);
@@ -67,7 +62,6 @@ function Summary (props) {
                     </div> */}
                     <div className="summaryDay">
                     <div className = "flexed centered summaryItemHeading">
-                        {/* <Diversity1 fontSize="2rem" color="primary"></Diversity1> */}
                         <div>
                             <div className="summaryItemTitle">
                                 Wedding Day
@@ -87,15 +81,13 @@ function Summary (props) {
                                     Ceremony
                                 </div>
                                 <div className="summaryItemLocation">
-                                    <Tooltip title={`${text == "590 Coast S Blvd, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                                        {/* <IconButton onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}> */}
+                                    <Tooltip title={`${text === "590 Coast S Blvd, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
                                         {
-                                        text == "590 Coast S Blvd, La Jolla, CA 92037" ?
+                                        text === "590 Coast S Blvd, La Jolla, CA 92037" ?
                                         <CheckOutlined color="primary"></CheckOutlined>
                                         :
                                         <LocationOn color="primary" onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}></LocationOn>
                                         }
-                                    {/* </IconButton> */}
                                     </Tooltip>
                                     <div>
                                         The Wedding Bowl - <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/Ha4L8fiTvzPPKuKn8" target="_blank" rel="noreferrer" className='secondary'>590 Coast S Blvd, La Jolla, CA 92037</a></Tooltip>
@@ -112,24 +104,18 @@ function Summary (props) {
                                     Reception
                                 </div>
                                 <div className="summaryItemLocation">
-                                <Tooltip title={`${text == "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                                    {/* <IconButton onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}> */}
+                                <Tooltip title={`${text === "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
                                         {
-                                        text == "7776 Eads Ave, La Jolla, CA 92037" ?
+                                        text === "7776 Eads Ave, La Jolla, CA 92037" ?
                                         <CheckOutlined color="primary"></CheckOutlined>
                                         :
                                         <LocationOn color="primary" onClick = {() => copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}></LocationOn>
                                         }
-                                    {/* </IconButton> */}
                                     </Tooltip>
-                                    {/* <LocationOn color="primary"></LocationOn>  */}
                                     <div>
                                         Cuvier Club -  <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/fCQhffHZshgdnUam8" target="_blank" rel="noreferrer" className="secondary">7776 Eads Ave, La Jolla, CA 92037</a></Tooltip>
                                     </div>
                                 </div>
-                                {/* <div className="summaryItemLocation">
-                                    Immediately Following Ceremony
-                                </div> */}
                             </div>
                         </div>
                         <Tooltip title={`${weddingNotesExpanded ? "" : "View Wedding Day Notes"}`}>
@@ -144,7 +130,7 @@ function Summary (props) {
                                 <div className="logisticsItem">
                                     <DirectionsWalk color="primary"></DirectionsWalk>
                                     <div>
-                                        The walk between the ceremony and reception is about <Tooltip title="View Walk on Google Maps"><a href="https://maps.app.goo.gl/9Wikbfou6GdPAasf8" rel="noreferrer" className="secondary" target="_blank">5 minutes long</a></Tooltip>, which includes some stairs and uneven grass. Please plan your shoe choices accordingly.
+                                        The walk between the ceremony and reception is about <Tooltip title="View Walk on Google Maps"><a href="https://maps.app.goo.gl/9Wikbfou6GdPAasf8" rel="noreferrer" className="secondary" target="_blank">5 minutes long</a></Tooltip>, which includes some stairs and uneven grass. Please plan  accordingly.
                                     </div>
                                 </div>
                                 <div className='logisticsItem'>
@@ -209,24 +195,18 @@ function Summary (props) {
                                     Brunch
                                 </div>
                                 <div className="summaryItemLocation">
-                                    <Tooltip title={`${text == "8030 Girard Ave, La Jolla, La Jolla, CA, 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                                        {/* <IconButton onClick = {() => {copyTextToClipBoard("8030 Girard Ave, La Jolla, La Jolla, CA, 92037")}}> */}
+                                    <Tooltip title={`${text === "8030 Girard Ave, La Jolla, La Jolla, CA, 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
                                         {
-                                        text == "8030 Girard Ave, La Jolla, La Jolla, CA, 92037" ?
+                                        text === "8030 Girard Ave, La Jolla, La Jolla, CA, 92037" ?
                                         <CheckOutlined color="primary" onClick = {() => {copyTextToClipBoard("8030 Girard Ave, La Jolla, La Jolla, CA, 92037")}}></CheckOutlined>
                                         :
                                         <LocationOn color="primary"></LocationOn>
                                         }
-                                    {/* </IconButton> */}
                                     </Tooltip>
-                                    {/* <LocationOn color="primary"></LocationOn> */}
                                     <div>
                                         La Jolla Covehouse - <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/7z2Feyod7zQVfgNr8" target="_blank" rel="noreferrer" className="secondary">8030 Girard Ave, La Jolla, La Jolla, CA, 92037</a></Tooltip>
                                     </div>
                                 </div>
-                                {/* <div className="summaryItemLocation">
-                                    Sponsored Event
-                                </div> */}
                             </div>
                         </div>
                         <div className="summaryItemInfo">

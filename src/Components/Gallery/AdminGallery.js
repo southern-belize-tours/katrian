@@ -1,13 +1,13 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import { useGalleryService } from "../../Services/GalleryService/GalleryServiceContext";
-import { Accordion, AccordionDetails, AccordionSummary, Button, Checkbox, FormControlLabel, IconButton, Input, TextField, Tooltip } from "@mui/material";
-import { Abc, Add, Cancel, Close, CloudUpload, Delete, Save } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Checkbox, FormControlLabel, IconButton,
+    TextField, Tooltip } from "@mui/material";
+import { Abc, Add, Close, CloudUpload, Delete, Save } from "@mui/icons-material";
 import { ToastContainer, toast } from "react-toastify";
 
 
 import './Gallery.css';
-import { VisuallyHidden } from "@aws-amplify/ui-react";
 import styled from "@emotion/styled";
 import GalleryItem from "./GalleryItem";
 import Camera from "../../page_art/camera/camera";
@@ -43,7 +43,7 @@ export default function AdminGallery (props) {
     const [files, setFiles] = useState([]);
     const [description ,setDescription] = useState("");
     const [error, setError] = useState("");
-    const [alts, setAlts] = useState([])
+    // const [alts, setAlts] = useState([])
     const [adminUploadOnly, setAdminUploadOnly] = useState(false);
     const [editing, setEditing] = useState(-1);
 
@@ -83,7 +83,7 @@ export default function AdminGallery (props) {
             isSubscribed = false;
             setLoading(false);
         }
-    }, []);
+    }, [GalleryService]);
 
     const deleteCallback = useCallback(async (galleryItem) => {
         setLoading(true);
@@ -101,7 +101,7 @@ export default function AdminGallery (props) {
             toast.error("Failure to Remove Gallery")
             setLoading(false);
         }
-    })
+    }, [GalleryService, galleries.length])
 
     const updateCallback = useCallback(async (id, galleryItem, files) => {
         setLoading(true);
@@ -119,7 +119,7 @@ export default function AdminGallery (props) {
         } finally {
             setLoading(false);
         }
-    })
+    }, [GalleryService, galleries.length])
 
     /**
      * When pencil icon is clicked, determines which of the admin items is being edited
@@ -132,7 +132,7 @@ export default function AdminGallery (props) {
         } else {
             setEditing(id);
         }
-    })
+    }, [editing])
 
     /**
      * Resets the form fields to default values, called on creation
@@ -143,7 +143,7 @@ export default function AdminGallery (props) {
         setFolder("");
         setDescription("");
         setError("");
-        setAlts([]);
+        // setAlts([]);
         setAdminUploadOnly(false);
     }
 
@@ -243,7 +243,6 @@ export default function AdminGallery (props) {
         setFiles([...newFiles]);
     }
 
-
     return (
         <div className="adminGalleryContainer">
         <ToastContainer></ToastContainer>
@@ -316,8 +315,9 @@ export default function AdminGallery (props) {
                     { files.length > 0 &&
                         <div className="thumbnailImageReel">
                             {files.map((file, idx) => 
-                                <div className="thumbnailImageContainer">
-                                    <img className="thumbnailImage" src={file.url}/>
+                                <div className="thumbnailImageContainer"
+                                    key={`gallery-thumbnail-${idx}`}>
+                                    <img className="thumbnailImage" src={file.url} alt={`thumbnail-${idx}`}/>
                                     <Tooltip title="Edit Image Description">
                                         <IconButton variant="outlined"
                                             color="primary"
@@ -355,6 +355,7 @@ export default function AdminGallery (props) {
             {galleries.map(gallery =>
                 user && user.isSignedIn ?
                 <GalleryItem gallery = {gallery}
+                    key={`Gallery-item-${gallery.id}`}
                     editing = {gallery.id === editing}
                     setEditingCallback = {setEditingCallback}
                     updateCallback = {updateCallback}
@@ -363,6 +364,7 @@ export default function AdminGallery (props) {
                 </GalleryItem>
                 :
                 <GalleryCard gallery = {gallery}
+                    key={`Gallery-card-${gallery.id}`}
                     loading = {loading}>
                 </GalleryCard>
                 // <div className="padded-top-bottom">

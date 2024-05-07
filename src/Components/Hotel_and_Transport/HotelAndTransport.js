@@ -1,5 +1,7 @@
-import { AirportShuttle, Balcony, Bed, Bolt, CalendarMonth, Call, Close, Coffee, DirectionsWalk, DoDisturb, ExpandMore, Info, InfoOutlined, Link, LocalOffer, LocalParking, LocalTaxi, LocationOn, PhotoAlbum, PriorityHigh, PriorityHighOutlined, Schedule, Star, TapAndPlay } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Button, Tooltip } from "@mui/material";
+import { AirportShuttle, Balcony, Bed, CalendarMonth, Call, Close, Coffee, DirectionsWalk, DoDisturb,
+    ExpandMore, Info, InfoOutlined, LocalOffer, LocalParking, LocalTaxi, LocationOn, PhotoAlbum,
+    PriorityHighOutlined, Schedule, Star, TapAndPlay } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function HotelAndTransport (props) {
@@ -10,11 +12,9 @@ export default function HotelAndTransport (props) {
     const [transportExpanded, setTransportExpanded] = useState(false);
 
     useEffect(() => {
-        let fadeTimeoutId = null;
-        fadeTimeoutId = setTimeout(() => {
+        setTimeout(() => {
             setFade(false);
         }, 0);
-
     }, [])
 
     return (
@@ -54,7 +54,8 @@ export default function HotelAndTransport (props) {
                         <div className="logisticsItem">
                             <Call color="primary"></Call>
                             <div>
-                                To book, call the hotel directly at <a className="secondary">1-800-526-4545</a> and ask for the rate for "Strawick - Feekes Wedding"
+                                {/* @TODO Figure out how to make this "call x" action */}
+                                To book, call the hotel directly at <span className="secondary">1-800-526-4545</span> and ask for the rate for "Strawick - Feekes Wedding"
                             </div>
                         </div>
                         </div>

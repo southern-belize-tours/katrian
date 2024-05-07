@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import Gift from './page_art/gift/gift';
-import RegistryItem from './Components/Registry/RegistryItem';
-
-import sealImage from './images/Gallery/seals.png';
 import { Tooltip } from '@mui/material';
 
 function TimeAndDate(props) {
@@ -31,10 +28,18 @@ function TimeAndDate(props) {
             We thank you for your thoughtful gifts and are genuinely grateful for anything you provide.
           </div>
           <div>
-            <Tooltip title="Open Registry in New Tab"><a href="https://www.theknot.com/us/ian-feekes-and-katrina-strawick-aug-2025/registry" className="secondary" target="_blank" rel="noreferrer">Registry</a></Tooltip>
+            <Tooltip title="Open Registry in New Tab"><a href="https://www.theknot.com/us/ian-feekes-and-katrina-strawick-aug-2025/registry" className="secondary" target="_blank" rel="noreferrer">Registry via The Knot</a></Tooltip>
+          </div>
+          <div className="padded-left">
+            Or
           </div>
           <div>
-            Honeymoon Fund - <Tooltip title="Open Paypal Link in New Tab"><a target="_blank" rel="noreferrer" href="https://www.paypal.com/donate/?hosted_button_id=V3GYH73CW9HN6" className="secondary">Paypal</a></Tooltip>
+            <div>
+              Honeymoon Fund - <Tooltip title="Open Paypal Link in New Tab"><a target="_blank" rel="noreferrer" href="https://www.paypal.com/donate/?hosted_button_id=V3GYH73CW9HN6" className="secondary">Paypal*</a></Tooltip>
+            </div>
+            <div className="disclaimer">
+              * To avoid fees from registry sites on monetary donations, we have created a donation link through Ian’s business paypal account Placencia Action Tours.
+            </div>
           </div>
       </div>
     </div>

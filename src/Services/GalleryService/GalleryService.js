@@ -36,6 +36,22 @@ export default class GalleryService {
         }
     }
 
+    async fetchGalleryLinks () {
+        if (this.galleries.length) {
+            return this.galleries;
+        }
+        try {
+            const newGalleries = await client.graphql({
+                query: listGalleries
+            });
+            this.galleries = [...newGalleries.data.listGalleries.items];
+            return [...this.galleries]
+        } catch (e) {
+            console.log("Error fetching Gallery Links")
+            return -1;
+        }
+    }
+
     // async removeGallery (gallery) {
 
     // }

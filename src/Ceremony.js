@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
-import cuvierClub3 from './images/Cuvier/CuvierClub3.jpg';
-import cuvierClub4 from './images/Cuvier/CuvierClub4.avif';
-import cuvierClubOutside from './images/Cuvier/cuvier_club_outside.webp';
 
-import { AccessTime, CalendarMonth, Deck, Dining, DirectionsWalk, Diversity1, EditNote, Liquor, LocalParking, LocationOn, MenuBook, MusicNote, Nightlife, Park, QuestionMark, Thermostat, WbShade, WbSunny } from "@mui/icons-material";
+import {Deck, DirectionsWalk, Diversity1, EditNote, LocalParking, LocationOn, Nightlife, QuestionMark,
+    Thermostat, WbShade, WbSunny } from "@mui/icons-material";
 
 export default function Ceremony (props) {
     const [fade, setFade] = useState(true);
 
     useEffect(() => {
-        let fadeTimeoutId = null;
-        fadeTimeoutId = setTimeout(() => {
+        setTimeout(() => {
             setFade(false);
         }, 0);
 

@@ -29,11 +29,6 @@
     flex: 1 1 auto;
 }
 
-.errorMessage {
-    font-size: .8rem;
-    color: #d32f2f;
-}
-
 .formFields {
     display: flex;
     gap: var(--default-gap);
