@@ -39,6 +39,8 @@ import HotelAndTransport from './Components/Hotel_and_Transport/HotelAndTranspor
 import GalleryPage from './Components/Gallery/GalleryPage.js';
 import WeddingParties from './Components/Gallery/WeddingParties.js';
 import BobsBurger from './Components/BobsBurger/BobsBurger.js';
+import Envelope from './page_art/envelope/envelope.js';
+import RSVP from './Components/RSVP/RSVP.js';
 
 Amplify.configure(awsconfig);
 
@@ -94,7 +96,8 @@ function App() {
     {text: "Travel", route: "/Hotels-and-Transport", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
     {text: "FAQ", route: "/FAQ", component: <Question size={linkSize}></Question>, items: []},
     {text: "Galleries", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: galleryItems},
-    {text: "Cuvier Club History", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
+    // {text: "Cuvier Club History", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
+    {text: "RSVP", route: "/RSVP", component: <Envelope size={linkSize}></Envelope>, items: []},
     {text: "Playlist", route: "/Playlist", component: <Music size={linkSize}></Music>, items: []},
     {text: "Registry", route: "/Registry", component: <Gift size={linkSize}></Gift>, items: []},
   ];
@@ -196,7 +199,10 @@ function App() {
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries} size = {linkSize * 4}></Gallery>}></Route>
           <Route path="/Gallery/WeddingParties" exact component={() => <WeddingParties size = {linkSize * 4}></WeddingParties>}></Route>
-
+          <Route path="/RSVP"
+            exact component = {() => <RSVP size = {linkSize * 4}></RSVP>}>
+            {/* exact component = {() => <div>Foo</div>}> */}
+          </Route>
           <Route path="/Gallery/Proposal"
             exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
           </Route>

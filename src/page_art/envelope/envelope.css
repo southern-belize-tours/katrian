@@ -1,0 +1,57 @@
+.envelopeContainer {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.envelopeBox {
+    height: 62.5%;
+    width: 75%;
+    border: solid var(--clr-lavender);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.envelopeTopFold {
+    position: absolute;
+    top: -73%;
+    border: solid var(--clr-lavender);
+    height: 100%;
+    width: 100%;
+    transform: rotate(45deg);
+}
+
+.envelopeBottomFold {
+    position: absolute;
+    top: 66%;
+    background-color: white;
+    border: solid var(--clr-lavender);
+    height: 100%;
+    width: 100%;
+    transform: rotate(45deg);
+}
+
+.envelopeLetter {
+    position: absolute;
+    height: 27%;
+    width: 42%;
+    top: 3%;
+    background: white;
+    border: solid var(--clr-lavender);
+    border-bottom-width: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.envelopeText {
+    font-weight: bold;
+    color: var(--clr-lavender);
+}
