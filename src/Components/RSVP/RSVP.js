@@ -76,6 +76,7 @@ export default function RSVP (props) {
     const guestService = useGuestService();
 
     const [groups, setGroups] = useState([]);
+    const [selecting, setSelecting] = useState(false);
     const [fade, setFade] = useState(true);
     const [people_selected, set_people_selected] = useState([]);
     const [group, setGroup] = useState(null);
@@ -187,6 +188,7 @@ export default function RSVP (props) {
                 if (val === false) {
                     newPeople[i].attending_brunch = false;
                     newPeople[i].attending_rehearsal = false;
+                    newPeople[i].attending_happy_hour = false;
                 }
                 const guestData = {
                     "id": newPeople[i].id,
@@ -194,16 +196,14 @@ export default function RSVP (props) {
                     "last": newPeople[i].last,
                     "attending_ceremony": newPeople[i].attending_ceremony,
                     "attending_rehearsal": newPeople[i].attending_rehearsal,
-                    "attending_brunch": newPeople[i].attending_brunch
+                    "attending_brunch": newPeople[i].attending_brunch,
+                    "attending_happy_hour": newPeople[i].attending_happy_hour,
                 }
                 await guestService.updateGuest(guestData);
                 break;
             }
         }
         set_people_selected(newPeople);
-        // let newGroup = {...group};
-        // newGroup.guests = [...newPeople];
-        // setGroup({...newGroup});
         setLoading(false);
     }
 
@@ -216,7 +216,7 @@ export default function RSVP (props) {
 
                 // They'd better be coming to the ceremony if they are going to brunch/rehearsal
                 if (val === true) {
-                    newPeople[i].attending = true;
+                    newPeople[i].attending_ceremony = true;
                 }
                 const guestData = {
                     "id": newPeople[i].id,
@@ -225,6 +225,35 @@ export default function RSVP (props) {
                     "attending_ceremony": newPeople[i].attending_ceremony,
                     "attending_rehearsal": newPeople[i].attending_rehearsal,
                     "attending_brunch": newPeople[i].attending_brunch,
+                    "attending_happy_hour": newPeople[i].attending_happy_hour,
+                }
+                await guestService.updateGuest(guestData);
+                break;
+            }
+        }
+        set_people_selected(newPeople);
+        setLoading(false);
+    }
+
+    const setAttendingHappyHour = async (person, val) => {
+        setLoading(true);
+        let newPeople = [...people_selected];
+        for (let i = 0; i < newPeople.length; ++i ) {
+            if (newPeople[i].first === person.first && newPeople[i].last === person.last) {
+                newPeople[i].attending_happy_hour = val;
+
+                // They'd better be coming to the ceremony if they are going to brunch/rehearsal
+                if (val === true) {
+                    newPeople[i].attending_ceremony = true;
+                }
+                const guestData = {
+                    "id": newPeople[i].id,
+                    "first": newPeople[i].first,
+                    "last": newPeople[i].last,
+                    "attending_ceremony": newPeople[i].attending_ceremony,
+                    "attending_rehearsal": newPeople[i].attending_rehearsal,
+                    "attending_brunch": newPeople[i].attending_brunch,
+                    "attending_happy_hour": newPeople[i].attending_happy_hour,
                 }
                 await guestService.updateGuest(guestData);
                 break;
@@ -250,7 +279,8 @@ export default function RSVP (props) {
                     "last": newPeople[i].last,
                     "attending_ceremony": newPeople[i].attending_ceremony,
                     "attending_rehearsal": newPeople[i].attending_rehearsal,
-                    "attending_brunch": newPeople[i].attending_brunch
+                    "attending_brunch": newPeople[i].attending_brunch,
+                    "attending_happy_hour": newPeople[i].attending_happy_hour,
                 }
                 await guestService.updateGuest(guestData);
                 break;
@@ -279,9 +309,12 @@ export default function RSVP (props) {
                     <Tooltip title="Return to Group Search">
                         <IconButton variant="outlined"
                             onClick = {() => {
+                                setPeopleConfirmed(false);
                                 setSearch("");
+                                set_people_selected([]);
                                 setMatchedGroups([]);
                                 setGroup(null);
+                                setSelecting(false);
                             }}
                             color="primary">
                             <Undo color="primary"></Undo>
@@ -289,7 +322,7 @@ export default function RSVP (props) {
                     </Tooltip>
                 }
             </h1>
-            <div>
+            <div className="flexed logisticsItem centered">
                 We kindly ask you to pre-RSVP on our website. This is an early RSVP without the commitment, but will help give us a guest estimate (guestimate). You can update your status later as the date approaches.
             </div>
             {group === null ?
@@ -297,12 +330,12 @@ export default function RSVP (props) {
                 <div className="flexed logisticsItem centered">
                     Search for your party by names to RSVP
                 </div>
-                {!loading &&
                 <div className="searchFieldContainer">
                     <TextField id="wedding-group-search"
                         className="weddingGroupSearchField"
                         placeholder="Doe"
                         value = {search}
+                        disabled = {loading}
                         label = "Last Name"
                         onChange = {(e) => {
                             setSearch(e.target.value)
@@ -329,11 +362,15 @@ export default function RSVP (props) {
                             }
                         }}>
                     </TextField>
+                    {loading ?
+                    <ClipLoader className="iconLoader searchFieldIcon"></ClipLoader>
+                    :
                     <Search color="primary"
                         className="searchFieldIcon">
                     </Search>
+                    }
+                    
                 </div>
-                }
                 <div className="flexed col">
                     {matchedGroups.map(group =>
                     <Tooltip title="Select this Group">
@@ -368,54 +405,72 @@ export default function RSVP (props) {
                 {!peopleConfirmed ? 
                 <div className="flexed col">
                     { people_selected.length < group.guests.length &&
-                        <div className="flexed logisticsItem centered">
-                            Add the people in your group whom you are RSVPing on behalf of.
+                        <div>
+                            <div className="flexed logisticsItem centered">
+                                Are you RSVPing on behalf of your entire group? Or are you booking for just a few members?
+                            </div>
+                            <div className="groupChoiceButtons">
+                                <Button variant="contained"
+                                    color="primary"
+                                    onClick = {() => {
+                                        set_people_selected([...group.guests]);
+                                        setPeopleConfirmed(true);
+                                    }}>
+                                    <GroupAdd></GroupAdd> RSVP for Group
+                                </Button>
+                                <Button variant="contained"
+                                    color="primary"
+                                    onClick = {() => {
+                                        setSelecting(true);
+                                    }}>
+                                    <PersonAdd></PersonAdd> Select Member(s)
+                                </Button>
+                            </div>
                         </div>
                     }
-                    <div className="peopleSelection">
-                        {people_selected.length < group.guests.length &&
-                        <Button variant="contained"
-                            onClick = {() => {set_people_selected([...group.guests])}}>
-                            <GroupAdd></GroupAdd> Add All
-                        </Button>
+
+                    {selecting === true &&
+                    <>
+                    {people_selected.length < group.guests.length &&
+                        <>
+                            <div className="flexed logisticsItem centered">
+                                Add the people in your group whom you are RSVPing on behalf of.
+                            </div>
+                            <div className="peopleSelection">
+                                {/* {people_selected.length < group.guests.length &&
+                                <Button variant="contained"
+                                    onClick = {() => {set_people_selected([...group.guests])}}>
+                                    <GroupAdd></GroupAdd> Add All
+                                </Button>
+                                } */}
+                                {group.guests.map(person =>
+                                    !people_selected.find(p => p.first === person.first && p.last === person.last) &&
+                                    <Tooltip title = {`RSVP on behalf of ${person.first}`}>
+                                        <Button variant="outlined"
+                                            onClick = {() => {set_people_selected([...people_selected, {...person}])}}>
+                                            <PersonAdd></PersonAdd> {person.first} {person.last}
+                                        </Button>
+                                    </Tooltip>
+                                )}
+                            </div>
+                        </>
                         }
-                        {group.guests.map(person =>
-                            !people_selected.find(p => p.first === person.first && p.last === person.last) &&
-                            <Tooltip title = {`RSVP on behalf of ${person.first}`}>
+                        { people_selected.length > 0 &&
+                            <div className="flexed logisticsItem centered">
+                                I am RSVPing for:
+                            </div>
+                        }
+                        <div className="peopleSelected">
+                            {people_selected.map(person =>
+                            <Tooltip title = {`Let ${person.first} RSVP themself`}>
                                 <Button variant="outlined"
-                                    onClick = {() => {set_people_selected([...people_selected, {...person}])}}>
-                                    <PersonAdd></PersonAdd> {person.first} {person.last}
+                                    onClick = {() => {removeSelected(person)}}
+                                    color="secondary">
+                                    {person.first} {person.last} <CancelOutlined></CancelOutlined>
                                 </Button>
                             </Tooltip>
-                        )}
-                    </div>
-                    { people_selected.length > 0 &&
-                        <div className="flexed logisticsItem centered">
-                            I am RSVPing for:
+                            )}
                         </div>
-                    }
-                    <div className="peopleSelected">
-                        {people_selected.map(person =>
-                        <Tooltip title = {`Let ${person.first} RSVP themself`}>
-                            <Button variant="outlined"
-                                onClick = {() => {removeSelected(person)}}
-                                color="secondary">
-                                {person.first} {person.last} <CancelOutlined></CancelOutlined>
-                            </Button>
-                        </Tooltip>
-                        )}
-                    </div>
-                    <div className="rsvpButtonPanel">
-                        <Button color="secondary"
-                            onClick = {() => {
-                                set_people_selected([]);
-                                setGroup(null);
-                                setSearch("");
-                                setMatchedGroups([]);
-                            }}
-                            variant="outlined">
-                            <Undo></Undo> Return to Group Search
-                        </Button>
                         <Tooltip title = {`${people_selected.length === 0 ? "Select at least 1 person to RSVP on behalf of" : ""}`}>
                             <Button color="primary"
                                 onClick = {() => {
@@ -426,7 +481,21 @@ export default function RSVP (props) {
                                 <Check></Check> Confirm
                             </Button>
                         </Tooltip>
-                    </div>
+                    </>
+                    }
+
+                    {/* <div className="rsvpButtonPanel">
+                        <Button color="secondary"
+                            onClick = {() => {
+                                set_people_selected([]);
+                                setGroup(null);
+                                setSearch("");
+                                setMatchedGroups([]);
+                            }}
+                            variant="outlined">
+                            <Undo></Undo> Return to Group Search
+                        </Button>
+                    </div> */}
                 </div>
                 :
                 <>
@@ -515,10 +584,6 @@ export default function RSVP (props) {
                         </div>
                     </div>
                 </Tooltip>
-                {/* <div className="summaryItemLocation">
-                    <InfoOutlined color="primary"></InfoOutlined>
-                    
-                </div> */}
                 <div className="RSVPForm">
                     {
                         people_selected.map(person => 
@@ -577,8 +642,6 @@ export default function RSVP (props) {
                         <div className="RSVPFormField">
                             <div>
                                 {person.first}
-                                {/* {person.attending == true ? "attending" : "not attending"} */}
-                                {/* {person.attending} */}
                             </div>
                             <div className="RSVPAcceptReject">
                                 <Button variant={`${person.attending_brunch ? "contained" : "outlined"}`}
@@ -598,6 +661,60 @@ export default function RSVP (props) {
                     )
                     }
                 </div>
+
+                {/* Happy Hour */}
+                {group.invited_happy_hour &&
+                <>
+                <div className="summaryItemName">
+                    Happy Hour
+                </div>
+                <div className="summaryItemLocation">
+                    <CalendarMonth color="primary"></CalendarMonth>
+                    <div>
+                        Saturday, August 23rd, 2025
+                    </div>
+                </div>
+                <Tooltip title={`${text === "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
+                    <div className="summaryItemLocation textCopy"
+                        onClick = {() => {copyTextToClipBoard("TBD")}}>
+                            {
+                            text === "TBD" ?
+                            <CheckOutlined color="primary"></CheckOutlined>
+                            :
+                            <LocationOn color="primary"></LocationOn>
+                            }
+                        <div>
+                            TBD
+                        </div>
+                    </div>
+                </Tooltip>
+                <div className="RSVPForm">
+                    {
+                        people_selected.map(person => 
+                        <div className="RSVPFormField">
+                            <div>
+                                {person.first}
+                            </div>
+                            <div className="RSVPAcceptReject">
+                                <Button variant={`${person.attending_happy_hour ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttendingHappyHour(person, true)}}
+                                    disabled = {loading}
+                                    color="primary">
+                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
+                                </Button>
+                                <Button variant={`${person.attending_happy_hour ? "outlined" : "contained"}`}
+                                    onClick = {() => {setAttendingHappyHour(person, false)}}
+                                    disabled = {loading}
+                                    color="secondary">
+                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                    }
+                </div>
+                </>
+                }
 {/* 
                 <table className='attendingTable'>
                     <tr>
