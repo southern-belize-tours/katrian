@@ -404,7 +404,7 @@ export default function RSVP (props) {
             <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
                 {!peopleConfirmed ? 
                 <div className="flexed col">
-                    { people_selected.length < group.guests.length &&
+                    { people_selected.length < group.guests.length && selecting === false &&
                         <div>
                             <div className="flexed logisticsItem centered">
                                 Are you RSVPing on behalf of your entire group? Or are you booking for just a few members?
