@@ -86,3 +86,9 @@
     gap: var(--default-gap);
     justify-content: space-around;
 }
+
+.groupChoiceButtons {
+    display: flex;
+    gap: var(--default-gap);
+    justify-content: space-around;
+}
