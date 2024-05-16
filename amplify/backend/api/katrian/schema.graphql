@@ -1,3 +1,27 @@
+type Group @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  invited_rehearsal: Boolean
+  address: String
+  city: String
+  state: String
+  email: String
+  Guest_ids: [String]
+  zip: String
+  invited_happy_hour: String
+  phone: String
+}
+
+type Guest @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  first: String
+  last: String
+  attending_ceremony: Boolean
+  attending_brunch: Boolean
+  attending_rehearsal: Boolean
+  attending_happy_hour: Boolean
+}
+
 type Gallery @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String

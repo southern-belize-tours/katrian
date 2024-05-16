@@ -3,6 +3,10 @@ import { useEffect, useState } from "react";
 import './RSVP.css';
 import { Button, Checkbox, IconButton, TextField, Tooltip } from "@mui/material";
 import { Add, CalendarMonth, Cancel, CancelOutlined, Check, CheckOutlined, GroupAdd, InfoOutlined, LocationOn, PersonAdd, Search, Undo } from "@mui/icons-material";
+import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
+import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
+import { toast, ToastContainer} from 'react-toastify';
+import { ClipLoader } from "react-spinners";
 
 const group1 = {
     rehearsal: true,
@@ -63,7 +67,15 @@ const allGroups = [
 //     }
 // ]}]
 
+const toastConfig = {
+    autoClose: 2000
+};
+
 export default function RSVP (props) {
+    const groupService = useGroupService();
+    const guestService = useGuestService();
+
+    const [groups, setGroups] = useState([]);
     const [fade, setFade] = useState(true);
     const [people_selected, set_people_selected] = useState([]);
     const [group, setGroup] = useState(null);
@@ -73,12 +85,57 @@ export default function RSVP (props) {
     const [text, setText] = useState("");
     const [matchedGroups, setMatchedGroups] = useState([]);
     const [peopleConfirmed, setPeopleConfirmed] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        let isSubscribed = true;
+        let isSubscribedGuest = true;
+        setLoading(true);
+
+        const getGroups = async () => {
+            try {
+                const groupData = await groupService.getGroups();
+                if (isSubscribed) {
+                    setGroups(groupData);
+                }
+            } catch (e) {
+                console.log("RSVP Component: Error retrieving groups", e);
+                toast.error("Failure to Retrieve Groups.", toastConfig)
+            }
+        }
+
+        const getGuests = async () => {
+            try {
+                const guestData = await guestService.getGuests();
+                if (isSubscribedGuest) {
+                    setAllPeople(guestData);
+                    const newGroups = await createGroupToGuestArray();
+                    setGroups(newGroups);
+                }
+            } catch (e) {
+                console.log("Group Component: Error retrieving guests", e);
+                toast.error("Failure to Retrieve Guests.", toastConfig)
+            } finally {
+                if (isSubscribedGuest) {
+                    setLoading(false);
+                }
+            }
+        }
+
+
         // Set text fading animation
         setTimeout(() => {
             setFade(false);
         }, 0);
+
+        getGroups();
+        getGuests();
+        
+        return () => {
+            isSubscribed = false;
+            isSubscribedGuest = false;
+            setLoading(false);
+        }
 
         // Delete this block when we get the backend connected
         // let newPeople = [...people]
@@ -89,13 +146,28 @@ export default function RSVP (props) {
         // setPeople([...newPeople]);
 
         // Get the people from all wedding groups to be searchable
-        const tempAllPeople = [];
-        allGroups.forEach(group => {
-            tempAllPeople.push(...group.people);
-        });
-        setAllPeople([...tempAllPeople]);
+        // const tempAllPeople = [];
+        // allGroups.forEach(group => {
+        //     tempAllPeople.push(...group.guests);
+        // });
+        // setAllPeople([...tempAllPeople]);
 
-    }, [])
+    }, [groupService, guestService])
+
+    const createGroupToGuestArray = async () => {
+        const guestData = await guestService.getGuests();
+        const newGroups = await groupService.getGroups();
+        for (let i = 0; i < newGroups.length; ++i) {
+            const newGuests = [];
+            for (let j = 0; j < newGroups[i].Guest_ids.length; ++j) {
+                const currId = newGroups[i].Guest_ids[j];
+                const guest = guestData.find(g => g.id === currId);
+                newGuests.push({...guest});
+            }
+            newGroups[i].guests = newGuests;
+        }
+        return newGroups;
+    }
 
     const copyTextToClipBoard = (text) => {
         navigator.clipboard.writeText(text).then(function() {
@@ -105,61 +177,87 @@ export default function RSVP (props) {
         });
     }
 
-    const setAttending = (person, val) => {
-        let newPeople = [...group.people];
+    const setAttending = async (person, val) => {
+        setLoading(true);
+        let newPeople = [...people_selected];
         for (let i = 0; i < newPeople.length; ++i ) {
             if (newPeople[i].first === person.first && newPeople[i].last === person.last) {
-                newPeople[i].attending = val;
+                newPeople[i].attending_ceremony = val;
                 // If they aren't going to the ceremony they don't get to go to rehearsal or brunch
                 if (val === false) {
-                    newPeople[i].attendingBrunch = false;
-                    newPeople[i].attendingRehearsal = false;
+                    newPeople[i].attending_brunch = false;
+                    newPeople[i].attending_rehearsal = false;
                 }
+                const guestData = {
+                    "id": newPeople[i].id,
+                    "first": newPeople[i].first,
+                    "last": newPeople[i].last,
+                    "attending_ceremony": newPeople[i].attending_ceremony,
+                    "attending_rehearsal": newPeople[i].attending_rehearsal,
+                    "attending_brunch": newPeople[i].attending_brunch
+                }
+                await guestService.updateGuest(guestData);
                 break;
             }
         }
-        let newGroup = {...group};
-        newGroup.people = [...newPeople];
-        setGroup({...newGroup});
-        // setPeople([...newPeople]);
+        set_people_selected(newPeople);
+        // let newGroup = {...group};
+        // newGroup.guests = [...newPeople];
+        // setGroup({...newGroup});
+        setLoading(false);
     }
 
-    const setAttendingBrunch = (person, val) => {
-        let newPeople = [...group.people];
+    const setAttendingBrunch = async (person, val) => {
+        setLoading(true);
+        let newPeople = [...people_selected];
         for (let i = 0; i < newPeople.length; ++i ) {
             if (newPeople[i].first === person.first && newPeople[i].last === person.last) {
-                newPeople[i].attendingBrunch = val;
+                newPeople[i].attending_brunch = val;
 
                 // They'd better be coming to the ceremony if they are going to brunch/rehearsal
                 if (val === true) {
                     newPeople[i].attending = true;
                 }
+                const guestData = {
+                    "id": newPeople[i].id,
+                    "first": newPeople[i].first,
+                    "last": newPeople[i].last,
+                    "attending_ceremony": newPeople[i].attending_ceremony,
+                    "attending_rehearsal": newPeople[i].attending_rehearsal,
+                    "attending_brunch": newPeople[i].attending_brunch,
+                }
+                await guestService.updateGuest(guestData);
                 break;
             }
         }
-        let newGroup = {...group};
-        newGroup.people = [...newPeople];
-        setGroup({...newGroup});
-        // setPeople([...newPeople]);
+        set_people_selected(newPeople);
+        setLoading(false);
     }
 
-    const setAttendingRehearsal = (person, val) => {
-        let newPeople = [...group.people];
+    const setAttendingRehearsal = async (person, val) => {
+        setLoading(true);
+        let newPeople = [...people_selected];
         for (let i = 0; i < newPeople.length; ++i ) {
             if (newPeople[i].first === person.first && newPeople[i].last === person.last) {
-                newPeople[i].attendingRehearsal = val;
-
+                newPeople[i].attending_rehearsal = val;
                 // They'd better be coming to the ceremony if they are going to brunch/rehearsal
                 if (val === true) {
-                    newPeople[i].attending = true;
+                    newPeople[i].attending_ceremony = true;
                 }
+                const guestData = {
+                    "id": newPeople[i].id,
+                    "first": newPeople[i].first,
+                    "last": newPeople[i].last,
+                    "attending_ceremony": newPeople[i].attending_ceremony,
+                    "attending_rehearsal": newPeople[i].attending_rehearsal,
+                    "attending_brunch": newPeople[i].attending_brunch
+                }
+                await guestService.updateGuest(guestData);
                 break;
             }
         }
-        let newGroup = {...group};
-        newGroup.people = [...newPeople];
-        setGroup({...newGroup});
-        // setPeople([...newPeople]);
+        set_people_selected(newPeople);
+        setLoading(false);
     }
 
     const removeSelected = (person) => {
@@ -199,7 +297,7 @@ export default function RSVP (props) {
                 <div className="flexed logisticsItem centered">
                     Search for your party by names to RSVP
                 </div>
-                {/* <div>Search for your group</div> */}
+                {!loading &&
                 <div className="searchFieldContainer">
                     <TextField id="wedding-group-search"
                         className="weddingGroupSearchField"
@@ -212,11 +310,11 @@ export default function RSVP (props) {
                                 setMatchedGroups([]);
                             } else {
                                 let newMatchedGroups = [];
-                                allGroups.forEach(group => {
+                                groups.forEach(group => {
                                     let groupContainsSearch = false;
-                                    for (let i = 0; i < group.people.length; ++i) {
-                                        if (group.people[i].first.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                                            group.people[i].last.toLowerCase().includes(e.target.value.toLowerCase())) {
+                                    for (let i = 0; i < group.guests.length; ++i) {
+                                        if (group.guests[i].first.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                                            group.guests[i].last.toLowerCase().includes(e.target.value.toLowerCase())) {
                                                 groupContainsSearch = true;
                                                 break;
                                             }
@@ -226,31 +324,30 @@ export default function RSVP (props) {
                                         newMatchedGroups.push({...group});
                                     }
                                 })
-                                setMatchedGroups([...newMatchedGroups]);
+                                setMatchedGroups(newMatchedGroups)
                                 // setMatchedGroups(allPeople.filter(person => person.first.toLowerCase().includes(search.toLowerCase()) || person.last.toLowerCase().includes(search.toLowerCase())));
                             }
-                            // allPeople.filter(person)
-                            // return people.filter(person => person.last.toLowerCase() === lastName.toLowerCase());
-                            // return people.filter(person => person.last.toLowerCase() === lastName.toLowerCase());
                         }}>
-                            {/* <Search color="primary"
-                        className="searchFieldIcon">
-                    </Search> */}
                     </TextField>
                     <Search color="primary"
                         className="searchFieldIcon">
                     </Search>
                 </div>
+                }
                 <div className="flexed col">
                     {matchedGroups.map(group =>
                     <Tooltip title="Select this Group">
                     <div className="matchedGroup padded"
-                        onClick={() => {setGroup(group)}}>
-                        {group.people.map(person => 
+                        onClick={() => {
+                            setGroup(group)
+                            // If there is only one guest we can skip the selection step
+                            if (group.guests.length < 2) {
+                                set_people_selected([...group.guests]);
+                                setPeopleConfirmed(true);
+                            }
+                        }}>
+                        {group.guests.map(person => 
                             <div>
-                                {/* <div> */}
-                                    {/* {person.first} */}
-                                {/* </div> */}
                                 <div>
                                     {person.first} {person.last}
                                 </div>
@@ -268,22 +365,21 @@ export default function RSVP (props) {
             :
 
             <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
-
                 {!peopleConfirmed ? 
                 <div className="flexed col">
-                    { people_selected.length < group.people.length &&
+                    { people_selected.length < group.guests.length &&
                         <div className="flexed logisticsItem centered">
                             Add the people in your group whom you are RSVPing on behalf of.
                         </div>
                     }
                     <div className="peopleSelection">
-                        {people_selected.length < group.people.length &&
+                        {people_selected.length < group.guests.length &&
                         <Button variant="contained"
-                            onClick = {() => {set_people_selected([...group.people])}}>
+                            onClick = {() => {set_people_selected([...group.guests])}}>
                             <GroupAdd></GroupAdd> Add All
                         </Button>
                         }
-                        {group.people.map(person =>
+                        {group.guests.map(person =>
                             !people_selected.find(p => p.first === person.first && p.last === person.last) &&
                             <Tooltip title = {`RSVP on behalf of ${person.first}`}>
                                 <Button variant="outlined"
@@ -326,7 +422,6 @@ export default function RSVP (props) {
                                     setPeopleConfirmed(true);
                                 }}
                                 disabled = {people_selected.length === 0}
-                                // disabled = {true}
                                 variant="outlined">
                                 <Check></Check> Confirm
                             </Button>
@@ -336,7 +431,7 @@ export default function RSVP (props) {
                 :
                 <>
                 {/* Rehearsal */}
-                { group.rehearsal == true &&
+                { group.invited_rehearsal == true &&
                 <>
                 <div className="summaryItemName">
                     Rehearsal
@@ -377,15 +472,16 @@ export default function RSVP (props) {
                                 {/* {person.attending} */}
                             </div>
                             <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attendingRehearsal ? "contained" : "outlined"}`}
+                                <Button variant={`${person.attending_rehearsal ? "contained" : "outlined"}`}
                                     onClick = {() => {setAttendingRehearsal(person, true)}}
+                                    disabled = {loading}
                                     color="primary">
-                                    <Check></Check> Accept
+                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Check></Check>} Accept
                                 </Button>
-                                <Button variant={`${person.attendingRehearsal ? "outlined" : "contained"}`}
+                                <Button variant={`${person.attending_rehearsal ? "outlined" : "contained"}`}
                                     onClick = {() => {setAttendingRehearsal(person, false)}}
                                     color="secondary">
-                                    <CancelOutlined></CancelOutlined> Decline
+                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
                                 </Button>
                             </div>
                         </div>
@@ -433,15 +529,17 @@ export default function RSVP (props) {
                                 {/* {person.attending} */}
                             </div>
                             <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attending ? "contained" : "outlined"}`}
+                                <Button variant={`${person.attending_ceremony ? "contained" : "outlined"}`}
                                     onClick = {() => {setAttending(person, true)}}
+                                    disabled = {loading}
                                     color="primary">
-                                    <Check></Check> Accept
+                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
                                 </Button>
-                                <Button variant={`${person.attending ? "outlined" : "contained"}`}
+                                <Button variant={`${person.attending_ceremony ? "outlined" : "contained"}`}
                                     onClick = {() => {setAttending(person, false)}}
+                                    disabled = {loading}
                                     color="secondary">
-                                    <CancelOutlined></CancelOutlined> Decline
+                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
                                 </Button>
                             </div>
                         </div>
@@ -483,15 +581,17 @@ export default function RSVP (props) {
                                 {/* {person.attending} */}
                             </div>
                             <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attendingBrunch ? "contained" : "outlined"}`}
+                                <Button variant={`${person.attending_brunch ? "contained" : "outlined"}`}
                                     onClick = {() => {setAttendingBrunch(person, true)}}
+                                    disabled = {loading}
                                     color="primary">
-                                    <Check></Check> Accept
+                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
                                 </Button>
-                                <Button variant={`${person.attendingBrunch ? "outlined" : "contained"}`}
+                                <Button variant={`${person.attending_brunch ? "outlined" : "contained"}`}
                                     onClick = {() => {setAttendingBrunch(person, false)}}
+                                    disabled = {loading}
                                     color="secondary">
-                                    <CancelOutlined></CancelOutlined> Decline
+                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
                                 </Button>
                             </div>
                         </div>
@@ -506,7 +606,7 @@ export default function RSVP (props) {
                         <th>Attending Ceremony</th>
                         <th>Attending Brunch</th>
                     </tr>
-                    {group.people.map(person =>
+                    {group.guests.map(person =>
                         <tr>
                             <td className="maxCell">{person.first} {person.last}</td>
                             <td>

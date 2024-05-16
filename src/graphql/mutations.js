@@ -1,6 +1,94 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createGroup = `
+  mutation CreateGroup(
+    $input: CreateGroupInput!
+    $condition: ModelGroupConditionInput
+  ) {
+    createGroup(input: $input, condition: $condition) {
+      id
+      title
+      invited_rehearsal
+      address
+      city
+      state
+      email
+      zip
+      invited_happy_hour
+      phone
+      Guest_ids
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+
+export const createGuest = `
+  mutation CreateGuest(
+    $input: CreateGuestInput!
+    $condition: ModelGuestConditionInput
+  ) {
+    createGuest(input: $input, condition: $condition) {
+      id
+      first
+      last
+      attending_ceremony
+      attending_brunch
+      attending_rehearsal
+      attending_happy_hour
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+
+export const updateGroup = `
+  mutation UpdateGroup(
+    $input: UpdateGroupInput!
+    $condition: ModelGroupConditionInput
+  ) {
+    updateGroup(input: $input, condition: $condition) {
+      id
+      title
+      invited_rehearsal
+      address
+      city
+      state
+      zip
+      invited_happy_hour
+      phone
+      email
+      Guest_ids
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`
+
+export const updateGuest = `
+  mutation UpdateGuest(
+    $input: UpdateGuestInput!
+    $condition: ModelGuestConditionInput
+  ) {
+    updateGuest(input: $input, condition: $condition) {
+      id
+      first
+      last
+      attending_ceremony
+      attending_brunch
+      attending_rehearsal
+      attending_happy_hour
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+
 export const createFaq = /* GraphQL */ `
   mutation CreateFaq(
     $input: CreateFaqInput!
@@ -52,6 +140,51 @@ export const deleteFaq = /* GraphQL */ `
     }
   }
 `;
+
+export const deleteGroup = `
+  mutation DeleteGroup(
+    $input: DeleteGroupInput!
+    $condition: ModelGroupConditionInput
+  ) {
+    deleteGroup(input: $input, condition: $condition) {
+      id
+      title
+      invited_rehearsal
+      address
+      city
+      state
+      email
+      zip
+      invited_happy_hour
+      phone
+      Guest_ids
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+
+export const deleteGuest = `
+  mutation DeleteGuest(
+    $input: DeleteGuestInput!
+    $condition: ModelGuestConditionInput
+  ) {
+    deleteGuest(input: $input, condition: $condition) {
+      id
+      first
+      last
+      attending_ceremony
+      attending_brunch
+      attending_rehearsal
+      attending_happy_hour
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+
 export const createTune = /* GraphQL */ `
   mutation CreateTune(
     $input: CreateTuneInput!

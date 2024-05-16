@@ -371,6 +371,10 @@ a {
   max-width: 100%;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
 .col {
   flex-direction: column;
 }
