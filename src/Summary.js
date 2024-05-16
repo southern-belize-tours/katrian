@@ -209,7 +209,7 @@ function Summary (props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="summaryItemInfo">
+                        {/* <div className="summaryItemInfo">
                             <div className="summaryItemTime">
                                 5:00pm
                             </div>
@@ -223,11 +223,8 @@ function Summary (props) {
                                     TBD
                                 </div>
                             </div>
-                                {/* <div className="summaryItemLocation">
-                                    This is not a Sponsored Event, but everyone is invited
-                                </div> */}
                             </div>
-                        </div>
+                        </div> */}
                         <Tooltip title={`${brunchNotesExpanded ? "" : "View Brunch and Chill Day Notes"}`}>
                         <Accordion id="Wedding-Notes"
                             expanded = {brunchNotesExpanded}>

@@ -518,7 +518,7 @@ export default function GroupCreate (props) {
                             </div>
                             <div>
                             <Checkbox value = {invitedHappyHour}
-                                defaultChecked = {props.group && props.group.invitedHappyHour === true}
+                                defaultChecked = {props.group && props.group.invited_happy_hour === true}
                                 label = "Invited to Happy Hour"
                                 onChange = {(e) => {setInvitedHappyHour(e.target.checked)}}>
                             </Checkbox> Invited to Happy Hour
