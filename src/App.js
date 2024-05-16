@@ -2,6 +2,7 @@ import './App.css';
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+
 import { SignInForm } from './SignInForm/SignInForm.js';
 import Home from './Home.js';
 import TimeAndDate from './TimeAndDate.js';
@@ -39,6 +40,16 @@ import HotelAndTransport from './Components/Hotel_and_Transport/HotelAndTranspor
 import GalleryPage from './Components/Gallery/GalleryPage.js';
 import WeddingParties from './Components/Gallery/WeddingParties.js';
 import BobsBurger from './Components/BobsBurger/BobsBurger.js';
+import Envelope from './page_art/envelope/envelope.js';
+import RSVP from './Components/RSVP/RSVP.js';
+import GroupCreateForm from './ui-components/GroupCreateForm.jsx';
+import GroupUpdateForm from './ui-components/GroupUpdateForm.jsx';
+import Groups from './Components/Groups/Groups.js';
+import GroupService from './Services/GroupService/GroupService.js';
+import { GroupServiceProvider } from './Services/GroupService/GroupServiceContext.js';
+import GroupCreate from './Components/Groups/GroupCreate.js';
+import { GuestServiceProvider } from './Services/GuestService/GuestServiceContext.js';
+import Guests from './Components/Groups/Guests.js';
 
 Amplify.configure(awsconfig);
 
@@ -94,7 +105,8 @@ function App() {
     {text: "Travel", route: "/Hotels-and-Transport", component: <Clock size={linkSize}></Clock>, items: timeAndPlaceItems},
     {text: "FAQ", route: "/FAQ", component: <Question size={linkSize}></Question>, items: []},
     {text: "Galleries", route: "/Gallery", component: <Camera size={linkSize}></Camera>, items: galleryItems},
-    {text: "Cuvier Club History", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
+    // {text: "Cuvier Club History", route: "/CuvierClubHistory", component: <Cuvier size={linkSize}></Cuvier>, items: []},
+    {text: "RSVP", route: "/RSVP", component: <Envelope size={linkSize}></Envelope>, items: []},
     {text: "Playlist", route: "/Playlist", component: <Music size={linkSize}></Music>, items: []},
     {text: "Registry", route: "/Registry", component: <Gift size={linkSize}></Gift>, items: []},
   ];
@@ -170,6 +182,8 @@ function App() {
     <ThemeProvider theme = {theme}>
       <FaqServiceProvider>
       <TuneServiceProvider>
+      <GroupServiceProvider>
+      <GuestServiceProvider>
       <AuthProvider>
       <div className="pageContainer">
       <Router>
@@ -196,7 +210,10 @@ function App() {
           <Route path="/Playlist" component={Playlist}></Route>
           <Route path="/Gallery" exact component={() => <Gallery galleries = {galleries} size = {linkSize * 4}></Gallery>}></Route>
           <Route path="/Gallery/WeddingParties" exact component={() => <WeddingParties size = {linkSize * 4}></WeddingParties>}></Route>
-
+          <Route path="/RSVP"
+            exact component = {() => <RSVP size = {linkSize * 4}></RSVP>}>
+            {/* exact component = {() => <div>Foo</div>}> */}
+          </Route>
           <Route path="/Gallery/Proposal"
             exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
           </Route>
@@ -209,11 +226,19 @@ function App() {
           <Route path = "/FAQ" exact component = {() => <FaqForm size = {linkSize * 4}></FaqForm>}></Route>
           <Route path = "/Sandbox" exact component = {() => <Sandbox></Sandbox>}></Route>
           <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>
+          <Route path = "/Group" exact component = {() => <>
+            {/* <GroupCreate></GroupCreate> */}
+            {/* <Guests></Guests> */}
+            <Groups></Groups>
+            {/* <GroupUpdateForm></GroupUpdateForm> */}
+            </>}></Route>
         </Switch>
       </Router>
       {/* <div className="loadingSpinner"></div> */}
       </div>
       </AuthProvider>
+      </GuestServiceProvider>
+      </GroupServiceProvider>
       </TuneServiceProvider>
       </FaqServiceProvider>
     </ThemeProvider>

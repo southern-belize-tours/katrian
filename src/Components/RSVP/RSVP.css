@@ -1,0 +1,88 @@
+.RSVPForm {
+    display: flex;
+    gap: var(--default-gap);
+    flex-direction: column;
+    padding-left: var(--default-padding);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.2rem;
+}
+
+.RSVPFormField {
+    display: flex;
+    gap: var(--default-gap);
+    flex-direction: row;
+}
+
+.RSVPAcceptReject {
+    flex: 1 1 auto;
+    display: flex;
+    gap: var(--default-gap);
+    justify-content: flex-end;
+}
+
+.searchFieldContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.searchFieldIcon {
+    position: absolute;
+    right: var(--default-padding);
+    /* right: calc(350px - var(--default-padding)); */
+}
+
+.weddingGroupSearchField {
+    width: 350px;
+}
+
+.matchedGroup {
+    background: #fafafa;
+    border: solid 2px #fafafa;
+    border-radius: 1rem;
+    display: flex;
+    gap: var(--default-gap);
+    flex-direction: column;
+    align-items: center;    
+    justify-content: center;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.matchedGroup:hover {
+    border-color: var(--clr-lavender);
+}
+
+.attendingTable {
+    font-size: 1.5rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.attendingTable tr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.attendingTable th {
+    font-weight: 700;
+}
+
+.attendingTable td {
+    font-weight: 500;
+}
+
+.maxCell {
+    width: 100%;
+}
+
+.peopleSelection, .peopleSelected {
+    display: flex;
+    gap: var(--default-gap);
+}
+
+.rsvpButtonPanel {
+    display: flex;
+    gap: var(--default-gap);
+    justify-content: space-around;
+}

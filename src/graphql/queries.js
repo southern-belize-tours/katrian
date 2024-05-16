@@ -95,30 +95,6 @@ export const listGalleries = /* GraphQL */ `
   }
 `;
 
-// export const listGallerys = /* GraphQL */ `
-//   query ListGallerys(
-//     $filter: ModelGalleryFilterInput
-//     $limit: Int
-//     $nextToken: String
-//   ) {
-//     listGallerys(filter: $filter, limit: $limit, nextToken: $nextToken) {
-//       items {
-//         id
-//         name
-//         long_description
-//         alts
-//         directory
-//         admin_upload_only
-//         createdAt
-//         updatedAt
-//         __typename
-//       }
-//       nextToken
-//       __typename
-//     }
-//   }
-// `;
-
 export const getGallery = /* GraphQL */ `
   query getGallery($id: ID!) {
     getGallery(id: $id) {
@@ -130,6 +106,81 @@ export const getGallery = /* GraphQL */ `
       admin_upload_only
       createdAt
       updatedAt
+      __typename
+    }
+  }
+`;
+
+export const getGroup = `
+  query getGroup($id: ID!) {
+    getGroup(id: $id) {
+      id
+      title
+      invited_rehearsal
+      address
+      city
+      state
+      email
+      zip
+      invited_happy_hour
+      phone
+      Guest_ids
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+
+export const listGroups = /* GraphQL */ `
+  query ListGroups(
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        invited_rehearsal
+        address
+        city
+        state
+        email
+        zip
+        invited_happy_hour
+        phone
+        Guest_ids
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+
+export const listGuests = /* GraphQL */ `
+  query ListGuests(
+    $filter: ModelGuestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGuests(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        first
+        last
+        attending_ceremony
+        attending_brunch
+        attending_rehearsal
+        attending_happy_hour
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
       __typename
     }
   }

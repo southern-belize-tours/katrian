@@ -6,6 +6,16 @@
   --clr-secondary: #a7b69d;
 }
 
+.textCopy {
+  cursor: pointer;
+  transition: all .2s;
+  border-radius: 1rem;
+}
+
+.textCopy:hover {
+  background: #fafafa;
+}
+
 .addPhotoLoader {
   height: 15rem !important;
   width: 15rem !important;
@@ -359,6 +369,10 @@ a {
   display: flex !important;
   gap: var(--default-gap);
   max-width: 100%;
+}
+
+.wrap {
+  flex-wrap: wrap;
 }
 
 .col {

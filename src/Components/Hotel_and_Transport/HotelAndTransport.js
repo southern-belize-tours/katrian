@@ -222,7 +222,7 @@ export default function HotelAndTransport (props) {
                                 <div className="logisticsItem">
                                     <AirportShuttle color="primary"></AirportShuttle> 
                                     <div>
-                                        For private shuttles, we recommend "Marina's Transportation". Their website is <a className="secondary" href="www.marinastransportation.com" target="_blank" rel="noreferrer">www.marinastransportation.com</a>. Their email is info@marinastransportation.com and their cell is 858-401-0877
+                                        For private shuttles, we recommend "Martina's Transportation". Their website is <a className="secondary" href="https://martinastransportation.com" target="_blank" rel="noreferrer">www.martinastransportation.com</a>. Their email is info@marinastransportation.com and their cell is 858-401-0877
                                     </div>
                                 </div><div className="logisticsItem flexed">
                                     <LocalTaxi color="primary"></LocalTaxi> 

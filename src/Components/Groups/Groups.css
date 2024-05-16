@@ -1,0 +1,91 @@
+.groupsContainer {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    /* display: flex; */
+    /* flex-direction: column; */
+    gap: var(--default-gap);
+    /* padding: var(--default-padding); */
+    flex-wrap: wrap;
+    /* column-width: 35rem; */
+    /* /* grid-template-columns: max-content; ? */
+}
+
+.groupContainer {
+    padding: var(--default-gap) var(--default-padding);
+    background: #fafafa;
+    border-radius: 1rem;
+    gap: var(--default-gap);
+    display: flex;
+    flex-direction: column;
+}
+/* 
+#headhunter .MuiTableCell-root {
+    display: flex;
+    gap: var(--default-gap);
+} */
+
+#headhunter th {
+    font-weight: 600;
+}
+
+.guestsContainer h3 {
+    margin: 0;
+}
+
+.groupActions {
+    display: flex;
+    /* flex-wrap: wrap; */
+}
+
+.groupCreateFormContainer {
+    /* padding: var(--default-padding) 0; */
+    padding-top: var(--default-gap);
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);    
+}
+
+.addressFields {
+    display: flex;
+    gap: var(--default-gap);
+    flex-wrap: wrap;
+}
+
+.addressFields .groupCreateFormField {
+    flex: 1 1 auto;
+}
+
+.closeContainer {
+    display: flex;
+    align-items: center;
+}
+
+.groupHeader {
+    display: flex;
+    flex-direction: row;
+    gap: var(--default-gap);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.groupHeader h2 {
+    margin: 0;
+}
+
+.iconLoader {
+    height: 20px !important;
+    width: 20px !important;
+    border-color: var(--clr-lavender) var(--clr-lavender) transparent !important;
+}
+
+@media(max-width: 768px) {
+    .groupsContainer {
+        grid-template-columns: auto auto;
+    }
+}
+
+@media(max-width: 425px) {
+    .groupsContainer {
+        grid-template-columns: auto;
+    }
+}
