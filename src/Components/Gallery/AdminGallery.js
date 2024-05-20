@@ -367,13 +367,6 @@ export default function AdminGallery (props) {
                     key={`Gallery-card-${gallery.id}`}
                     loading = {loading}>
                 </GalleryCard>
-                // <div className="padded-top-bottom">
-                //     <div>Name: {gallery.name}</div>
-                //     <div>Description: {gallery.long_description}</div>
-                //     <div>Alts: {gallery.alts}</div>
-                //     <div>Directory: {gallery.directory}</div>
-                //     <div>Admin? {gallery.admin_upload_only ? "Yes" : "No"}</div>
-                // </div>    
             )}
         </div>
         </div>

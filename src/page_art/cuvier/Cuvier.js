@@ -11,7 +11,7 @@ export default function Cuvier (props) {
         if (props && props.size) {
             setSize(props.size);
         }
-
+        // eslint-disable-next-line
     }, []);
 
     return (

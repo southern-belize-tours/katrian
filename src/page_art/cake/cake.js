@@ -43,13 +43,13 @@ function Cake (props) {
             }
         }
 
-    }, []);
+    }, [props.disappearing, props.doTransition]);
 
     useEffect(() => {
         if (!(props == null || props.size == null || props.size <= 0)) {
             setSize(props.size);
         }
-    }, [props.size])
+    }, [props, props.size])
 
     return (
         // !disappearing &&

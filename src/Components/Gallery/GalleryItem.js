@@ -8,11 +8,11 @@ export default function GalleryItem (props) {
     const GalleryService = useGalleryService();   
 
     const [photos, setPhotos] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [description, setDescription] = useState(props.gallery.long_description);
     const [name, setName] = useState(props.gallery.name);
-    const [alts, setAlts] = useState(props.gallery.alts);
+    const [alts,] = useState(props.gallery.alts);
 
     const deleteConfirmOpen = Boolean(anchorEl);
 
@@ -40,7 +40,7 @@ export default function GalleryItem (props) {
             isSubscribed = false;
             setLoading(false);
         }
-    }, []);
+    }, [GalleryService, props.gallery.directory]);
 
     /**
      * Function called for delete clicking to run modal confirm/cancel
@@ -168,7 +168,9 @@ export default function GalleryItem (props) {
                     {photos.map((photo, idx) =>
                         <div className="thumbnailImageContainer"
                             key={`gallery-item-photo-${idx}`}>
-                            <img className="thumbnailImage" src={photo.url}/>
+                            <img className="thumbnailImage"
+                                alt={`Gallery Item ${idx}`}
+                                src={photo.url}/>
                             {props.editing &&
                             <Tooltip title="Remove Image">
                                 <IconButton variant="outlined"

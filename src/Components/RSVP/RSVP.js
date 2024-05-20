@@ -1,71 +1,13 @@
 import { useEffect, useState } from "react";
 
 import './RSVP.css';
-import { Button, Checkbox, IconButton, TextField, Tooltip } from "@mui/material";
-import { Add, CalendarMonth, Cancel, CancelOutlined, Check, CheckOutlined, GroupAdd, InfoOutlined, LocationOn, PersonAdd, Search, Undo } from "@mui/icons-material";
+import { Button, IconButton, TextField, Tooltip } from "@mui/material";
+import { CalendarMonth, CancelOutlined, Check, CheckOutlined, GroupAdd, InfoOutlined,
+    LocationOn, PersonAdd, Search, Undo } from "@mui/icons-material";
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
-import { toast, ToastContainer} from 'react-toastify';
+import { toast} from 'react-toastify';
 import { ClipLoader } from "react-spinners";
-
-const group1 = {
-    rehearsal: true,
-    people: [
-    {
-        first: "greg",
-        last: "nemo",
-        attending: false,
-    },
-    {
-        first: "randa",
-        last: "nono",
-        attending: false,
-    }
-]};
-
-const group2 = {
-    rehearsal: true,
-    people:[
-        {
-            first: "gregory",
-            last: "nemo",
-            attending: false,
-        },
-        {
-            first: "gianna",
-            last: "nono",
-            attending: false,
-        }
-    ]
-};
-
-const group3 = {
-    rehearsal: false,
-    people:[
-        {
-            first: "maya",
-            last: "strawick",
-            attending: false,
-        },
-    ]
-};
-
-const allGroups = [
-    group1, group2, group3
-];
-
-
-
-// [{people: [
-//     {
-//         first: "greg",
-//         last: "nemo",
-//     },
-//     {
-//         first: "randa",
-//         last: "nono",
-//     }
-// ]}]
 
 const toastConfig = {
     autoClose: 2000
@@ -80,9 +22,8 @@ export default function RSVP (props) {
     const [fade, setFade] = useState(true);
     const [people_selected, set_people_selected] = useState([]);
     const [group, setGroup] = useState(null);
-    const [allPeople, setAllPeople] = useState(null);
+    const [, setAllPeople] = useState(null);
     const [search, setSearch] = useState("");
-    // const [people, setPeople] = useState([...group1])
     const [text, setText] = useState("");
     const [matchedGroups, setMatchedGroups] = useState([]);
     const [peopleConfirmed, setPeopleConfirmed] = useState(false);
@@ -123,7 +64,6 @@ export default function RSVP (props) {
             }
         }
 
-
         // Set text fading animation
         setTimeout(() => {
             setFade(false);
@@ -137,22 +77,7 @@ export default function RSVP (props) {
             isSubscribedGuest = false;
             setLoading(false);
         }
-
-        // Delete this block when we get the backend connected
-        // let newPeople = [...people]
-        // for (let i = 0; i < newPeople.length; ++i) {
-        //     newPeople[i].attending = false;
-        //     newPeople[i].attendingBrunch = false;
-        // }
-        // setPeople([...newPeople]);
-
-        // Get the people from all wedding groups to be searchable
-        // const tempAllPeople = [];
-        // allGroups.forEach(group => {
-        //     tempAllPeople.push(...group.guests);
-        // });
-        // setAllPeople([...tempAllPeople]);
-
+        // eslint-disable-next-line
     }, [groupService, guestService])
 
     const createGroupToGuestArray = async () => {
@@ -500,7 +425,7 @@ export default function RSVP (props) {
                 :
                 <>
                 {/* Rehearsal */}
-                { group.invited_rehearsal == true &&
+                { group.invited_rehearsal === true &&
                 <>
                 <div className="summaryItemName">
                     Rehearsal

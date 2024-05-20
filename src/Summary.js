@@ -209,22 +209,6 @@ function Summary (props) {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="summaryItemInfo">
-                            <div className="summaryItemTime">
-                                5:00pm
-                            </div>
-                            <div className="summaryItemMore">
-                                <div className="summaryItemName">
-                                    Casual Happy Hour
-                                </div>
-                                <div className="summaryItemLocation">
-                                <LocationOn color="primary"></LocationOn>
-                                <div>
-                                    TBD
-                                </div>
-                            </div>
-                            </div>
-                        </div> */}
                         <Tooltip title={`${brunchNotesExpanded ? "" : "View Brunch and Chill Day Notes"}`}>
                         <Accordion id="Wedding-Notes"
                             expanded = {brunchNotesExpanded}>
@@ -249,28 +233,6 @@ function Summary (props) {
                                 <div className="logisticsItem">
                                     <AttachMoney color="primary"></AttachMoney> Brunch will be sponsored. The happy hour will not be sponsored.
                                 </div>
-
-                                {/* <div className="logisticsItem">
-                                    <DirectionsWalk color="primary"></DirectionsWalk> The walk between the ceremony and reception is about 5 minutes long, which includes some stairs and uneven grass. Please plan your shoe choices accordingly.
-                                </div>
-                                <div className='logisticsItem'>
-                                    <LocalParking color="primary"></LocalParking> La Jolla street parking is first-come-first-served and will be competitive. We recommend walking from hotel and parking early, if possible.
-                                </div>
-                                <div className="logisticsItem">
-                                    <WbSunny color="primary"></WbSunny> The ceremony will be fully outdoors on a grassy coastal cliff.
-                                </div>
-                                <div className="logisticsItem">
-                                    <Deck color="primary"></Deck> The cocktail hour (open bar) will be in a semi-covered outdoor area immediately following the ceremony.
-                                </div>
-                                <div className='logisticsItem'>
-                                    <WbShade color="primary"></WbShade> The reception will be indoors.
-                                </div>
-                                <div className="logisticsItem">
-                                    <Thermostat color="primary"></Thermostat> The average La Jolla weather has daily high temperatures around 76 F. Weather rarely exceeds 84 F and rarely dips below 68 F at this time of year. August is quite dry and averages 3 days with rain each year.
-                                </div>
-                                <div className="logisticsItem">
-                                    <QuestionMark color="primary"></QuestionMark> Looking for things to do during the day? Look at our<a href="/FAQ#San-Diego-Activities" className="secondary">San Diego Activities</a> section of the FAQ page.
-                                </div> */}
                             </AccordionDetails>
                         </Accordion>
                         </Tooltip>

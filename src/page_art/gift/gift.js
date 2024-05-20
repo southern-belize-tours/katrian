@@ -22,7 +22,7 @@ function Gift (props) {
         if (timeoutId !== null) {
             return () => clearTimeout(timeoutId);
         }
-    }, []);
+    }, [props]);
 
     return (
         <div>

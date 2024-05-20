@@ -1,4 +1,4 @@
-import { Dining, DirectionsWalk, EggAlt, Info, LightMode, Liquor, LocationOn, Menu, Nightlife, Note, QuestionMark, Schedule } from "@mui/icons-material";
+import { Dining, DirectionsWalk, EggAlt, LocationOn, Nightlife, QuestionMark } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 
 export default function Brunch (props) {
@@ -9,6 +9,10 @@ export default function Brunch (props) {
         fadeTimeoutId = setTimeout(() => {
             setFade(false);
         }, 0);
+
+        return (() => {
+            clearTimeout(fadeTimeoutId);
+        })
 
     }, [])
 
@@ -36,7 +40,7 @@ export default function Brunch (props) {
                     <div className="padded-left logisticsItem">
                         <Nightlife color="primary"></Nightlife> There will also be bottomless mimosas, Bloody Marys, beer, and wine to celebrate.
                     </div>
-                    <div classname="flexed centered">
+                    {/* <div classname="flexed centered">
                         <Liquor color="primary" fontSize="2rem"></Liquor> Casual Happy Hour ~ 5pm
                     </div>
                     <div className="padded-left logisticsItem">
@@ -44,7 +48,7 @@ export default function Brunch (props) {
                     </div>
                     <div className="padded-left logisticsItem">
                         <Info color="primary"></Info> This is not a funded event, but everyone is invited
-                    </div>
+                    </div> */}
                     <div className="flexed centered">
                         <div><QuestionMark fontSize="2rem" color="primary"></QuestionMark> Looking for things to do during the day? Look at our <a href="/FAQ#San-Diego-Activities" className="secondary">San Diego Activities</a> section of the FAQ page.</div>
                     </div>
