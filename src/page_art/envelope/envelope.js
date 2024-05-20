@@ -8,7 +8,7 @@ export default function Envelope (props) {
         if (props && props.size) {
             setSize(props.size);
         }
-    }, []);
+    }, [props]);
 
     return (
         <div className="envelopeContainer"

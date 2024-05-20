@@ -139,13 +139,13 @@ export default function GroupCreate (props) {
             const groupData = {
                 "id": props.group.id,
                 "title": props.group.title,
-                "invited_rehearsal": props.group.invitedRehearsal,
+                "invited_rehearsal": props.group.invited_rehearsal,
                 "address": props.group.address,
                 "city": props.group.city,
                 "state": props.group.state,
                 "zip": props.group.zip,
                 "email": props.group.email,
-                "invited_happy_hour": props.group.invitedHappyHour,
+                "invited_happy_hour": props.group.invited_happy_hour,
                 "phone": props.group.phone,
                 "Guest_ids": newGuestIds,
             };
@@ -198,22 +198,22 @@ export default function GroupCreate (props) {
             updateError("phone", "Specify a valid phone number");
             ret = false;
         }
-        if (address.length < 3) {
-            updateError("address", "Specify at least 3 characters for the address");
-            ret = false;
-        }
-        if (city.length < 3) {
-            updateError("city", "Specify at least 3 characters for the city");
-            ret = false;
-        }
-        if (zip.length !==5) {
-            updateError("zip", "Specify exactly 5 digits for the zip code");
-            ret = false;
-        }
-        if (state.length <= 0) {
-            updateError("state", "Specify a state");
-            ret = false;
-        }
+        // if (address.length < 3) {
+        //     updateError("address", "Specify at least 3 characters for the address");
+        //     ret = false;
+        // }
+        // if (city.length < 3) {
+        //     updateError("city", "Specify at least 3 characters for the city");
+        //     ret = false;
+        // }
+        // if (zip.length !==5) {
+        //     updateError("zip", "Specify exactly 5 digits for the zip code");
+        //     ret = false;
+        // }
+        // if (state.length <= 0) {
+        //     updateError("state", "Specify a state");
+        //     ret = false;
+        // }
         if (people.length < 1) {
             ret = false;
         }
@@ -247,6 +247,7 @@ export default function GroupCreate (props) {
                 await groupService.createGroup({
                     "title": single ? people[0].first + " " + people[0].last : title,
                     "invited_rehearsal": invitedRehearsal,
+                    "invited_happy_hour": invitedHappyHour,
                     "address": address,
                     "city": city,
                     "state": state,
@@ -409,7 +410,7 @@ export default function GroupCreate (props) {
                                 value = {address}
                                 label = "Address 1st Line, Unit"
                                 error = {errors["address"]}
-                                required = {true}
+                                required = {false}
                                 onChange = {(e) => {
                                     updateAddress(e);
                                 }}>
@@ -419,7 +420,7 @@ export default function GroupCreate (props) {
                                 value = {city}
                                 label = "City"
                                 error = {errors["city"]}
-                                required = {true}
+                                required = {false}
                                 onChange = {(e) => {
                                     updateCity(e);
                                 }}>
@@ -429,7 +430,7 @@ export default function GroupCreate (props) {
                                 value = {zip}
                                 label = "Zip Code"
                                 error = {errors["zip"]}
-                                required = {true}
+                                required = {false}
                                 inputProps={{ maxLength: 5 }} // Restrict input length to 5 characters
                                 // helperText="Enter a 5-digit zip code"
                                 onChange = {(e) => {

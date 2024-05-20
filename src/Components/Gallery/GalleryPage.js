@@ -73,7 +73,7 @@ export default function GalleryPage (props) {
         } finally {
             setLoading(false);
         }
-    }, [GalleryService]);
+    }, [GalleryService, gallery.directory]);
 
     const getAlt = (alt_list, photo) => {
         if (!alt_list || !alt_list.length) {
@@ -123,7 +123,9 @@ export default function GalleryPage (props) {
         }
 
         { ((gallery !== null) && 
+        // eslint-disable-next-line
             (((gallery.admin_upload_only === true) && (user) && (user.isSignedIn)) ||
+        // eslint-disable-next-line
             (gallery.admin_upload_only === false) && (loading === false))) &&
             <AddPhotoDialog gallery={gallery}
                 saveCallback={photoAddedCallback}>

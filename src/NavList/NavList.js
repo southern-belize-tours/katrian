@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.js';
 import NavListItem from './NavListItem.js'
 import { Tooltip } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
@@ -27,7 +26,6 @@ function NavList (props) {
     const GalleryService = useGalleryService();
 
     const ref = useRef(null);
-    const location = useLocation();
     const [isOverflowing, setIsOverflowing] = useState(false);
     // Compute the size of the wedding logos based on the screen width
     const [iconSize] = useState(100);
@@ -35,7 +33,7 @@ function NavList (props) {
     const [translate, setTranslate] = useState(0);
     const [initialWidth, setInitialWidth] = useState(0);
 
-    const [galleries, setGalleries] = useState([]);
+    const [, setGalleries] = useState([]);
 
     /**
      * When component is resized it starts checking for overflow
@@ -85,7 +83,7 @@ function NavList (props) {
             isSubscribed = false;
             window.removeEventListener('resize', debouncedCheckOverflow);
         }
-      }, [ref]);
+      }, [ref, GalleryService]);
 
     /**
      * When component is initialized it starts checking for overflow

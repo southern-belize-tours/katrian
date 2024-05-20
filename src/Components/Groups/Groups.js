@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { toast, ToastContainer } from "react-toastify";
-import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from "@mui/material";
-import { Add, Cancel, CancelOutlined, DinnerDining, Edit, EggAlt, EggAltOutlined, Email, Favorite, FavoriteBorder, GroupsTwoTone, LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, PersonAdd, Restaurant } from "@mui/icons-material";
+import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, 
+    TableHead, TableRow, Tooltip } from "@mui/material";
+import { CancelOutlined, Edit, EggAlt, EggAltOutlined, Email, Favorite, FavoriteBorder,
+    LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, Restaurant } from "@mui/icons-material";
 
 import './Groups.css';
-import { BeatLoader, CircleLoader, ClipLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
 import GroupCreate from "./GroupCreate";
 
@@ -19,7 +21,7 @@ export default function Groups (props) {
 
     const [loading, setLoading] = useState(false);
     const [groups, setGroups] = useState([]);
-    const [guests, setGuests] = useState([]);
+    const [, setGuests] = useState([]);
     const [editingGroup, setEditingGroup] = useState(null);
 
     const dialogCallback = async () => {
@@ -82,7 +84,8 @@ export default function Groups (props) {
             isSubscribedGuest = false;
             setLoading(false);
         }
-    }, [groupService])
+        // eslint-disable-next-line
+    }, [])
 
     const createGroupToGuestArray = async () => {
         const guestData = await guestService.getGuests();
@@ -99,28 +102,28 @@ export default function Groups (props) {
         return newGroups;
     }
 
-    const addDummyGroup = async () => {
-        setLoading(true);
+    // const addDummyGroup = async () => {
+    //     setLoading(true);
 
-        // Generate between 1 and 4 guests
-        const numDummyGuests =  Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-        const guestIds = [];
-        for (let i = 0; i < numDummyGuests; ++i ) {
-            const currId = await guestService.createDummyGuest();
-            guestIds.push(currId.id);
-        }
-        const newGroup = await groupService.createDummyGroup(guestIds);
-        // setGroups([...groups, newGroup]);
-        const newGroups = await createGroupToGuestArray();
-        setGroups(newGroups);
+    //     // Generate between 1 and 4 guests
+    //     const numDummyGuests =  Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+    //     const guestIds = [];
+    //     for (let i = 0; i < numDummyGuests; ++i ) {
+    //         const currId = await guestService.createDummyGuest();
+    //         guestIds.push(currId.id);
+    //     }
+    //     const newGroup = await groupService.createDummyGroup(guestIds);
+    //     // setGroups([...groups, newGroup]);
+    //     const newGroups = await createGroupToGuestArray();
+    //     setGroups(newGroups);
 
-        setLoading(false);
-        if (newGroup) {
-            toast.success("Successfully added dummy group", toastConfig);
-        } else {
-            toast.error("Failure to add dummy group", toastConfig);
-        }
-    }
+    //     setLoading(false);
+    //     if (newGroup) {
+    //         toast.success("Successfully added dummy group", toastConfig);
+    //     } else {
+    //         toast.error("Failure to add dummy group", toastConfig);
+    //     }
+    // }
 
     const deleteGroup = async (group) => {
         setLoading(true);
@@ -147,14 +150,14 @@ export default function Groups (props) {
         }
     }
 
-    const deleteAllGroups = async (group) => {
-        setLoading(true);
-        const updatedGroups = await groupService.deleteAllGroups();
-        setGroups(updatedGroups);
-        const updatedGuests = await guestService.deleteAllGuests();
-        setGuests(updatedGuests);
-        setLoading(false);
-    }
+    // const deleteAllGroups = async (group) => {
+    //     setLoading(true);
+    //     const updatedGroups = await groupService.deleteAllGroups();
+    //     setGroups(updatedGroups);
+    //     const updatedGuests = await guestService.deleteAllGuests();
+    //     setGuests(updatedGuests);
+    //     setLoading(false);
+    // }
 
     const editGroup = (group) => {
         setEditingGroup(group);
@@ -387,7 +390,7 @@ export default function Groups (props) {
                             {group.invited_rehearsal ? 
                             <Restaurant color="primary"></Restaurant> 
                             : <NoMeals color="secondary"></NoMeals>} 
-                            {group.invited_rehearsal == true ? "Invited to Rehearsal Dinner" : "Not Invited to Rehearsal Dinner"}
+                            {group.invited_rehearsal === true ? "Invited to Rehearsal Dinner" : "Not Invited to Rehearsal Dinner"}
                         </div>
                         <div className="flexed centered">
                             {group.invited_happy_hour ? 
@@ -406,6 +409,7 @@ export default function Groups (props) {
                                 <LocalPhone color="primary"></LocalPhone> {group.phone}
                             </div>
                         }
+                        {group.address &&
                         <div className="flexed row">
                             <div>
                                 <LocationOn color="primary"></LocationOn>
@@ -415,6 +419,7 @@ export default function Groups (props) {
                                 <div>{group.city}, {group.state}, {group.zip}</div>
                             </div>
                         </div>
+                        }
                         <div className="guestsContainer">
                             {group.guests && group.guests.length > 0 &&
                                 <h3>Guests in Group:</h3>

@@ -30,26 +30,19 @@ import { FaqServiceProvider } from './Services/FaqService/FaqServiceContext.js';
 // Spinner
 import CuvierClubHistory from './Components/CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
-import Cuvier from './page_art/cuvier/Cuvier.js';
 import { TuneServiceProvider } from './Services/TuneService/TuneServiceContext.js';
 import {AutoStories, BrunchDining, CloudUploadOutlined, Collections, DiamondOutlined } from '@mui/icons-material';
 import Ceremony from './Ceremony.js';
 import Brunch from './Brunch.js';
-import { useGalleryService } from './Services/GalleryService/GalleryServiceContext.js';
 import HotelAndTransport from './Components/Hotel_and_Transport/HotelAndTransport.js';
 import GalleryPage from './Components/Gallery/GalleryPage.js';
 import WeddingParties from './Components/Gallery/WeddingParties.js';
 import BobsBurger from './Components/BobsBurger/BobsBurger.js';
 import Envelope from './page_art/envelope/envelope.js';
 import RSVP from './Components/RSVP/RSVP.js';
-import GroupCreateForm from './ui-components/GroupCreateForm.jsx';
-import GroupUpdateForm from './ui-components/GroupUpdateForm.jsx';
 import Groups from './Components/Groups/Groups.js';
-import GroupService from './Services/GroupService/GroupService.js';
 import { GroupServiceProvider } from './Services/GroupService/GroupServiceContext.js';
-import GroupCreate from './Components/Groups/GroupCreate.js';
 import { GuestServiceProvider } from './Services/GuestService/GuestServiceContext.js';
-import Guests from './Components/Groups/Guests.js';
 
 Amplify.configure(awsconfig);
 
@@ -85,7 +78,6 @@ function debounce(fn, ms) {
 }
 
 function App() {
-  const GalleryService = useGalleryService();
 
   const initializeLinkSize = () => {
     if (window.innerWidth <= 768) {
@@ -97,7 +89,7 @@ function App() {
 
   const [linkSize, setLinkSize] = React.useState(initializeLinkSize());
   const [size, setSize] = React.useState(window.innerWidth);
-  const [galleries, setGalleries] = React.useState([]);
+  const [galleries] = React.useState([]);
   // const [, ] = React.useState(false);
 
   const links = [
@@ -123,49 +115,6 @@ function App() {
       setSize(window.innerWidth);
     }
 
-    // setLoading(true);
-    let isSubscribed = true; 
-
-    const getGalleries = async () => {
-      try {
-         await GalleryService.fetchGalleries();
-        // await GalleryService.fetchGalleryLinks();
-
-        // if (isSubscribed && galleriesData !== -1) {
-        //   // setGalleries(galleriesData);
-        //   let galleryLinks = navLinks[3];
-        //   for (let i = 0; i < galleriesData.length; ++i) {
-        //     const galleryLink = {text: galleriesData[i].name,
-        //       route: "/Gallery/" + galleriesData[i].directory,
-        //       component: <></>
-        //     }
-        //     galleryLinks.items.push(galleryLink);
-        //   }
-        //   let oldNavs = [...navLinks];
-        //   oldNavs[3] = galleryLinks;
-          // setNavLinks(oldNavs);
-        // }
-      } catch (e) {
-        console.log("Error retrieving galleries", e);
-      } finally {
-        if (isSubscribed) {
-          // setLoading(false);
-          setGalleries(GalleryService.galleries);
-        }
-      }
-    }
-
-    if (galleries.length === 0) {
-      // getGalleries();
-      // setGalleries(GalleryService.fetchGalleryLinks());
-    } else if (galleries.length === 0 && GalleryService.galleries.length !== 0) {
-      // getGalleries();
-      // setGalleries(GalleryService.galleries);
-      // setLoading(false);
-    } else {
-      // setLoading(false);
-    }
-
     // Only check the resizing every 100ms
     const debouncedCheckMediaSize = debounce(checkMediaSize, 100);
 
@@ -173,7 +122,6 @@ function App() {
     window.addEventListener('resize', debouncedCheckMediaSize);
 
     return () => {
-      isSubscribed = false;
       window.removeEventListener('resize', debouncedCheckMediaSize);
     }
   }, [])

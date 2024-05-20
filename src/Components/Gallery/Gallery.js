@@ -2,9 +2,6 @@
 import React from 'react';
 
 // Custom Components
-import Camera from '../../page_art/camera/camera.js';
-// import GallerySummary from './GallerySummary.js';
-import GuestGallery from './GuestGallery.js';
 import AdminGallery from './AdminGallery.js';
 
 export default function Gallery (props) {
