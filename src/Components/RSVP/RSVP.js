@@ -272,7 +272,8 @@ export default function RSVP (props) {
                                     let groupContainsSearch = false;
                                     for (let i = 0; i < group.guests.length; ++i) {
                                         if (group.guests[i].first.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                                            group.guests[i].last.toLowerCase().includes(e.target.value.toLowerCase())) {
+                                            group.guests[i].last.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                                            (group.guests[i].first.toLowerCase() + " " + group.guests[i].last.toLowerCase()).includes(e.target.value.toLowerCase())) {
                                                 groupContainsSearch = true;
                                                 break;
                                             }

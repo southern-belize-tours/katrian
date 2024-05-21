@@ -1,3 +1,9 @@
+.bigClip {
+    width: 100px !important;
+    height: 100px !important;
+    border-color: var(--clr-lavender) var(--clr-lavender) transparent !important;
+}
+
 .groupsContainer {
     display: grid;
     grid-template-columns: auto auto auto;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { toast, ToastContainer } from "react-toastify";
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, 
@@ -24,14 +24,11 @@ export default function Groups (props) {
     const [, setGuests] = useState([]);
     const [editingGroup, setEditingGroup] = useState(null);
 
-    const dialogCallback = async () => {
-        setLoading(true);
-        setEditingGroup(null);
-        const newGroups = await createGroupToGuestArray();
-        console.log(newGroups);
-        setGroups(newGroups);
-        setLoading(false);
-    };
+     
+    // This effect runs whenever `groups` changes, ensuring UI updates
+    useEffect(() => {
+        console.log("Group State Changed");
+    }, [groups]);
 
     const dialogCancelCallback = () => {
         setEditingGroup(null);
@@ -101,6 +98,22 @@ export default function Groups (props) {
         }
         return newGroups;
     }
+
+    const dialogCallback = useCallback(async () => {
+        setLoading(true);
+        setEditingGroup(null);
+        try {
+            await groupService.getGroups();
+            const newGroups = await createGroupToGuestArray();
+            console.log("new groups after dialog callback");
+            console.log(newGroups);
+            setGroups(newGroups);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    });
 
     // const addDummyGroup = async () => {
     //     setLoading(true);
@@ -333,6 +346,7 @@ export default function Groups (props) {
             </TableContainer>
             }
             <GroupCreate closeCallback = {dialogCallback}
+                disabled = {loading}
                 cancelCallback = {dialogCancelCallback}
                 group={editingGroup}
                 hideButton = {false}>
@@ -357,7 +371,11 @@ export default function Groups (props) {
                 Delete All Groups
             </Button> */}
             <div className="groupsContainer">
-                {groups &&  groups.map(group => 
+                {loading && groups.length < 1 ?
+                    <ClipLoader className="bigClip"></ClipLoader>
+                //  : groups ?
+                :
+                    groups.map(group => 
                     <div className="groupContainer">
                         <div className="groupHeader">
                             <h2>{group.title}</h2>
@@ -393,10 +411,10 @@ export default function Groups (props) {
                             {group.invited_rehearsal === true ? "Invited to Rehearsal Dinner" : "Not Invited to Rehearsal Dinner"}
                         </div>
                         <div className="flexed centered">
-                            {group.invited_happy_hour ? 
+                            {group.invited_happy_hour === true? 
                             <LocalBar color="primary"></LocalBar> 
                             : <NoDrinks color="secondary"></NoDrinks>} 
-                            {`${group.invited_happy_hour ? "" : "Not "}Invited to Happy Hour`}
+                            {`${group.invited_happy_hour === true ? "" : "Not "}Invited to Happy Hour`}
                             {/* {group.invited_rehearsal == true ? "Invited to Rehearsal Dinner" : "Not Invited to Rehearsal Dinner"} */}
                         </div>
                         {group.email &&    
@@ -452,8 +470,10 @@ export default function Groups (props) {
                                 </div>
                             )}
                         </div>
-                    </div>
-                )}
+                    </div>)
+                    // :
+                    // <ClipLoader className="bigClip"></ClipLoader>
+                }
             </div>
         </div>
     )

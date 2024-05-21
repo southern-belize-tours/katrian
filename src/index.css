@@ -12,6 +12,13 @@ body {
   justify-content: space-around !important;
 }
 
+.error{
+  color: #d32f2f;
+  display: flex;
+  gap: var(--default-gap);
+  align-items: center;
+}
+
 h1 {
   text-align: center;
 }
