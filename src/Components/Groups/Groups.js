@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { toast, ToastContainer } from "react-toastify";
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, 
@@ -10,12 +10,14 @@ import './Groups.css';
 import { ClipLoader } from "react-spinners";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
 import GroupCreate from "./GroupCreate";
+import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 
 const toastConfig = {
     autoClose: 2000
 };
 
 export default function Groups (props) {
+    const {user} = useContext(AuthContext)
     const groupService = useGroupService();
     const guestService = useGuestService();
 
@@ -269,7 +271,9 @@ export default function Groups (props) {
     }
 
     return (
+        (user && user.isSignedIn) ?
         <div className="weddingBody">
+
             <ToastContainer></ToastContainer>
             <h1>Invite List</h1>
             {/* Dummy Group Button */}
@@ -475,6 +479,10 @@ export default function Groups (props) {
                     // <ClipLoader className="bigClip"></ClipLoader>
                 }
             </div>
+        </div>
+        :
+        <div className="weddingBody">
+            <div>You need to be signed in to view this page. Please <a href="/signin">sign in</a> first</div>
         </div>
     )
 
