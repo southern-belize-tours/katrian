@@ -70,6 +70,16 @@ export default function Groups (props) {
         return true;
     }
 
+    const anySelected = () => {
+        let keys = Object.keys(filterConfig);
+        for (let i = 0; i < keys.length; ++i) {
+            if (filterConfig[keys[i]] === true) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Sets the filter selections to empty (initial state)
      */
@@ -261,7 +271,7 @@ export default function Groups (props) {
             }
             if (groups[i].guests) {
                 for (let j = 0; j < groups[i].guests.length; ++j) {
-                    if (groups[i].guests[j].attending_rehearsal) {
+                    if (groups[i].guests[j] && groups[i].guests[j].attending_rehearsal) {
                         ret++;
                     }
                 }
@@ -286,7 +296,7 @@ export default function Groups (props) {
         for (let i = 0; i < groups.length; ++i) {
             if (groups[i].guests) {
                 for (let j = 0; j < groups[i].guests.length; ++j) {
-                    if (groups[i].guests[j].attending_ceremony) {
+                    if (groups[i].guests[j] && groups[i].guests[j].attending_ceremony) {
                         ret++;
                     }
                 }
@@ -300,7 +310,7 @@ export default function Groups (props) {
         for (let i = 0; i < groups.length; ++i) {
             if (groups[i].guests) {
                 for (let j = 0; j < groups[i].guests.length; ++j) {
-                    if (groups[i].guests[j].attending_brunch) {
+                    if (groups[i].guests[j] && groups[i].guests[j].attending_brunch) {
                         ret++;
                     }
                 }
@@ -325,7 +335,7 @@ export default function Groups (props) {
         for (let i = 0; i < groups.length; ++i) {
             if (groups[i].guests) {
                 for (let j = 0; j < groups[i].guests.length; ++j) {
-                    if (groups[i].guests[j].attending_happy_hour) {
+                    if (groups[i].guests[j] && groups[i].guests[j].attending_happy_hour) {
                         ret++;
                     }
                 }
@@ -452,12 +462,14 @@ export default function Groups (props) {
                             MenuListProps = {{
                                 'aria-labelledby': 'Groups-List-Filter-Button'
                             }}>
-                            <MenuItem className = {`filterOption`} 
-                                onClick = {() => {
-                                    removeFilterSelections();
-                                }}>
-                                <PlaylistRemove></PlaylistRemove> Remove All Selections
-                            </MenuItem>
+                            {anySelected() &&
+                                <MenuItem className = {`filterOption`} 
+                                    onClick = {() => {
+                                        removeFilterSelections();
+                                    }}>
+                                    <PlaylistRemove></PlaylistRemove> Remove All Selections
+                                </MenuItem>
+                            }
                             <MenuItem className = {`filterOption ${filterConfig['rsvp'] === true ? "selected" : ""}`} 
                                 onClick = {() => {
                                     const newOptions = toggleFilterOption('rsvp');
@@ -530,9 +542,11 @@ export default function Groups (props) {
                 Delete All Groups
             </Button> */}
             <div className="groupsContainer">
-                {!groups || loading || groups.length < 1 ?
+                {!groups || loading ?
                     <ClipLoader className="bigClip"></ClipLoader>
                 //  : groups ?
+                : groups.length < 1 ?
+                <h3>There are Currently no Groups Invited</h3>
                 :
                     groups.filter(g => passesFilter(g)).map(group => 
                     <div className="groupContainer"

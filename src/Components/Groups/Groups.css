@@ -13,13 +13,8 @@
 .groupsContainer {
     display: grid;
     grid-template-columns: auto auto auto;
-    /* display: flex; */
-    /* flex-direction: column; */
     gap: var(--default-gap);
-    /* padding: var(--default-padding); */
     flex-wrap: wrap;
-    /* column-width: 35rem; */
-    /* /* grid-template-columns: max-content; ? */
 }
 
 .groupContainer {
@@ -30,11 +25,6 @@
     display: flex;
     flex-direction: column;
 }
-/* 
-#headhunter .MuiTableCell-root {
-    display: flex;
-    gap: var(--default-gap);
-} */
 
 #headhunter th {
     font-weight: 600;
@@ -46,11 +36,9 @@
 
 .groupActions {
     display: flex;
-    /* flex-wrap: wrap; */
 }
 
 .groupCreateFormContainer {
-    /* padding: var(--default-padding) 0; */
     padding-top: var(--default-gap);
     display: flex;
     flex-direction: column;
