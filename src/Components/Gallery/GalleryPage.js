@@ -73,7 +73,8 @@ export default function GalleryPage (props) {
         } finally {
             setLoading(false);
         }
-    }, [GalleryService, gallery.directory]);
+        // eslint-disable-next-line
+    }, [GalleryService]);
 
     const getAlt = (alt_list, photo) => {
         if (!alt_list || !alt_list.length) {
