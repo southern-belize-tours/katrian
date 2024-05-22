@@ -1,10 +1,12 @@
 import { useCallback, useContext, useEffect, useState } from "react"
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { toast, ToastContainer } from "react-toastify";
-import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, 
+import { IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, 
     TableHead, TableRow, Tooltip } from "@mui/material";
-import { CancelOutlined, Edit, EggAlt, EggAltOutlined, Email, Favorite, FavoriteBorder,
-    LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, Restaurant } from "@mui/icons-material";
+import { CancelOutlined, Check, Close, Edit, EggAlt, EggAltOutlined, Email,
+    Favorite, FavoriteBorder,
+    FilterAlt,
+    LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, PlaylistRemove, Restaurant } from "@mui/icons-material";
 
 import './Groups.css';
 import { ClipLoader } from "react-spinners";
@@ -25,12 +27,84 @@ export default function Groups (props) {
     const [groups, setGroups] = useState([]);
     const [, setGuests] = useState([]);
     const [editingGroup, setEditingGroup] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const filterOpen = Boolean(anchorEl);
+    const [filterConfig, setFilterConfig] = useState({
+        'rsvp': false,
+        'not_rsvp': false,
+        'invited_rehearsal': false,
+        'not_invited_rehearsal': false,
+        'invited_happy_hour': false,
+        'not_invited_happy_hour': false,
+    })
 
-     
-    // This effect runs whenever `groups` changes, ensuring UI updates
-    useEffect(() => {
-        console.log("Group State Changed");
-    }, [groups]);
+    const passesFilter = (group) => {
+        if (filterConfig['rsvp'] === true) {
+            let guestAttending = false;
+            for (let i = 0; i < group.guests.length; ++i) {
+                if (group.guests[i].attending_ceremony === true) {
+                    guestAttending = true;
+                    break;
+                }
+            }
+            if (guestAttending === false) {
+                return false;
+            }
+        } else if (filterConfig['not_rsvp'] === true) {
+            for (let i = 0; i < group.guests.length; ++i) {
+                if (group.guests[i].attending_ceremony === true) {
+                    return false;
+                }
+            }
+        }
+        if (filterConfig['invited_rehearsal'] === true && group.invited_rehearsal === false) {
+            return false;
+        } else if (filterConfig['not_invited_rehearsal'] === true && group.invited_rehearsal === true) {
+            return false;
+        }
+        if (filterConfig['invited_happy_hour'] === true && group.invited_happy_hour === false) {
+            return false;
+        } else if (filterConfig['not_invited_happy_hour'] === true && group.invited_happy_hour === true) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Sets the filter selections to empty (initial state)
+     */
+    const removeFilterSelections = () => {
+        setFilterConfig({
+            'rsvp': false,
+            'not_rsvp': false,
+            'invited_rehearsal': false,
+            'not_invited_rehearsal': false,
+            'invited_happy_hour': false,
+            'not_invited_happy_hour': false,
+        })
+    }
+
+    /**
+     * Toggles a filter option from the key parameter
+     * 
+     * @param {Filter Option to Toggle} key 
+     */
+    const toggleFilterOption = (key) => {
+        const oldVal = filterConfig[key];
+        let newFilterConfig = {...filterConfig};
+        newFilterConfig[key] = !oldVal;
+        return newFilterConfig;
+    }
+
+    /**
+     * Sets a filter option to no longer filter the key parameter
+     * 
+     * @param {Filter Option to Remove} key 
+     */
+    const removeFilterOption = (key, newFilterConfig) => {
+        newFilterConfig[key] = false;
+        setFilterConfig(newFilterConfig);
+    }
 
     const dialogCancelCallback = () => {
         setEditingGroup(null);
@@ -52,7 +126,7 @@ export default function Groups (props) {
                 toast.error("Failure to Retrieve Groups.", toastConfig)
             } finally {
                 if (isSubscribed) {
-                    // setLoading(false);
+                    setLoading(false);
                 }
             }
         }
@@ -62,7 +136,7 @@ export default function Groups (props) {
                 const guestData = await guestService.getGuests();
                 if (isSubscribedGuest) {
                     setGuests(guestData);
-                    const newGroups = await createGroupToGuestArray();
+                    const newGroups = await createGroupToGuestArray(guestData);
                     setGroups(newGroups);
                 }
             } catch (e) {
@@ -86,36 +160,37 @@ export default function Groups (props) {
         // eslint-disable-next-line
     }, [])
 
-    const createGroupToGuestArray = async () => {
-        const guestData = await guestService.getGuests();
+
+    const createGroupToGuestArray = async (guestData) => {
         const newGroups = await groupService.getGroups();
-        for (let i = 0; i < newGroups.length; ++i) {
-            const newGuests = [];
-            for (let j = 0; j < newGroups[i].Guest_ids.length; ++j) {
-                const currId = newGroups[i].Guest_ids[j];
-                const guest = guestData.find(g => g.id === currId);
-                newGuests.push({...guest});
-            }
-            newGroups[i].guests = newGuests;
-        }
-        return newGroups;
+        const updatedGroups = newGroups.map(group => {
+            const newGuests = group.Guest_ids.map(currId => {
+                return guestData.find(g => g.id === currId);
+            });
+            return { ...group, guests: newGuests };
+        });
+        return updatedGroups;
     }
 
     const dialogCallback = useCallback(async () => {
         setLoading(true);
-        setEditingGroup(null);
         try {
-            await groupService.getGroups();
-            const newGroups = await createGroupToGuestArray();
-            console.log("new groups after dialog callback");
-            console.log(newGroups);
+            const guestData = await guestService.getGuests();
+            const newGroups = await createGroupToGuestArray(guestData);
             setGroups(newGroups);
         } catch (e) {
             console.log(e);
         } finally {
             setLoading(false);
+            setEditingGroup(null);
         }
-    });
+        // eslint-disable-next-line
+    }, [groupService, guestService]);
+
+        // This effect runs whenever `groups` changes, ensuring UI updates
+        useEffect(() => {
+            // console.log("Group State Changed");
+        }, [groups]);
 
     // const addDummyGroup = async () => {
     //     setLoading(true);
@@ -298,7 +373,7 @@ export default function Groups (props) {
 
             </div>
             } */}
-            {groups.length > 0 &&
+            {groups && groups.length > 0 &&
             <TableContainer sx={{maxWidth: 650}}
                 component = {Paper}>
                 <Table sx={{maxWidth: 650}} 
@@ -349,12 +424,92 @@ export default function Groups (props) {
                 </Table>
             </TableContainer>
             }
-            <GroupCreate closeCallback = {dialogCallback}
-                disabled = {loading}
-                cancelCallback = {dialogCancelCallback}
-                group={editingGroup}
-                hideButton = {false}>
-            </GroupCreate>
+            <div className="flexed row">
+                <GroupCreate closeCallback = {dialogCallback}
+                    disabled = {loading}
+                    cancelCallback = {dialogCancelCallback}
+                    group={editingGroup}
+                    hideButton = {false}>
+                </GroupCreate>
+                <div>
+                    <Tooltip title={`${filterOpen ? "" : "Filter Invitees"}`}>
+                        <IconButton id={`Groups-List-Filter-Button`} 
+                            aria-controls = {filterOpen ? `filter-submenu` : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={filterOpen ? 'true' : undefined}
+                            onClick = { (e) => {
+                                setAnchorEl(e.currentTarget)
+                            }}
+                            >
+                            <FilterAlt color="primary"></FilterAlt>
+                        </IconButton>
+                        <Menu id={'filter-submenu'}
+                            anchorEl = {anchorEl}
+                            open = {filterOpen}
+                            onClose = {() => {
+                                setAnchorEl(null);
+                            }}
+                            MenuListProps = {{
+                                'aria-labelledby': 'Groups-List-Filter-Button'
+                            }}>
+                            <MenuItem className = {`filterOption`} 
+                                onClick = {() => {
+                                    removeFilterSelections();
+                                }}>
+                                <PlaylistRemove></PlaylistRemove> Remove All Selections
+                            </MenuItem>
+                            <MenuItem className = {`filterOption ${filterConfig['rsvp'] === true ? "selected" : ""}`} 
+                                onClick = {() => {
+                                    const newOptions = toggleFilterOption('rsvp');
+                                    removeFilterOption('not_rsvp', newOptions);
+                                }}>
+                                <Check></Check> Has RSVP'd
+                            </MenuItem>
+                            <MenuItem className = {`filterOption ${filterConfig['not_rsvp'] === true ? "selected" : ""}`} 
+                                onClick = {() => {
+                                   const newOptions = toggleFilterOption('not_rsvp');
+                                    removeFilterOption('rsvp', newOptions);
+                                }}>
+                                <Close></Close> Has not RSVP'd
+                            </MenuItem>
+                            <MenuItem className = {`filterOption ${filterConfig['invited_rehearsal'] === true ? "selected" : ""}`} 
+                                onClick = {() => {
+                                   const newOptions = toggleFilterOption('invited_rehearsal');
+                                    removeFilterOption('not_invited_rehearsal', newOptions);
+                                }}>
+                                <Restaurant></Restaurant> Invited Rehearsal
+                            </MenuItem>
+                            <MenuItem className = {`filterOption ${filterConfig['not_invited_rehearsal'] === true ? "selected" : ""}`} 
+                                onClick = {() => {
+                                   const newOptions = toggleFilterOption('not_invited_rehearsal');
+                                    removeFilterOption('invited_rehearsal', newOptions);
+                                }}>
+                                <NoMeals></NoMeals> Not Invited Rehearsal
+                            </MenuItem>
+                            <MenuItem className = {`filterOption ${filterConfig['invited_happy_hour'] === true ? "selected" : ""}`} 
+                                onClick = {() => {
+                                   const newOptions = toggleFilterOption('invited_happy_hour');
+                                    removeFilterOption('not_invited_happy_hour', newOptions);
+                                }}>
+                                <LocalBar></LocalBar> Invited Happy Hour
+                            </MenuItem>
+                            <MenuItem className = {`filterOption ${filterConfig['not_invited_happy_hour'] === true ? "selected" : ""}`} 
+                                onClick = {() => {
+                                   const newOptions = toggleFilterOption('not_invited_happy_hour');
+                                    removeFilterOption('invited_happy_hour', newOptions);
+                                }}>
+                                <NoDrinks></NoDrinks> Not Invited Happy Hour
+                            </MenuItem>
+                            {/* 'rsvp': false,
+        'invited_rehearsal': false,
+        'not_invited_rehearsal': false,
+        'invited_happy_hour': false,
+        'not_invited_happy_hour': false, */}
+                        </Menu>
+                    </Tooltip>
+                    {/* Filter */}
+                </div>
+            </div>
             {/* <GroupCreate closeCallback = {dialogCallback}
                 group={editingGroup}
                 single={true}
@@ -375,12 +530,13 @@ export default function Groups (props) {
                 Delete All Groups
             </Button> */}
             <div className="groupsContainer">
-                {loading && groups.length < 1 ?
+                {!groups || loading || groups.length < 1 ?
                     <ClipLoader className="bigClip"></ClipLoader>
                 //  : groups ?
                 :
-                    groups.map(group => 
-                    <div className="groupContainer">
+                    groups.filter(g => passesFilter(g)).map(group => 
+                    <div className="groupContainer"
+                        key={`group-${group.id}`}>
                         <div className="groupHeader">
                             <h2>{group.title}</h2>
                             {loading ?
@@ -448,7 +604,8 @@ export default function Groups (props) {
                             }
                             {group.guests && group.guests.map(guest =>
                                 guest && guest.first !== null &&
-                                <div className="flexed">
+                                <div className="flexed"
+                                    key={`guest-${guest.id}`}>
                                     <div>
                                         <Tooltip title={`This guest is ${guest.attending_ceremony ? "" : "not"} attending the ceremony`}>
                                             {guest.attending_ceremony ? <Favorite color = "primary"></Favorite> : <FavoriteBorder color="secondary"></FavoriteBorder>}

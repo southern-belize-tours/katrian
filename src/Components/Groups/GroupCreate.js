@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
-import { Accordion, AccordionDetails, AccordionSummary, Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, Tooltip } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Autocomplete, Button, Checkbox, Dialog, DialogActions,
+    DialogContent, DialogTitle, IconButton, TextField, Tooltip } from "@mui/material";
 import { Add, Close, ErrorOutline, ExpandMore, GroupAdd, PersonAdd, Save } from "@mui/icons-material";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
 const us_states = [
+    "",
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", 
     "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", 
     "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
@@ -47,6 +49,7 @@ export default function GroupCreate (props) {
         city: "",
         state: "",
         email: "",
+        phone: "",
         zip: "",
         people: "",
     });
@@ -71,6 +74,7 @@ export default function GroupCreate (props) {
             address: "",
             city: "",
             state: "",
+            phone: "",
             email: "",
             zip: "",
             people: "",
@@ -94,6 +98,7 @@ export default function GroupCreate (props) {
             setErrors({
                 title: "",
                 address: "",
+                phone: "",
                 city: "",
                 state: "",
                 email: "",
@@ -413,7 +418,7 @@ export default function GroupCreate (props) {
                             placeholder="John and Jane Doe Family"
                             value = {title}
                             label = "Group Name"
-                            error = {errors["title"]}
+                            error = {errors["title"].length > 0}
                             required = {true}
                             onChange = {(e) => {
                                 updateTitle(e);
@@ -436,7 +441,7 @@ export default function GroupCreate (props) {
                                     placeholder="jdoe@gmail.com"
                                     value = {email}
                                     label = {`${single ? "Guest" : "Group"} Email (optional)`}
-                                    error = {errors["email"]}
+                                    error = {errors["email"].length > 0}
                                     required = {false}
                                     onChange = {(e) => {
                                         updateEmail(e);
@@ -447,7 +452,7 @@ export default function GroupCreate (props) {
                                     placeholder="1234567890"
                                     value = {phone}
                                     label = {`${single ? "Guest" : "Group"} Phone Number (optional)`}
-                                    error = {errors["phone"]}
+                                    error = {errors["phone"].length > 0}
                                     required = {false}
                                     onChange = {(e) => {
                                         updatePhone(e);
@@ -459,7 +464,7 @@ export default function GroupCreate (props) {
                                         placeholder="1234 Lakeshore Drive"
                                         value = {address}
                                         label = "Address 1st Line, Unit (optional)"
-                                        error = {errors["address"]}
+                                        error = {errors["address"].length > 0}
                                         required = {false}
                                         onChange = {(e) => {
                                             updateAddress(e);
@@ -469,7 +474,7 @@ export default function GroupCreate (props) {
                                         placeholder="San Diego"
                                         value = {city}
                                         label = "City (optional)"
-                                        error = {errors["city"]}
+                                        error = {errors["city"].length > 0}
                                         required = {false}
                                         onChange = {(e) => {
                                             updateCity(e);
@@ -479,15 +484,14 @@ export default function GroupCreate (props) {
                                         placeholder="12345"
                                         value = {zip}
                                         label = "Zip Code (optional)"
-                                        error = {errors["zip"]}
+                                        error = {errors["zip"].length > 0}
                                         required = {false}
-                                        inputProps={{ maxLength: 5 }} // Restrict input length to 5 characters
+                                        inputProps={{ maxLength: 5 }} // Restrict input length to 5 characters for zip code
                                         onChange = {(e) => {
                                             updateZip(e);
                                         }}>
                                     </TextField>
                                     <Autocomplete className = "groupCreateFormField"
-                                        // defaultValue={props && props.group ? props.group.state : null}
                                         value={state}
                                         fullWidth   
                                         options={us_states.map((option) => option)}
@@ -583,24 +587,6 @@ export default function GroupCreate (props) {
                         disabled = {loading}
                         onClick = {() => {
                             setDefaultValues();
-                            // setDialogOpen(false);
-                            // setErrors({
-                            //     title: "",
-                            //     address: "",
-                            //     city: "",
-                            //     state: "",
-                            //     email: "",
-                            //     zip: "",
-                            //     people: "",
-                            // })
-                            // setSingle(false);
-                            // setAddress("");
-                            // setCity("");
-                            // setZip("");
-                            // setEmail("");
-                            // setLoading(false);
-                            // setPhone("");
-                            // setPeople([]);
                             props.cancelCallback();
                         }}>
                         {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Close></Close>} Close

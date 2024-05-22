@@ -4,6 +4,12 @@
     border-color: var(--clr-lavender) var(--clr-lavender) transparent !important;
 }
 
+.filterOption.selected {
+    background: var(--clr-lavender);
+    color: white;
+    font-weight: 600;
+}
+
 .groupsContainer {
     display: grid;
     grid-template-columns: auto auto auto;
