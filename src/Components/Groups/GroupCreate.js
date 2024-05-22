@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
-import { Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, Tooltip } from "@mui/material";
-import { Add, Close, GroupAdd, PersonAdd, Save } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Autocomplete, Button, Checkbox, Dialog, DialogActions,
+    DialogContent, DialogTitle, IconButton, TextField, Tooltip } from "@mui/material";
+import { Add, Close, ErrorOutline, ExpandMore, GroupAdd, PersonAdd, Save } from "@mui/icons-material";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
 const us_states = [
+    "",
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", 
     "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", 
     "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
@@ -27,6 +29,7 @@ export default function GroupCreate (props) {
     const groupService = useGroupService();
     const guestService = useGuestService();
 
+    const [additionalFieldsExpanded, setAdditionalFieldsExpanded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [single, setSingle] = useState(false);
     const [title, setTitle] = useState("");
@@ -46,8 +49,37 @@ export default function GroupCreate (props) {
         city: "",
         state: "",
         email: "",
+        phone: "",
         zip: "",
+        people: "",
     });
+
+    const setDefaultValues = () => {
+        setLoading(false);
+        setSingle(false);
+        setTitle("");
+        setAdditionalFieldsExpanded(false);
+        setInvitedHappyHour(false);
+        setInvitedRehearsal(false);
+        setAddress("");
+        setCity("");
+        setState("");
+        setPhone("");
+        setEmail("");
+        setPeople([]);
+        setZip("");
+        setDialogOpen(false);
+        setErrors({
+            title: "",
+            address: "",
+            city: "",
+            state: "",
+            phone: "",
+            email: "",
+            zip: "",
+            people: "",
+        })
+    }
 
     /**
      * If opened from an edit button, set all the fields to the group data
@@ -57,6 +89,7 @@ export default function GroupCreate (props) {
             setDialogOpen(true);
             setTitle(props.group.title);
             setInvitedRehearsal(props.group.invited_rehearsal);
+            setInvitedHappyHour(props.group.invited_happy_hour);
             setEmail(props.group.email);
             setCity(props.group.city);
             setState(props.group.state);
@@ -65,6 +98,7 @@ export default function GroupCreate (props) {
             setErrors({
                 title: "",
                 address: "",
+                phone: "",
                 city: "",
                 state: "",
                 email: "",
@@ -113,6 +147,7 @@ export default function GroupCreate (props) {
     }
 
     const addPerson = (e) => {
+        updateError("people", "");
         const newPerson = {
             first: "",
             last: "",
@@ -216,6 +251,7 @@ export default function GroupCreate (props) {
         // }
         if (people.length < 1) {
             ret = false;
+            updateError("people", "Please add at least one person to the group");
         }
         for (let i = 0; i < people.length; ++i) {
             const currPerson = people[i];
@@ -304,6 +340,7 @@ export default function GroupCreate (props) {
             setLoading(false);
             toast.success("Successfully created group", toastConfig);
             setDialogOpen(false);
+            setDefaultValues();
             if (props.closeCallback) {
                 props.closeCallback();
             }
@@ -316,13 +353,18 @@ export default function GroupCreate (props) {
             {!props.group && !props.hideButton &&
             <div className="flexed wrap">
                 <Button variant = "outlined"
+                    disabled={props.disabled}
                     onClick = {() => {
                         setDialogOpen(!dialogOpen); 
                     }}
                     color="primary">
-                    <GroupAdd></GroupAdd> Create New Group
+                    {props.disabled ? 
+                    <ClipLoader className="iconLoader"></ClipLoader>
+                    :<GroupAdd></GroupAdd>
+                    } Create New Group
                 </Button>
                 <Button variant = "outlined"
+                    disabled={props.disabled}
                     onClick = {() => {
                         const newPerson = {
                             first: "",
@@ -333,7 +375,10 @@ export default function GroupCreate (props) {
                         setDialogOpen(!dialogOpen); 
                     }}
                     color="primary">
-                    <Add></Add> Add Single Guest
+                    {props.disabled ? 
+                    <ClipLoader className="iconLoader"></ClipLoader>
+                    :<Add></Add>
+                    } Add Single Guest
                 </Button>
             </div>
             }
@@ -373,7 +418,7 @@ export default function GroupCreate (props) {
                             placeholder="John and Jane Doe Family"
                             value = {title}
                             label = "Group Name"
-                            error = {errors["title"]}
+                            error = {errors["title"].length > 0}
                             required = {true}
                             onChange = {(e) => {
                                 updateTitle(e);
@@ -381,87 +426,88 @@ export default function GroupCreate (props) {
                         </TextField>
                         }
                         
-                        <TextField className="groupCreateFormField"
-                            fullWidth
-                            placeholder="jdoe@gmail.com"
-                            value = {email}
-                            label = {`${single ? "Guest" : "Group"} Email`}
-                            error = {errors["email"]}
-                            required = {false}
-                            onChange = {(e) => {
-                                updateEmail(e);
-                            }}>
-                        </TextField>
-                        <TextField className="groupCreateFormField"
-                            fullWidth
-                            placeholder="1234567890"
-                            value = {phone}
-                            label = {`${single ? "Guest" : "Group"} Phone Number`}
-                            error = {errors["phone"]}
-                            required = {false}
-                            onChange = {(e) => {
-                                updatePhone(e);
-                            }}>
-                        </TextField>
-                        <div className="addressFields">
-                            <TextField className = "groupCreateFormField"
-                                fullWidth
-                                placeholder="1234 Lakeshore Drive"
-                                value = {address}
-                                label = "Address 1st Line, Unit"
-                                error = {errors["address"]}
-                                required = {false}
-                                onChange = {(e) => {
-                                    updateAddress(e);
-                                }}>
-                            </TextField>
-                            <TextField className = "groupCreateFormField"
-                                placeholder="San Diego"
-                                value = {city}
-                                label = "City"
-                                error = {errors["city"]}
-                                required = {false}
-                                onChange = {(e) => {
-                                    updateCity(e);
-                                }}>
-                            </TextField>
-                            <TextField className = "groupCreateFormField"
-                                placeholder="12345"
-                                value = {zip}
-                                label = "Zip Code"
-                                error = {errors["zip"]}
-                                required = {false}
-                                inputProps={{ maxLength: 5 }} // Restrict input length to 5 characters
-                                // helperText="Enter a 5-digit zip code"
-                                onChange = {(e) => {
-                                    updateZip(e);
-                                }}>
-                            </TextField>
-                            {/* <TextField className = "groupCreateFormField"
-                                placeholder="CA"
-                                value = {state}
-                                label = "State"
-                                error = {errors["state"]}
-                                required = {true}
-                                onChange = {(e) => {
-                                    updateState(e);
-                                }}>
-                            </TextField> */}
-                            <Autocomplete className = "groupCreateFormField"
-                                // defaultValue={props && props.group ? props.group.state : null}
-                                value={state}
-                                fullWidth   
-                                options={us_states.map((option) => option)}
-                                onChange = {(e) => {
-                                    updateState(e)
+                        <Accordion expanded = {additionalFieldsExpanded}>
+                            <AccordionSummary onClick = {() => {
+                                    setAdditionalFieldsExpanded(!additionalFieldsExpanded);
                                 }}
-                                renderInput={(params) => <TextField {...params} label="State" />}
-                            />
-                        </div>
+                                expandIcon = {additionalFieldsExpanded ? 
+                                    <Close fontSize="2rem" color="primary"></Close>
+                                    : <ExpandMore fontSize="2rem" color="primary"></ExpandMore>}>
+                                Optional Additional Fields
+                            </AccordionSummary>
+                            <AccordionDetails className="logisticsAccordion">
+                                <TextField className="groupCreateFormField"
+                                    fullWidth
+                                    placeholder="jdoe@gmail.com"
+                                    value = {email}
+                                    label = {`${single ? "Guest" : "Group"} Email (optional)`}
+                                    error = {errors["email"].length > 0}
+                                    required = {false}
+                                    onChange = {(e) => {
+                                        updateEmail(e);
+                                    }}>
+                                </TextField>
+                                <TextField className="groupCreateFormField"
+                                    fullWidth
+                                    placeholder="1234567890"
+                                    value = {phone}
+                                    label = {`${single ? "Guest" : "Group"} Phone Number (optional)`}
+                                    error = {errors["phone"].length > 0}
+                                    required = {false}
+                                    onChange = {(e) => {
+                                        updatePhone(e);
+                                    }}>
+                                </TextField>
+                                <div className="addressFields">
+                                    <TextField className = "groupCreateFormField"
+                                        fullWidth
+                                        placeholder="1234 Lakeshore Drive"
+                                        value = {address}
+                                        label = "Address 1st Line, Unit (optional)"
+                                        error = {errors["address"].length > 0}
+                                        required = {false}
+                                        onChange = {(e) => {
+                                            updateAddress(e);
+                                        }}>
+                                    </TextField>
+                                    <TextField className = "groupCreateFormField"
+                                        placeholder="San Diego"
+                                        value = {city}
+                                        label = "City (optional)"
+                                        error = {errors["city"].length > 0}
+                                        required = {false}
+                                        onChange = {(e) => {
+                                            updateCity(e);
+                                        }}>
+                                    </TextField>
+                                    <TextField className = "groupCreateFormField"
+                                        placeholder="12345"
+                                        value = {zip}
+                                        label = "Zip Code (optional)"
+                                        error = {errors["zip"].length > 0}
+                                        required = {false}
+                                        inputProps={{ maxLength: 5 }} // Restrict input length to 5 characters for zip code
+                                        onChange = {(e) => {
+                                            updateZip(e);
+                                        }}>
+                                    </TextField>
+                                    <Autocomplete className = "groupCreateFormField"
+                                        value={state}
+                                        fullWidth   
+                                        options={us_states.map((option) => option)}
+                                        onChange = {(e) => {
+                                            updateState(e)
+                                        }}
+                                        renderInput={(params) => <TextField {...params} label="State (optional)" />}
+                                    />
+                                </div>
+                            </AccordionDetails>
+                        </Accordion>
+
                         {!single &&
                         <>
                             <div>
-                                <Button color="primary"
+                                <Button color={`${errors.people && errors.people.length > 0 ? "error" : "primary"}`}
                                     onClick = {(e) => {
                                         addPerson(e);
                                     }}
@@ -511,7 +557,8 @@ export default function GroupCreate (props) {
 
                         <div>
                             <div>
-                            <Checkbox value = {invitedRehearsal}
+                            <Checkbox 
+                                checked = {invitedRehearsal}
                                 defaultChecked = {props.group && props.group.invited_rehearsal === true}
                                 label = "Invited to Rehearsal"
                                 onChange = {(e) => {setInvitedRehearsal(e.target.checked)}}>
@@ -527,13 +574,19 @@ export default function GroupCreate (props) {
                         </div>
                         
                     </div>
+
+                    <div>
+                        {errors.people && errors.people.length > 0 &&
+                            <div className="error"> <ErrorOutline></ErrorOutline> {errors.people}</div>
+                        }
+                    </div>
                 </DialogContent>
                 <DialogActions>
                     <Button variant="outlined"
                         color="secondary"
                         disabled = {loading}
                         onClick = {() => {
-                            setDialogOpen(false);
+                            setDefaultValues();
                             props.cancelCallback();
                         }}>
                         {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Close></Close>} Close

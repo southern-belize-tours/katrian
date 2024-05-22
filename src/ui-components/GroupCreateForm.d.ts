@@ -30,7 +30,7 @@ export declare type GroupCreateFormInputValues = {
     email?: string;
     Guest_ids?: string[];
     zip?: string;
-    invited_happy_hour?: string;
+    invited_happy_hour?: boolean;
     phone?: string;
 };
 export declare type GroupCreateFormValidationValues = {
@@ -42,7 +42,7 @@ export declare type GroupCreateFormValidationValues = {
     email?: ValidationFunction<string>;
     Guest_ids?: ValidationFunction<string>;
     zip?: ValidationFunction<string>;
-    invited_happy_hour?: ValidationFunction<string>;
+    invited_happy_hour?: ValidationFunction<boolean>;
     phone?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -56,7 +56,7 @@ export declare type GroupCreateFormOverridesProps = {
     email?: PrimitiveOverrideProps<TextFieldProps>;
     Guest_ids?: PrimitiveOverrideProps<TextFieldProps>;
     zip?: PrimitiveOverrideProps<TextFieldProps>;
-    invited_happy_hour?: PrimitiveOverrideProps<TextFieldProps>;
+    invited_happy_hour?: PrimitiveOverrideProps<SwitchFieldProps>;
     phone?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type GroupCreateFormProps = React.PropsWithChildren<{

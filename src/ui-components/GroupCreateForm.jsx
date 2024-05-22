@@ -198,7 +198,7 @@ export default function GroupCreateForm(props) {
     email: "",
     Guest_ids: [],
     zip: "",
-    invited_happy_hour: "",
+    invited_happy_hour: false,
     phone: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
@@ -620,13 +620,13 @@ export default function GroupCreateForm(props) {
         hasError={errors.zip?.hasError}
         {...getOverrideProps(overrides, "zip")}
       ></TextField>
-      <TextField
+      <SwitchField
         label="Invited happy hour"
-        isRequired={false}
-        isReadOnly={false}
-        value={invited_happy_hour}
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={invited_happy_hour}
         onChange={(e) => {
-          let { value } = e.target;
+          let value = e.target.checked;
           if (onChange) {
             const modelFields = {
               title,
@@ -654,7 +654,7 @@ export default function GroupCreateForm(props) {
         errorMessage={errors.invited_happy_hour?.errorMessage}
         hasError={errors.invited_happy_hour?.hasError}
         {...getOverrideProps(overrides, "invited_happy_hour")}
-      ></TextField>
+      ></SwitchField>
       <TextField
         label="Phone"
         isRequired={false}
