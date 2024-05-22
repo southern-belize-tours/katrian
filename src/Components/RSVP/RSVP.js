@@ -271,6 +271,9 @@ export default function RSVP (props) {
                                 groups.forEach(group => {
                                     let groupContainsSearch = false;
                                     for (let i = 0; i < group.guests.length; ++i) {
+                                        if (group.guests[i].first && group.guests[i].last) {
+                                            continue;
+                                        }
                                         if (group.guests[i].first.toLowerCase().includes(e.target.value.toLowerCase()) ||
                                             group.guests[i].last.toLowerCase().includes(e.target.value.toLowerCase()) ||
                                             (group.guests[i].first.toLowerCase() + " " + group.guests[i].last.toLowerCase()).includes(e.target.value.toLowerCase())) {
