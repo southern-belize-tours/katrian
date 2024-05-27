@@ -247,8 +247,8 @@ export default function RSVP (props) {
                     </Tooltip>
                 }
             </h1>
-            <div className="flexed logisticsItem centered">
-                We kindly ask you to pre-RSVP on our website. This is an early RSVP without the commitment, but will help give us a guest estimate (guestimate). You can update your status later as the date approaches.
+            <div className={`flexed logisticsItem centered logisticsText ${fade ? "" : "fading"}`}>
+                We kindly ask you to RSVP on our website. You can update your status later if things change.
             </div>
             {group === null ?
             <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
@@ -256,6 +256,7 @@ export default function RSVP (props) {
                     Search for your party by names to RSVP
                 </div>
                 <div className="searchFieldContainer">
+                    <Tooltip title={`${loading ? "loading groups, please wait" : ""}`}>
                     <TextField id="wedding-group-search"
                         className="weddingGroupSearchField"
                         placeholder="Doe"
@@ -291,6 +292,7 @@ export default function RSVP (props) {
                             }
                         }}>
                     </TextField>
+                    </Tooltip>
                     {loading ?
                     <ClipLoader className="iconLoader searchFieldIcon"></ClipLoader>
                     :

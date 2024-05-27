@@ -1,5 +1,5 @@
 import { AirportShuttle, Balcony, Bed, CalendarMonth, Call, Close, Coffee, DirectionsWalk, DoDisturb,
-    ExpandMore, Info, InfoOutlined, LocalOffer, LocalParking, LocalTaxi, LocationOn, PhotoAlbum,
+    ExpandMore, Flight, Info, InfoOutlined, LocalOffer, LocalParking, LocalTaxi, LocationOn, PhotoAlbum,
     PriorityHighOutlined, Schedule, Star, TapAndPlay } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -216,6 +216,14 @@ export default function HotelAndTransport (props) {
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails>
+                            <div className="logisticsItem">
+                                <div className="logisticsItem">
+                                    <Flight color="primary"></Flight>
+                                    <div>
+                                        The San Diego Airport is the closest airport to the venue, <Tooltip title="Open Directions in Google Maps"><a className="secondary" href="https://maps.app.goo.gl/35q6LvbzikCYUALi9" target="_blank" rel="noreferrer">between 20 and 40 minutes away depending on traffic</a></Tooltip>. The John Wayne Airport in Orange County is another option with a slightly longer commute <Tooltip title="Open Directions in Google Maps"><a href="https://maps.app.goo.gl/byS6QN9HbAXW8ATK9" className="secondary" target="_blank" rel="noreferrer">(~75-120 minutes)</a></Tooltip> that skips LA traffic.
+                                    </div>
+                                </div>
+                                </div>
                                 <div className="logisticsItem">
                                     <TapAndPlay color="primary"></TapAndPlay> Uber and Lyft ridesharing applications are prominent in San Diego, with Uber being generally more available
                                 </div>

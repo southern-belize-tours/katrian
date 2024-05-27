@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, Tooltip } from "@mui/material";
 import { VisuallyHiddenInput } from "./AdminGallery";
-import { Add, AddToPhotos, Close, CloudUpload, Delete, Save } from "@mui/icons-material";
+import { AddToPhotos, Close, CloudUpload, Save } from "@mui/icons-material";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
