@@ -4,18 +4,16 @@ import React, { useEffect, useState } from 'react';
 // Styles and Images
 import './camera.css';
 
-// By default the component will be 500px x 500px
-const defaultSize = 500;
-
 function Camera (props) {
 
     const [size, setSize] = useState(props.size);
     const [transition, setTransition] = useState(false);
     const [spin, setSpin] = useState(false);
 
-    let timeoutId, secondTimeoutId, thirdTimeoutId = null;
 
     useEffect(() => {
+        let timeoutId, secondTimeoutId, thirdTimeoutId = null;
+
         // Determine if the cake will make a transition and set a timeout function if false
         if (props !== null && props.doTransition !==null && props.doTransition) {
             setTransition(false);
@@ -43,6 +41,7 @@ function Camera (props) {
                 clearTimeout(thirdTimeoutId);
             }
         }
+        // eslint-disable-next-line
     }, []);
 
     // Set the size on init and resizing
@@ -50,7 +49,7 @@ function Camera (props) {
         if(props !== null && props.size !== null && props.size > 0) {
             setSize(props.size);
         }
-    }, [props.size])
+    }, [props, props.size])
 
     return(
         <div className={`cameraContainer ${props.opaque ? "opaque" : ""}`}
