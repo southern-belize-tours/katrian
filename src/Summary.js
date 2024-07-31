@@ -173,9 +173,8 @@ function Summary (props) {
                     </div>
                     </div>
 
-                    <div className="summaryDay">
+                    {/* <div className="summaryDay">
                     <div className = "flexed centered summaryItemHeading">
-                        {/* <Diversity1 fontSize="2rem" color="primary"></Diversity1> */}
                         <div>
                             <div className="summaryItemTitle">
                                 Brunch and Chill Day
@@ -237,7 +236,7 @@ function Summary (props) {
                         </Accordion>
                         </Tooltip>
                     </div>
-                    </div>
+                    </div> */}
 
                 </div>
             </div>
