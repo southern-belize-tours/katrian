@@ -31,7 +31,7 @@ export default function HotelAndTransport (props) {
                             {/* color="secondary"> */}
                         {/* </PriorityHigh>  */}
                         {/* <div> */}
-                            Late august will be a very busy month and rooms will book out early - we highly recommend booking in advance if at all possible
+                            Late August will be a very busy month and rooms will book out early - we highly recommend booking in advance if at all possible
                         {/* </div> */}
                         </div>
 
@@ -162,14 +162,6 @@ export default function HotelAndTransport (props) {
                                         rel = "noreferrer"
                                         className="secondary">
                                         Orli La Jolla
-                                    </a>
-                                </div>
-                                <div className="logisticsItem">
-                                    <a href="https://www.empress-hotel.com/"
-                                        target="_blank"
-                                        rel = "noreferrer"
-                                        className="secondary">
-                                        Empress Hotel La Jolla
                                     </a>
                                 </div>
                                 <div className="logisticsItem">
