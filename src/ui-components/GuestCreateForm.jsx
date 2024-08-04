@@ -31,7 +31,7 @@ export default function GuestCreateForm(props) {
   const initialValues = {
     first: "",
     last: "",
-    attending_ceremony: false,
+    attending_ceremony: "",
     attending_brunch: false,
     attending_rehearsal: false,
     attending_happy_hour: false,
@@ -211,13 +211,17 @@ export default function GuestCreateForm(props) {
         hasError={errors.last?.hasError}
         {...getOverrideProps(overrides, "last")}
       ></TextField>
-      <SwitchField
+      <TextField
         label="Attending ceremony"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={attending_ceremony}
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={attending_ceremony}
         onChange={(e) => {
-          let value = e.target.checked;
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
               first,
@@ -241,7 +245,7 @@ export default function GuestCreateForm(props) {
         errorMessage={errors.attending_ceremony?.errorMessage}
         hasError={errors.attending_ceremony?.hasError}
         {...getOverrideProps(overrides, "attending_ceremony")}
-      ></SwitchField>
+      ></TextField>
       <SwitchField
         label="Attending brunch"
         defaultChecked={false}

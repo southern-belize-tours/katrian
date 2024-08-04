@@ -16,7 +16,7 @@ type Guest @model @auth(rules: [{allow: public}]) {
   id: ID!
   first: String
   last: String
-  attending_ceremony: Boolean
+  attending_ceremony: Int
   attending_brunch: Boolean
   attending_rehearsal: Boolean
   attending_happy_hour: Boolean

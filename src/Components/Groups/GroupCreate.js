@@ -271,13 +271,13 @@ export default function GroupCreate (props) {
                     const guestData = {
                         "first": people[i].first,
                         "last": people[i].last,
-                        "attending_ceremony": false,
+                        "attending_ceremony": -1,
                         "attending_happy_hour": false,
                         "attending_brunch": false,
                         "attending_rehearsal": false,
                     };
+                    // console.log(guestData)
                     const newGuest = await guestService.createGuest(guestData);
-                    console.log(newGuest);
                     guestIds.push(newGuest.id);
                 }
                 await groupService.createGroup({
@@ -312,7 +312,7 @@ export default function GroupCreate (props) {
                         guestData = {
                             "first": people[i].first,
                             "last": people[i].last,
-                            "attending_ceremony": false,
+                            "attending_ceremony": -1,
                             "attending_happy_hour": false,
                             "attending_brunch": false,
                             "attending_rehearsal": false,
@@ -389,7 +389,7 @@ export default function GroupCreate (props) {
                 </DialogTitle>
                 <DialogContent>
                     <div className="groupCreateFormContainer">
-                        {single ? 
+                        {single && people.length ? 
                             people.map((person, idx) =>
                                 <div className = "addressFields">
                                     <TextField className = "groupCreateFormField"
@@ -515,7 +515,7 @@ export default function GroupCreate (props) {
                                     <PersonAdd></PersonAdd> Add Person to Group
                                 </Button>
                             </div>
-                            {people.map((person, idx) =>
+                            {(people && people.length) ? people.map((person, idx) =>
                                 <div className = "addressFields">
                                     <TextField className = "groupCreateFormField"
                                         placeholder="John"
@@ -551,7 +551,7 @@ export default function GroupCreate (props) {
                                     </Tooltip>
                                     </div>
                                 </div>
-                            )}
+                            ) : <></>}
                             </>
                         }
 

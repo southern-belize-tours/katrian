@@ -616,15 +616,18 @@ export default function Groups (props) {
                             {group.guests && group.guests.length > 0 &&
                                 <h3>Guests in Group:</h3>
                             }
+                            <div>
                             {group.guests && group.guests.map(guest =>
                                 guest && guest.first !== null &&
                                 <div className="flexed"
                                     key={`guest-${guest.id}`}>
                                     <div>
-                                        <Tooltip title={`This guest is ${guest.attending_ceremony ? "" : "not"} attending the ceremony`}>
-                                            {guest.attending_ceremony ? <Favorite color = "primary"></Favorite> : <FavoriteBorder color="secondary"></FavoriteBorder>}
+                                        <Tooltip title={`This guest is ${guest.attending_ceremony === 1 ? "" : guest.attending_ceremony === 0 ? "not" : "undetermined regarding"} attending the ceremony`}>
+                                            {guest.attending_ceremony === 1 ? <Favorite color = "primary"></Favorite> 
+                                            : guest.attending_ceremony === 0 ? <Favorite color= "secondary"></Favorite>
+                                            : <FavoriteBorder color="disabled"></FavoriteBorder>}
                                         </Tooltip>
-                                        <Tooltip title={`This guest is ${guest.attending_brunch ? "" : "not"} attending brunch`}>
+                                        {/* <Tooltip title={`This guest is ${guest.attending_brunch ? "" : "not"} attending brunch`}>
                                             {guest.attending_brunch ? <EggAlt color="primary"></EggAlt> : <EggAltOutlined color="secondary"></EggAltOutlined>}
                                         </Tooltip>
                                         {group.invited_rehearsal &&
@@ -639,11 +642,12 @@ export default function Groups (props) {
                                             <LocalBar color="primary"></LocalBar> : <NoDrinks color="secondary"></NoDrinks>
                                             }
                                         </Tooltip>
-                                        }
+                                        } */}
                                     </div>
                                     <div>{guest.first} {guest.last}</div>
                                 </div>
                             )}
+                            </div>
                         </div>
                     </div>)
                     // :

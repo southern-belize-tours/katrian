@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import './RSVP.css';
 import { Button, IconButton, TextField, Tooltip } from "@mui/material";
 import { CalendarMonth, CancelOutlined, Check, CheckOutlined, GroupAdd, InfoOutlined,
-    LocationOn, PersonAdd, Search, Undo } from "@mui/icons-material";
+    LocationOn, PersonAdd, PsychologyAlt, Search, Undo } from "@mui/icons-material";
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
-import { toast} from 'react-toastify';
+import { toast, ToastContainer} from 'react-toastify';
 import { ClipLoader } from "react-spinners";
+import GroupEmailForm from "./GroupEmailForm";
 
 const toastConfig = {
     autoClose: 2000
@@ -28,6 +29,8 @@ export default function RSVP (props) {
     const [matchedGroups, setMatchedGroups] = useState([]);
     const [peopleConfirmed, setPeopleConfirmed] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [statusConfirmed, setStatusConfirmed] = useState(false);
+    const [emailConfirmed, setEmailConfirmed] = useState(false);
 
     useEffect(() => {
         let isSubscribed = true;
@@ -110,7 +113,7 @@ export default function RSVP (props) {
             if (newPeople[i].first === person.first && newPeople[i].last === person.last) {
                 newPeople[i].attending_ceremony = val;
                 // If they aren't going to the ceremony they don't get to go to rehearsal or brunch
-                if (val === false) {
+                if (val === 0) {
                     newPeople[i].attending_brunch = false;
                     newPeople[i].attending_rehearsal = false;
                     newPeople[i].attending_happy_hour = false;
@@ -124,7 +127,12 @@ export default function RSVP (props) {
                     "attending_brunch": newPeople[i].attending_brunch,
                     "attending_happy_hour": newPeople[i].attending_happy_hour,
                 }
-                await guestService.updateGuest(guestData);
+                const updatedGuest = await guestService.updateGuest(guestData);
+                if (updatedGuest !== null) {
+                    toast.success(`Updated ${newPeople[i].first} ${newPeople[i].last} to ${val === 1 ? "" : val === 0 ? "Not" : "Undecided Regarding"} Attending the Ceremony.`, toastConfig);
+                } else {
+                    toast.error(`Failure to Update ${newPeople[i].first} ${newPeople[i].last}.`, toastConfig);
+                }
                 break;
             }
         }
@@ -226,11 +234,68 @@ export default function RSVP (props) {
         set_people_selected(newPeople);
     }
     
+    const saveEmail = async (email) => {
+        setLoading(true);
+        console.log(email);
+        // let groupData = {...group};
+        let groupData = {
+            "id": group.id,
+            "title": group.title,
+            "invited_rehearsal": group.invitedRehearsal,
+            "address": group.address,
+            "city": group.city,
+            "state": group.state,
+            "zip": group.zip,
+            "email": email,
+            "phone": group.phone,
+            "invited_happy_hour": group.invitedHappyHour,
+            "Guest_ids": group.guestIds
+        };
+
+
+        console.log(groupData);
+
+        let newGroup = await groupService.updateGroup(groupData);
+        newGroup = {...newGroup.data.updateGroup}
+        // Update the state variables to reflect the new service's values from backend
+        if (newGroup !== null) {
+            // setGroups(groupService.getGroups);
+            newGroup.guests = group.guests;
+            setGroup(newGroup);
+            let newGroups = [...groups];
+            for (let i = 0; i < newGroups.length; ++i) {
+                if (newGroups[i].id === newGroup.id) {
+                    newGroups[i] = {...newGroup};
+                    newGroups[i].email = email;
+                    break;
+                }
+            }
+            setGroups(newGroups);
+            setEmailConfirmed(true);
+            toast.success("Email Updated Successfully", toastConfig);
+        } else {
+            toast.error("Failure to Update Email", toastConfig);
+        }
+        setLoading(false);
+    }
+
+    const AddToCalendar = () => {
+        const eventTitle = 'Katrina & Ian Wedding';
+        const eventLocation = '590 Coast S Blvd, La Jolla, CA 92037';
+        const eventDescription = 'A day of love';
+        const eventStartTime = '20250822T170000';
+        const eventEndTime = '20250822T230000';
+    
+        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartTime}/${eventEndTime}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}`;
+    
+        window.open(googleCalendarUrl, '_blank');
+    };
 
     return (
         <div className="weddingBody">
+            <ToastContainer></ToastContainer>
             <h1 className={`logisticsText ${fade ? "" : "fading"}`}>
-                Pre-RSVP {group !== null &&
+                Pre-RSVP {group !== null && statusConfirmed === false &&
                     <Tooltip title="Return to Group Search">
                         <IconButton variant="outlined"
                             onClick = {() => {
@@ -240,6 +305,8 @@ export default function RSVP (props) {
                                 setMatchedGroups([]);
                                 setGroup(null);
                                 setSelecting(false);
+                                setEmailConfirmed(false);
+                                setStatusConfirmed(false);
                             }}
                             color="primary">
                             <Undo color="primary"></Undo>
@@ -247,9 +314,6 @@ export default function RSVP (props) {
                     </Tooltip>
                 }
             </h1>
-            <div className={`flexed logisticsItem centered logisticsText ${fade ? "" : "fading"}`}>
-                We kindly ask you to RSVP on our website. You can update your status later if things change.
-            </div>
             {group === null ?
             <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
                 <div className="flexed logisticsItem centered">
@@ -328,6 +392,9 @@ export default function RSVP (props) {
                     </div>
                     </Tooltip>
                     )}
+                    {matchedGroups.length === 0 && search.length > 0 ?
+                    <>No Groups Found</>
+                    :<></>}
                 </div>
             </div>
             :
@@ -336,7 +403,19 @@ export default function RSVP (props) {
                 {!peopleConfirmed ? 
                 <div className="flexed col">
                     { people_selected.length < group.guests.length && selecting === false &&
-                        <div>
+                        <>
+                        {/* <div className="flexed col">
+                            {group.email && group.email.length > 0 ?
+                            <div className="flexed logisticsItem centered">
+                                The current best email we have for reaching your group is {group.email}
+                            </div>
+                            :
+                            <div className="flexed logisticsItem centered">
+                                We currently don't an email on file for reaching your group.
+                            </div>
+                            }
+                        </div> */}
+                        <div className="flexed col">
                             <div className="flexed logisticsItem centered">
                                 Are you RSVPing on behalf of your entire group? Or are you booking for just a few members?
                             </div>
@@ -358,6 +437,7 @@ export default function RSVP (props) {
                                 </Button>
                             </div>
                         </div>
+                        </>
                     }
 
                     {selecting === true &&
@@ -393,7 +473,7 @@ export default function RSVP (props) {
                         }
                         <div className="peopleSelected">
                             {people_selected.map(person =>
-                            <Tooltip title = {`Let ${person.first} RSVP themself`}>
+                            <Tooltip title = {`Let ${person.first} RSVP themself later`}>
                                 <Button variant="outlined"
                                     onClick = {() => {removeSelected(person)}}
                                     color="secondary">
@@ -428,10 +508,10 @@ export default function RSVP (props) {
                         </Button>
                     </div> */}
                 </div>
-                :
+                : statusConfirmed == false ?
                 <>
                 {/* Rehearsal */}
-                { group.invited_rehearsal === true &&
+                {/* { group.invited_rehearsal === true &&
                 <>
                 <div className="summaryItemName">
                     Rehearsal
@@ -468,8 +548,6 @@ export default function RSVP (props) {
                         <div className="RSVPFormField">
                             <div>
                                 {person.first}
-                                {/* {person.attending == true ? "attending" : "not attending"} */}
-                                {/* {person.attending} */}
                             </div>
                             <div className="RSVPAcceptReject">
                                 <Button variant={`${person.attending_rehearsal ? "contained" : "outlined"}`}
@@ -489,18 +567,23 @@ export default function RSVP (props) {
                     }
                 </div>
                 </>
-                }
-
+                } */}
+                <div className={`flexed logisticsItem centered`}>
+                    Thank you for helping us plan by RSVPing here. You can always update your status later if things change.
+                </div>
                 {/* Ceremony */}
                 <div className="summaryItemName">
                     Ceremony
                 </div>
-                <div className="summaryItemLocation">
-                    <CalendarMonth color="primary"></CalendarMonth>
-                    <div>
-                        Friday, August 22nd, 2025
+                <Tooltip title={"Add to Google Calendar"}>
+                    <div className="summaryItemLocation"
+                        onClick = {AddToCalendar}>
+                        <CalendarMonth color="primary"></CalendarMonth>
+                        <div>
+                            Friday, August 22nd, 2025, 5:00pm
+                        </div>
                     </div>
-                </div>
+                </Tooltip>
                 <Tooltip title={`${text === "590 Coast S Blvd, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
                     <div className="summaryItemLocation textCopy"
                         onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}>
@@ -511,7 +594,7 @@ export default function RSVP (props) {
                             <LocationOn color="primary"></LocationOn>
                             }
                         <div>
-                            The Wedding Bowl, La Jolla
+                            The Wedding Bowl, La Jolla Cove
                         </div>
                     </div>
                 </Tooltip>
@@ -520,22 +603,30 @@ export default function RSVP (props) {
                         people_selected.map(person => 
                         <div className="RSVPFormField">
                             <div>
-                                {person.first}
+                                <Tooltip title = {`${person.first} is currently ${person.attending_ceremony === 0 ? "not planning on" : person.attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
+                                    {person.first}
+                                </Tooltip>
                                 {/* {person.attending == true ? "attending" : "not attending"} */}
                                 {/* {person.attending} */}
                             </div>
                             <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attending_ceremony ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttending(person, true)}}
+                                <Button variant={`${person.attending_ceremony === 1 ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttending(person, 1)}}
                                     disabled = {loading}
                                     color="primary">
                                     {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
                                 </Button>
-                                <Button variant={`${person.attending_ceremony ? "outlined" : "contained"}`}
-                                    onClick = {() => {setAttending(person, false)}}
+                                <Button variant={`${person.attending_ceremony === 0 ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttending(person, 0)}}
                                     disabled = {loading}
                                     color="secondary">
                                     {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
+                                </Button>
+                                <Button variant={`${person.attending_ceremony === -1 ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttending(person, -1)}}
+                                    disabled = {loading}
+                                    color="disabled">
+                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
                                 </Button>
                             </div>
                         </div>
@@ -544,7 +635,7 @@ export default function RSVP (props) {
                 </div>
 
                 {/* Brunch */}
-                <div className="summaryItemName">
+                {/* <div className="summaryItemName">
                     Brunch
                 </div>
                 <div className="summaryItemLocation">
@@ -591,10 +682,10 @@ export default function RSVP (props) {
                         </div>
                     )
                     }
-                </div>
+                </div> */}
 
                 {/* Happy Hour */}
-                {group.invited_happy_hour &&
+                {/* {group.invited_happy_hour &&
                 <>
                 <div className="summaryItemName">
                     Happy Hour
@@ -645,7 +736,7 @@ export default function RSVP (props) {
                     }
                 </div>
                 </>
-                }
+                } */}
 {/* 
                 <table className='attendingTable'>
                     <tr>
@@ -670,7 +761,50 @@ export default function RSVP (props) {
                     )}
 
                 </table> */}
-                </>}
+                    <Button variant="contained"
+                        onClick = {() => {
+                            setStatusConfirmed(true);
+                            let no_attendees = true;
+                            for (let i = 0; i < people_selected.length; ++i) {
+                                if (people_selected[i].attending_ceremony === 1) {
+                                    no_attendees = false;
+                                    break;
+                                }
+                            }
+                            if (no_attendees) {
+                                setEmailConfirmed(true);
+                            }
+                            else {
+                                setEmailConfirmed(false);
+                            }
+                        }}
+                        disabled = {loading}
+                        color="primary">
+                        {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Continue
+                    </Button>
+                </>
+                : emailConfirmed === false ?
+                <GroupEmailForm email={group.email}
+                    confirmFunction = {() => {setEmailConfirmed(true);}}
+                    saveFunction = {saveEmail}>
+                </GroupEmailForm>
+                :
+                <div className="flexed col">
+                    <div className="flexed logisticsItem centered">
+                        Thank you for RSVPing, we sincerely look forward to seeing you if you are able to make it.
+                    </div> 
+                    <div className="logisticsItem">
+                        <span>
+                            Please take a look at the <a className='secondary' href="/Hotels-and-Transport">Hotels and Transport Page</a> for some great hotels that are a walking distance from everything that we plan before they book out!
+                        </span>
+                    </div>
+                    <div className="logisticsItem">
+                        <span>
+                            Our <a className='secondary' href="/FAQ">FAQ</a> page has some great activities to do in San Diego, and feel free to ask any questions that come to mind.
+                        </span>
+                    </div>
+                </div>
+            }
         </div>
         }
         
