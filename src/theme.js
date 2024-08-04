@@ -11,6 +11,9 @@ const theme = createTheme({
       main: '#a9b69c',
     //   main: '#f50057', // Change this to your desired secondary color
     },
+    disabled: {
+      main: '#888888'
+    }
   },
 });
 

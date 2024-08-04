@@ -18,7 +18,7 @@
 }
 
 .groupContainer {
-    padding: var(--default-gap) var(--default-padding);
+    padding: var(--default-gap);
     background: #fafafa;
     border-radius: 1rem;
     gap: var(--default-gap);
@@ -28,6 +28,12 @@
 
 #headhunter th {
     font-weight: 600;
+}
+
+.guestsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
 }
 
 .guestsContainer h3 {

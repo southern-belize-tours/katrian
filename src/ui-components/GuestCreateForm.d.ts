@@ -24,7 +24,7 @@ export declare type ValidationFunction<T> = (value: T, validationResponse: Valid
 export declare type GuestCreateFormInputValues = {
     first?: string;
     last?: string;
-    attending_ceremony?: boolean;
+    attending_ceremony?: number;
     attending_brunch?: boolean;
     attending_rehearsal?: boolean;
     attending_happy_hour?: boolean;
@@ -32,7 +32,7 @@ export declare type GuestCreateFormInputValues = {
 export declare type GuestCreateFormValidationValues = {
     first?: ValidationFunction<string>;
     last?: ValidationFunction<string>;
-    attending_ceremony?: ValidationFunction<boolean>;
+    attending_ceremony?: ValidationFunction<number>;
     attending_brunch?: ValidationFunction<boolean>;
     attending_rehearsal?: ValidationFunction<boolean>;
     attending_happy_hour?: ValidationFunction<boolean>;
@@ -42,7 +42,7 @@ export declare type GuestCreateFormOverridesProps = {
     GuestCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     first?: PrimitiveOverrideProps<TextFieldProps>;
     last?: PrimitiveOverrideProps<TextFieldProps>;
-    attending_ceremony?: PrimitiveOverrideProps<SwitchFieldProps>;
+    attending_ceremony?: PrimitiveOverrideProps<TextFieldProps>;
     attending_brunch?: PrimitiveOverrideProps<SwitchFieldProps>;
     attending_rehearsal?: PrimitiveOverrideProps<SwitchFieldProps>;
     attending_happy_hour?: PrimitiveOverrideProps<SwitchFieldProps>;
