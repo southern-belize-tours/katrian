@@ -6,7 +6,7 @@ import { IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableCo
 import { CancelOutlined, Check, Close, Edit, EggAlt, EggAltOutlined, Email,
     Favorite, FavoriteBorder,
     FilterAlt,
-    LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, PlaylistRemove, Restaurant } from "@mui/icons-material";
+    LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, PlaylistRemove, QuestionMark, Restaurant } from "@mui/icons-material";
 
 import './Groups.css';
 import { ClipLoader } from "react-spinners";
@@ -32,6 +32,7 @@ export default function Groups (props) {
     const [filterConfig, setFilterConfig] = useState({
         'rsvp': false,
         'not_rsvp': false,
+        'undecided': false,
         'invited_rehearsal': false,
         'not_invited_rehearsal': false,
         'invited_happy_hour': false,
@@ -42,7 +43,7 @@ export default function Groups (props) {
         if (filterConfig['rsvp'] === true) {
             let guestAttending = false;
             for (let i = 0; i < group.guests.length; ++i) {
-                if (group.guests[i].attending_ceremony === true) {
+                if (group.guests[i].attending_ceremony === 1) {
                     guestAttending = true;
                     break;
                 }
@@ -51,10 +52,26 @@ export default function Groups (props) {
                 return false;
             }
         } else if (filterConfig['not_rsvp'] === true) {
+            let guestRejected = false;
             for (let i = 0; i < group.guests.length; ++i) {
-                if (group.guests[i].attending_ceremony === true) {
-                    return false;
+                if (group.guests[i].attending_ceremony === 0) {
+                    guestRejected = true;
+                    break;
                 }
+            }
+            if (guestRejected === false) {
+                return false;
+            }
+        } else if (filterConfig['undecided'] === true) {
+            let guestUndecided = false;
+            for (let i = 0; i < group.guests.length; ++i) {
+                if (group.guests[i].attending_ceremony === -1) {
+                    guestUndecided = true;
+                    break;
+                }
+            }
+            if (guestUndecided === false) {
+                return false;
             }
         }
         if (filterConfig['invited_rehearsal'] === true && group.invited_rehearsal === false) {
@@ -87,6 +104,7 @@ export default function Groups (props) {
         setFilterConfig({
             'rsvp': false,
             'not_rsvp': false,
+            'undecided': false,
             'invited_rehearsal': false,
             'not_invited_rehearsal': false,
             'invited_happy_hour': false,
@@ -296,7 +314,7 @@ export default function Groups (props) {
         for (let i = 0; i < groups.length; ++i) {
             if (groups[i].guests) {
                 for (let j = 0; j < groups[i].guests.length; ++j) {
-                    if (groups[i].guests[j] && groups[i].guests[j].attending_ceremony) {
+                    if (groups[i].guests[j] && groups[i].guests[j].attending_ceremony === 1) {
                         ret++;
                     }
                 }
@@ -482,7 +500,14 @@ export default function Groups (props) {
                                    const newOptions = toggleFilterOption('not_rsvp');
                                     removeFilterOption('rsvp', newOptions);
                                 }}>
-                                <Close></Close> Has not RSVP'd
+                                <Close></Close> Has Rejected
+                            </MenuItem>
+                            <MenuItem className = {`filterOption ${filterConfig['undecided'] === true ? "selected" : ""}`} 
+                                onClick = {() => {
+                                   const newOptions = toggleFilterOption('undecided');
+                                   setFilterConfig(newOptions);
+                                }}>
+                                <QuestionMark></QuestionMark> Undecided RSVP
                             </MenuItem>
                             <MenuItem className = {`filterOption ${filterConfig['invited_rehearsal'] === true ? "selected" : ""}`} 
                                 onClick = {() => {
