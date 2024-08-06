@@ -295,7 +295,7 @@ export default function RSVP (props) {
         <div className="weddingBody">
             <ToastContainer></ToastContainer>
             <h1 className={`logisticsText ${fade ? "" : "fading"}`}>
-                Pre-RSVP {group !== null && statusConfirmed === false &&
+                RSVP {group !== null && statusConfirmed === false &&
                     <Tooltip title="Return to Group Search">
                         <IconButton variant="outlined"
                             onClick = {() => {
@@ -573,7 +573,7 @@ export default function RSVP (props) {
                 </div>
                 {/* Ceremony */}
                 <div className="summaryItemName">
-                    Ceremony
+                    Ceremony + Reception
                 </div>
                 <Tooltip title={"Add to Google Calendar"}>
                     <div className="summaryItemLocation"

@@ -348,6 +348,11 @@ export default function GroupCreate (props) {
         return;
     }
 
+    // console.log(people);
+    // console.log(props.group);
+    // const guests = guestService.getGuests()
+    // console.log(guests);
+
     return (
         <div>
             {!props.group && !props.hideButton &&
@@ -389,7 +394,7 @@ export default function GroupCreate (props) {
                 </DialogTitle>
                 <DialogContent>
                     <div className="groupCreateFormContainer">
-                        {single && people.length ? 
+                        {single && people.length > 0 ?
                             people.map((person, idx) =>
                                 <div className = "addressFields">
                                     <TextField className = "groupCreateFormField"
@@ -515,7 +520,7 @@ export default function GroupCreate (props) {
                                     <PersonAdd></PersonAdd> Add Person to Group
                                 </Button>
                             </div>
-                            {(people && people.length) ? people.map((person, idx) =>
+                            {(people && people.length > 0) ? people.map((person, idx) =>
                                 <div className = "addressFields">
                                     <TextField className = "groupCreateFormField"
                                         placeholder="John"

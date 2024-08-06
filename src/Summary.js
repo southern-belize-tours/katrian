@@ -1,6 +1,6 @@
 import Clock from './page_art/clock/clock.js'
 import { useEffect, useState } from 'react';
-import { AttachMoney, CheckOutlined, Close, Deck, Dining, DirectionsWalk, ExpandMore, LocalParking,
+import { AttachMoney, CheckOutlined, Checkroom, Close, Deck, Dining, DirectionsWalk, ExpandMore, LocalParking,
     LocationOn, Nightlife, QuestionMark, Thermostat, WbShade, WbSunny } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Tooltip } from '@mui/material';
 
@@ -159,6 +159,12 @@ function Summary (props) {
                                     <Thermostat color="primary"></Thermostat>
                                     <div>
                                         The <Tooltip title="View La Jolla Weather Data for August"><a href="https://www.accuweather.com/en/us/la-jolla/92870/august-weather/2168187?year=2025" className="secondary" target="_blank" rel="noreferrer">average La Jolla weather</a></Tooltip> has daily high temperatures around 76 F. Weather rarely exceeds 84 F and rarely dips below 68 F at this time of year. August is quite dry and averages 3 days with rain each year.
+                                    </div>
+                                </div>
+                                <div className="logisticsItem">
+                                    <Checkroom color="primary"></Checkroom>
+                                    <div>
+                                        The attire for the wedding ceremony and reception is <a href="https://www.theknot.com/content/formal-wedding-attire" target='_blank' rel='noreferrer' className="secondary">formal</a>.
                                     </div>
                                 </div>
                                 <div className="logisticsItem">

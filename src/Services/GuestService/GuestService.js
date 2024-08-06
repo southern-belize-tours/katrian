@@ -11,18 +11,44 @@ export default class GuestService {
         this.guests = [];
     }
 
+    // async fetchGuests() {
+    //     try {
+    //         const newGuests = await client.graphql({
+    //             query: listGuests
+    //         });
+    //         this.guests = [...newGuests.data.listGuests.items];
+    //         return [...this.guests];
+    //     } catch (e) {
+    //         console.log("Guest Service: Error fetching Guests", e);
+    //         return [];
+    //     }
+    // }
+
     async fetchGuests() {
         try {
-            const newGuests = await client.graphql({
-                query: listGuests
-            });
-            this.guests = [...newGuests.data.listGuests.items];
+            let nextToken = null;
+            let allGuests = [];
+    
+            do {
+                const newGuests = await client.graphql({
+                    query: listGuests,
+                    variables: {
+                        nextToken
+                    }
+                });
+    
+                allGuests = [...allGuests, ...newGuests.data.listGuests.items];
+                nextToken = newGuests.data.listGuests.nextToken;
+            } while (nextToken);
+    
+            this.guests = allGuests;
             return [...this.guests];
         } catch (e) {
             console.log("Guest Service: Error fetching Guests", e);
             return [];
         }
     }
+    
 
     async getGuests() {
         if (this.guests.length === 0) {
