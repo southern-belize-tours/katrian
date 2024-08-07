@@ -2,7 +2,7 @@
     display: flex;
     gap: var(--default-gap);
     flex-direction: column;
-    padding-left: var(--default-padding);
+    padding-left: var(--default-gap);
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.2rem;
 }
@@ -12,6 +12,11 @@
     gap: var(--default-gap);
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+.RSVPName {
+    font-size: var(--font-size-medium);
 }
 
 .RSVPAcceptReject {
@@ -19,6 +24,7 @@
     display: flex;
     gap: var(--default-gap);
     justify-content: flex-end;
+    max-width: 100%;
 }
 
 .searchFieldContainer {
@@ -92,4 +98,5 @@
     display: flex;
     gap: var(--default-gap);
     justify-content: space-around;
+    flex-wrap: wrap;
 }

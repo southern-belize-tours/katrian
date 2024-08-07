@@ -39,7 +39,7 @@ const weddingPartyTitles = [
     "Marissa Quilici - Bridesmaid",
     "Ray Russell - Bridesmaid",
     "Jordan Legge - Bridesmaid",
-    "Melissa Nunez - Bridesmaid",
+    "Melissa Nunes - Bridesmaid",
     "Meigan Feekes - Bridesmaid",
 ];
 

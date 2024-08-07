@@ -31,7 +31,7 @@ import { FaqServiceProvider } from './Services/FaqService/FaqServiceContext.js';
 import CuvierClubHistory from './Components/CuvierClub/CuvierClubHistory.js';
 import Question from './page_art/question/question.js';
 import { TuneServiceProvider } from './Services/TuneService/TuneServiceContext.js';
-import {AutoStories, BrunchDining, CloudUploadOutlined, Collections, DiamondOutlined } from '@mui/icons-material';
+import {AutoStories, BrunchDining, CloudUploadOutlined, Collections, DiamondOutlined, Grass } from '@mui/icons-material';
 import Ceremony from './Ceremony.js';
 import Brunch from './Brunch.js';
 import HotelAndTransport from './Components/Hotel_and_Transport/HotelAndTransport.js';
@@ -62,6 +62,7 @@ const galleryItems = [
   {text: "Our Story", route: "/Gallery/Story", component: <AutoStories color="primary" fontSize="small"></AutoStories>},
   {text: "Proposal", route: "/Gallery/Proposal", component: <DiamondOutlined color="primary" fontSize="small"></DiamondOutlined>},
   {text: "Wedding Party", route: "/Gallery/WeddingParties", component: <BrunchDining color="primary" fontSize="small"></BrunchDining>},
+  {text: "Lavender", route: "/Gallery/Lavender", component: <Grass color="primary" fontSize="small"></Grass>},
   {text: "Guest Uploads", route: "/Gallery/GuestUploads", component: <CloudUploadOutlined color="primary" fontSize="small"></CloudUploadOutlined>},
 
 ];
@@ -169,6 +170,9 @@ function App() {
             exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
           </Route>
           <Route path="/Gallery/Story"
+            exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
+          </Route>
+          <Route path="/Gallery/Lavender"
             exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
           </Route>
           <Route path = "/FAQ" exact component = {() => <FaqForm size = {linkSize * 4}></FaqForm>}></Route>

@@ -4,6 +4,11 @@
   --clr-lavender: #ad9ded;
   --clr-background: #ffffff;
   --clr-secondary: #a7b69d;
+  --font-size-medium: 1rem;
+}
+
+.min {
+  max-width: min-content !important;
 }
 
 .textCopy {
@@ -61,6 +66,7 @@
   text-align: center;
   font-weight: 400;
   font-family: 'Times New Roman', Times, serif;
+  cursor: pointer;
 }
 
 .summaryItems {
