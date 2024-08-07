@@ -40,7 +40,7 @@ export default function BobsBurger (props) {
                     // pathname !== link.route || link.route === "/Logistics" && 
                         <a href={link.route}
                             key={`mobile-navbar-${link.route}`}
-                            target={`${link.text === "Registry" ? "_blank" : ""}`}
+                            target={`${link.text === "Registry" ? "" : ""}`}
                             className="bobsBurgerItem">
                             <div className="bobsBurgerItemContent">
                                 <div>{link.component}</div>

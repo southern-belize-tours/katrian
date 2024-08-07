@@ -112,7 +112,7 @@ export default function PlaylistForm () {
         <Music size = {400}
             loading={loading}>
         </Music>
-        <div className="flexed col">
+        <div className="flexed col min">
             <div>
                 We hope to play music that will make it difficult to sit down.
                 Please feel free to request collaborator access on our <Tooltip title="View Playlist on Spotify"><a target="_blank" rel="noreferrer" href="https://open.spotify.com/playlist/05qaofCfEVNM02kdE81AEy?si=447cd6af3d7b47f2" className="secondary">Spotify Playlist</a></Tooltip>.

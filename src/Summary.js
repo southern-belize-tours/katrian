@@ -43,6 +43,16 @@ function Summary (props) {
         });
     }
 
+    const AddToCalendar = () => {
+        const eventTitle = 'Katrina & Ian Wedding';
+        const eventLocation = '590 Coast S Blvd, La Jolla, CA 92037';
+        const eventDescription = 'A day of love';
+        const eventStartTime = '20250822T170000';
+        const eventEndTime = '20250822T230000';
+        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartTime}/${eventEndTime}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}`;
+        window.open(googleCalendarUrl, '_blank');
+    };
+
     return(
         <div>
             <div className="flexed col centered">
@@ -66,9 +76,12 @@ function Summary (props) {
                             <div className="summaryItemTitle">
                                 Wedding Day
                             </div>
-                            <div className="summaryItemTime">
-                                Friday, August 22nd, 2025
-                            </div>
+                            <Tooltip title={"Add to Google Calendar"}>
+                                <div className="summaryItemTime"
+                                    onClick = {AddToCalendar}>
+                                    Friday, August 22nd, 2025
+                                </div>
+                            </Tooltip>
                         </div>
                     </div>
                     <div className="summaryItems">

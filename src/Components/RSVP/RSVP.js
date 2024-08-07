@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import './RSVP.css';
 import { Button, IconButton, TextField, Tooltip } from "@mui/material";
-import { CalendarMonth, CancelOutlined, Check, CheckOutlined, GroupAdd, InfoOutlined,
+import { Apple, CalendarMonth, CancelOutlined, Check, CheckOutlined, Google, GroupAdd, InfoOutlined,
     LocationOn, PersonAdd, PsychologyAlt, Search, Undo } from "@mui/icons-material";
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
@@ -290,6 +290,38 @@ export default function RSVP (props) {
     
         window.open(googleCalendarUrl, '_blank');
     };
+
+    const AddToAppleCalendar = () => {
+        const eventTitle = 'Katrina & Ian Wedding';
+        const eventLocation = '590 Coast S Blvd, La Jolla, CA 92037';
+        const eventDescription = 'A day of Love';
+        const eventStartTime = '20250822T170000';
+        const eventEndTime = '20250822T230000';
+      
+        // Ensure the .ics data is correctly formatted with \r\n
+        const icsData = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'BEGIN:VEVENT',
+          `SUMMARY:${eventTitle}`,
+          `DESCRIPTION:${eventDescription}`,
+          `LOCATION:${eventLocation}`,
+          `DTSTART:${eventStartTime}`,
+          `DTEND:${eventEndTime}`,
+          'END:VEVENT',
+          'END:VCALENDAR'
+        ].join('\r\n');
+      
+        const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+      
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'katrian-wedding-event.ics';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
 
     return (
         <div className="weddingBody">
@@ -602,7 +634,7 @@ export default function RSVP (props) {
                     {
                         people_selected.map(person => 
                         <div className="RSVPFormField">
-                            <div>
+                            <div className="RSVPName">
                                 <Tooltip title = {`${person.first} is currently ${person.attending_ceremony === 0 ? "not planning on" : person.attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
                                     {person.first}
                                 </Tooltip>
@@ -612,6 +644,7 @@ export default function RSVP (props) {
                             <div className="RSVPAcceptReject">
                                 <Button variant={`${person.attending_ceremony === 1 ? "contained" : "outlined"}`}
                                     onClick = {() => {setAttending(person, 1)}}
+                                    size="small"
                                     disabled = {loading}
                                     color="primary">
                                     {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
@@ -619,12 +652,14 @@ export default function RSVP (props) {
                                 <Button variant={`${person.attending_ceremony === 0 ? "contained" : "outlined"}`}
                                     onClick = {() => {setAttending(person, 0)}}
                                     disabled = {loading}
+                                    size="small"
                                     color="secondary">
                                     {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
                                 </Button>
                                 <Button variant={`${person.attending_ceremony === -1 ? "contained" : "outlined"}`}
                                     onClick = {() => {setAttending(person, -1)}}
                                     disabled = {loading}
+                                    size="small"
                                     color="disabled">
                                     {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
                                 </Button>
@@ -791,8 +826,23 @@ export default function RSVP (props) {
                 :
                 <div className="flexed col">
                     <div className="flexed logisticsItem centered">
-                        Thank you for RSVPing, we sincerely look forward to seeing you if you are able to make it.
-                    </div> 
+                        Thank you for RSVPing, we sincerely look forward to seeing you if you are able to make it. We appreciate that you took the time to let us know so that we're able to best welcome our loved ones.
+                    </div>
+                    <div className="logisticsItem">
+                        <CalendarMonth color="primary"></CalendarMonth>Please click the icons to add this event to your calendars.
+                        <Tooltip title={"Add event to your Google Calendar"}>
+                            <IconButton color="primary"
+                                onClick={AddToCalendar}>
+                                <Google></Google>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title={"Add event to your Apple Calendar"}>
+                            <IconButton color="primary"
+                                onClick={AddToAppleCalendar}>
+                                <Apple></Apple>
+                            </IconButton>
+                        </Tooltip>
+                    </div>
                     <div className="logisticsItem">
                         <span>
                             Please take a look at the <a className='secondary' href="/Hotels-and-Transport">Hotels and Transport Page</a> for some great hotels that are a walking distance from everything that we plan before they book out!
