@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import './RSVP.css';
 import { Button, IconButton, TextField, Tooltip } from "@mui/material";
@@ -9,6 +9,7 @@ import { useGuestService } from "../../Services/GuestService/GuestServiceContext
 import { toast, ToastContainer} from 'react-toastify';
 import { ClipLoader } from "react-spinners";
 import GroupEmailForm from "./GroupEmailForm";
+import AllergyForm from "./AllergyForm";
 
 const toastConfig = {
     autoClose: 2000
@@ -31,6 +32,7 @@ export default function RSVP (props) {
     const [loading, setLoading] = useState(false);
     const [statusConfirmed, setStatusConfirmed] = useState(false);
     const [emailConfirmed, setEmailConfirmed] = useState(false);
+    const [allergiesConfirmed, setAllergiesConfirmed] = useState(false);
 
     useEffect(() => {
         let isSubscribed = true;
@@ -236,8 +238,6 @@ export default function RSVP (props) {
     
     const saveEmail = async (email) => {
         setLoading(true);
-        console.log(email);
-        // let groupData = {...group};
         let groupData = {
             "id": group.id,
             "title": group.title,
@@ -251,12 +251,8 @@ export default function RSVP (props) {
             "invited_happy_hour": group.invitedHappyHour,
             "Guest_ids": group.guestIds
         };
-
-
-        console.log(groupData);
-
         let newGroup = await groupService.updateGroup(groupData);
-        newGroup = {...newGroup.data.updateGroup}
+        newGroup = {...newGroup.data.updateGroup};
         // Update the state variables to reflect the new service's values from backend
         if (newGroup !== null) {
             // setGroups(groupService.getGroups);
@@ -278,6 +274,41 @@ export default function RSVP (props) {
         }
         setLoading(false);
     }
+
+    /**
+     * Callback from AllergyForm component save
+     * 
+     * @param {*} guestArray Array of json guest objects with possibly-updated 'notes' keys
+     */
+    const saveAllergies = async (guestArray) => {
+        setLoading(true);
+        let updatedGuests = [];
+        for (let i = 0; i < guestArray.length; ++i) {
+            // Give an empty string if notes doesn't exist
+            if (!('notes' in guestArray[i])) {
+                guestArray[i].notes = '';
+            }
+            let updatedGuest = {
+                "id": guestArray[i].id,
+                "first": guestArray[i].first,
+                "last": guestArray[i].last,
+                "attending_ceremony": guestArray[i].attending_ceremony,
+                "attending_happy_hour": guestArray[i].attending_happy_hour,
+                "attending_brunch": guestArray[i].attending_brunch,
+                "attending_rehearsal": guestArray[i].attending_rehearsal,
+                "notes": guestArray[i].notes,
+            }
+            const savedGuest = await guestService.updateGuest(updatedGuest);
+            updatedGuests.push({...savedGuest.data.updateGuest});
+        }
+        set_people_selected([...updatedGuests]);
+        let updatedGroup = {...group};
+        updatedGroup.guests = updatedGuests;
+        setGroup(updatedGroup);
+        toast.success("Successfully Updated Allergies");
+        setAllergiesConfirmed(true);
+        setLoading(false);
+    };
 
     const AddToCalendar = () => {
         const eventTitle = 'Katrina & Ian Wedding';
@@ -823,6 +854,11 @@ export default function RSVP (props) {
                     confirmFunction = {() => {setEmailConfirmed(true);}}
                     saveFunction = {saveEmail}>
                 </GroupEmailForm>
+                : allergiesConfirmed === false ?
+                <AllergyForm guests = {people_selected}
+                    loading = {loading}
+                    saveFunction = {saveAllergies}>
+                </AllergyForm>
                 :
                 <div className="flexed col">
                     <div className="flexed logisticsItem centered">

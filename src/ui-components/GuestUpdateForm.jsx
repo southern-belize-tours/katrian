@@ -37,6 +37,7 @@ export default function GuestUpdateForm(props) {
     attending_brunch: false,
     attending_rehearsal: false,
     attending_happy_hour: false,
+    notes: "",
   };
   const [first, setFirst] = React.useState(initialValues.first);
   const [last, setLast] = React.useState(initialValues.last);
@@ -52,6 +53,7 @@ export default function GuestUpdateForm(props) {
   const [attending_happy_hour, setAttending_happy_hour] = React.useState(
     initialValues.attending_happy_hour
   );
+  const [notes, setNotes] = React.useState(initialValues.notes);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = guestRecord
@@ -63,6 +65,7 @@ export default function GuestUpdateForm(props) {
     setAttending_brunch(cleanValues.attending_brunch);
     setAttending_rehearsal(cleanValues.attending_rehearsal);
     setAttending_happy_hour(cleanValues.attending_happy_hour);
+    setNotes(cleanValues.notes);
     setErrors({});
   };
   const [guestRecord, setGuestRecord] = React.useState(guestModelProp);
@@ -88,6 +91,7 @@ export default function GuestUpdateForm(props) {
     attending_brunch: [],
     attending_rehearsal: [],
     attending_happy_hour: [],
+    notes: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -121,6 +125,7 @@ export default function GuestUpdateForm(props) {
           attending_brunch: attending_brunch ?? null,
           attending_rehearsal: attending_rehearsal ?? null,
           attending_happy_hour: attending_happy_hour ?? null,
+          notes: notes ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -187,6 +192,7 @@ export default function GuestUpdateForm(props) {
               attending_brunch,
               attending_rehearsal,
               attending_happy_hour,
+              notes,
             };
             const result = onChange(modelFields);
             value = result?.first ?? value;
@@ -216,6 +222,7 @@ export default function GuestUpdateForm(props) {
               attending_brunch,
               attending_rehearsal,
               attending_happy_hour,
+              notes,
             };
             const result = onChange(modelFields);
             value = result?.last ?? value;
@@ -249,6 +256,7 @@ export default function GuestUpdateForm(props) {
               attending_brunch,
               attending_rehearsal,
               attending_happy_hour,
+              notes,
             };
             const result = onChange(modelFields);
             value = result?.attending_ceremony ?? value;
@@ -280,6 +288,7 @@ export default function GuestUpdateForm(props) {
               attending_brunch: value,
               attending_rehearsal,
               attending_happy_hour,
+              notes,
             };
             const result = onChange(modelFields);
             value = result?.attending_brunch ?? value;
@@ -309,6 +318,7 @@ export default function GuestUpdateForm(props) {
               attending_brunch,
               attending_rehearsal: value,
               attending_happy_hour,
+              notes,
             };
             const result = onChange(modelFields);
             value = result?.attending_rehearsal ?? value;
@@ -340,6 +350,7 @@ export default function GuestUpdateForm(props) {
               attending_brunch,
               attending_rehearsal,
               attending_happy_hour: value,
+              notes,
             };
             const result = onChange(modelFields);
             value = result?.attending_happy_hour ?? value;
@@ -356,6 +367,36 @@ export default function GuestUpdateForm(props) {
         hasError={errors.attending_happy_hour?.hasError}
         {...getOverrideProps(overrides, "attending_happy_hour")}
       ></SwitchField>
+      <TextField
+        label="Notes"
+        isRequired={false}
+        isReadOnly={false}
+        value={notes}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              first,
+              last,
+              attending_ceremony,
+              attending_brunch,
+              attending_rehearsal,
+              attending_happy_hour,
+              notes: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.notes ?? value;
+          }
+          if (errors.notes?.hasError) {
+            runValidationTasks("notes", value);
+          }
+          setNotes(value);
+        }}
+        onBlur={() => runValidationTasks("notes", notes)}
+        errorMessage={errors.notes?.errorMessage}
+        hasError={errors.notes?.hasError}
+        {...getOverrideProps(overrides, "notes")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

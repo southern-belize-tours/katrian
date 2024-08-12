@@ -275,6 +275,7 @@ export default function GroupCreate (props) {
                         "attending_happy_hour": false,
                         "attending_brunch": false,
                         "attending_rehearsal": false,
+                        "notes": "",
                     };
                     // console.log(guestData)
                     const newGuest = await guestService.createGuest(guestData);
@@ -304,6 +305,7 @@ export default function GroupCreate (props) {
                             "attending_happy_hour": people[i].attending_happy_hour,
                             "attending_brunch": people[i].attending_brunch,
                             "attending_rehearsal": people[i].attending_rehearsal,
+                            "notes": "notes" in people[i] ? people[i].notes : "",
                         }
                         const newGuest = await guestService.updateGuest(guestData);
                         guestIds.push(people[i].id);
@@ -316,6 +318,7 @@ export default function GroupCreate (props) {
                             "attending_happy_hour": false,
                             "attending_brunch": false,
                             "attending_rehearsal": false,
+                            "notes": "",
                         }
                         const newGuest = await guestService.createGuest(guestData);
                         guestIds.push(newGuest.id);
