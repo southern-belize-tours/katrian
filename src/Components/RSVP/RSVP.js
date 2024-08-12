@@ -109,6 +109,9 @@ export default function RSVP (props) {
     }
 
     const setAttending = async (person, val) => {
+        if (person.attending_ceremony === val) {
+            return;
+        }
         setLoading(true);
         let newPeople = [...people_selected];
         for (let i = 0; i < newPeople.length; ++i ) {
@@ -486,17 +489,17 @@ export default function RSVP (props) {
                                 <Button variant="contained"
                                     color="primary"
                                     onClick = {() => {
-                                        set_people_selected([...group.guests]);
-                                        setPeopleConfirmed(true);
+                                        setSelecting(true);
                                     }}>
-                                    <GroupAdd></GroupAdd> RSVP for Group
+                                    <PersonAdd></PersonAdd> Select Member(s)
                                 </Button>
                                 <Button variant="contained"
                                     color="primary"
                                     onClick = {() => {
-                                        setSelecting(true);
+                                        set_people_selected([...group.guests]);
+                                        setPeopleConfirmed(true);
                                     }}>
-                                    <PersonAdd></PersonAdd> Select Member(s)
+                                    <GroupAdd></GroupAdd> RSVP for Group
                                 </Button>
                             </div>
                         </div>
@@ -663,8 +666,9 @@ export default function RSVP (props) {
                 </Tooltip>
                 <div className="RSVPForm">
                     {
-                        people_selected.map(person => 
-                        <div className="RSVPFormField">
+                        people_selected.map((person, idx) => 
+                        <div className="RSVPFormField"
+                            key={`RSVP-guest-${idx}`}>
                             <div className="RSVPName">
                                 <Tooltip title = {`${person.first} is currently ${person.attending_ceremony === 0 ? "not planning on" : person.attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
                                     {person.first}

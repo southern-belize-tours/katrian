@@ -35,7 +35,7 @@ export default function AllergyForm (props) {
     <div className="flexed col">
         <div className="flexed col">
             <div className="flexed logisticsItem centered">
-                Please add allergies, dietary restrictions, and anything we need to be aware of for your group members.
+                Please add allergies and required dietary constraints (if any), for your group members.
             </div>
             {guests.map((guest, idx) =>
                 <div key={`guest-allergy-${idx}`}

@@ -2,7 +2,8 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { signIn, 
   // signUp,
-  signOut  } from 'aws-amplify/auth';
+  signOut,  
+  signUp} from 'aws-amplify/auth';
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -34,11 +35,11 @@ export function SignInForm (props) {
     };
 
     // const handleSignUp = async (event) => {
-    //     event.preventDefault();
+    //     // event.preventDefault();
     //     try {
     //       const newUser = await signUp({
-    //         username,
-    //         password,
+    //         username: usernameNew ,
+    //         password: passwordNew,
     //         // ... other attributes
     //       });
     //       console.log(newUser);
@@ -65,6 +66,7 @@ export function SignInForm (props) {
 
     return (
       <div className="weddingBody">
+        {/* <Button variant="outlined" onClick = {handleSignUp}>Sign Up</Button> */}
         {/* <h1>{user}</h1> */}
         { (!user || !user.isSignedIn) ?
         <>
