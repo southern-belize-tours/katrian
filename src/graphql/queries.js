@@ -178,6 +178,7 @@ export const listGuests = /* GraphQL */ `
         attending_happy_hour
         createdAt
         updatedAt
+        notes
         __typename
       }
       nextToken

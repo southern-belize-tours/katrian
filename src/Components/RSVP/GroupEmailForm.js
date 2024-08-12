@@ -43,7 +43,7 @@ export default function GroupEmailForm (props) {
                 <Button variant="outlined"
                     color="primary"
                     onClick = {() => {props.confirmFunction();}}>
-                    <Check></Check> Complete RSVP
+                    <Check></Check> Continue
                 </Button>
             </div>
             }

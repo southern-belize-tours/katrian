@@ -28,6 +28,7 @@ export declare type GuestCreateFormInputValues = {
     attending_brunch?: boolean;
     attending_rehearsal?: boolean;
     attending_happy_hour?: boolean;
+    notes?: string;
 };
 export declare type GuestCreateFormValidationValues = {
     first?: ValidationFunction<string>;
@@ -36,6 +37,7 @@ export declare type GuestCreateFormValidationValues = {
     attending_brunch?: ValidationFunction<boolean>;
     attending_rehearsal?: ValidationFunction<boolean>;
     attending_happy_hour?: ValidationFunction<boolean>;
+    notes?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type GuestCreateFormOverridesProps = {
@@ -46,6 +48,7 @@ export declare type GuestCreateFormOverridesProps = {
     attending_brunch?: PrimitiveOverrideProps<SwitchFieldProps>;
     attending_rehearsal?: PrimitiveOverrideProps<SwitchFieldProps>;
     attending_happy_hour?: PrimitiveOverrideProps<SwitchFieldProps>;
+    notes?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type GuestCreateFormProps = React.PropsWithChildren<{
     overrides?: GuestCreateFormOverridesProps | undefined | null;

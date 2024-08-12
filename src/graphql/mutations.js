@@ -38,6 +38,7 @@ export const createGuest = `
       attending_brunch
       attending_rehearsal
       attending_happy_hour
+      notes
       createdAt
       updatedAt
       __typename
@@ -82,6 +83,7 @@ export const updateGuest = `
       attending_brunch
       attending_rehearsal
       attending_happy_hour
+      notes
       createdAt
       updatedAt
       __typename
@@ -178,6 +180,7 @@ export const deleteGuest = `
       attending_brunch
       attending_rehearsal
       attending_happy_hour
+      notes
       createdAt
       updatedAt
       __typename
