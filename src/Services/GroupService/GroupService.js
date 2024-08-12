@@ -26,7 +26,6 @@ export default class GroupService {
                 query: listGroups
             });
             this.groups = [...newGroups.data.listGroups.items];
-            console.log("Group service fetching groups", this.groups);
             return [...this.groups];
         } catch (e) {
             console.log("Group Service: Error fetching Groups", e);
