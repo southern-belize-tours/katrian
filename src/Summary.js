@@ -143,7 +143,7 @@ function Summary (props) {
                                 <div className="logisticsItem">
                                     <DirectionsWalk color="primary"></DirectionsWalk>
                                     <div>
-                                        The walk between the ceremony and reception is about <Tooltip title="View Walk on Google Maps"><a href="https://maps.app.goo.gl/9Wikbfou6GdPAasf8" rel="noreferrer" className="secondary" target="_blank">5 minutes long</a></Tooltip>, which includes some stairs and uneven grass. Please plan  accordingly.
+                                        The walk between the ceremony and reception is about <Tooltip title="View Walk on Google Maps"><a href="https://maps.app.goo.gl/9Wikbfou6GdPAasf8" rel="noreferrer" className="secondary" target="_blank">5 minutes long</a></Tooltip>, which includes some stairs and uneven grass. If you need assistance, please let us know.
                                     </div>
                                 </div>
                                 <div className='logisticsItem'>
@@ -177,7 +177,7 @@ function Summary (props) {
                                 <div className="logisticsItem">
                                     <Checkroom color="primary"></Checkroom>
                                     <div>
-                                        The attire for the wedding ceremony and reception is <a href="https://www.theknot.com/content/formal-wedding-attire" target='_blank' rel='noreferrer' className="secondary">formal</a>.
+                                        The attire for the wedding ceremony and reception is <a href="https://www.theknot.com/content/what-to-wear-semi-formal?srsltid=AfmBOoqoAnVQjGkWlebY8-KuR-CPpJzGnHb7bnJI-7MqKjQqsLfsU5kr" target='_blank' rel='noreferrer' className="secondary">semi-formal/formal</a>.
                                     </div>
                                 </div>
                                 <div className="logisticsItem">
