@@ -177,7 +177,7 @@ function Summary (props) {
                                 <div className="logisticsItem">
                                     <Checkroom color="primary"></Checkroom>
                                     <div>
-                                        The attire for the wedding ceremony and reception is <a href="https://www.theknot.com/content/formal-wedding-attire" target='_blank' rel='noreferrer' className="secondary">formal</a>.
+                                        The attire for the wedding ceremony and reception is <a href="https://www.theknot.com/content/what-to-wear-semi-formal?srsltid=AfmBOoqoAnVQjGkWlebY8-KuR-CPpJzGnHb7bnJI-7MqKjQqsLfsU5kr" target='_blank' rel='noreferrer' className="secondary">semi-formal/formal</a>.
                                     </div>
                                 </div>
                                 <div className="logisticsItem">
