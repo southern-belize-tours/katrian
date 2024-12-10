@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react"
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { toast, ToastContainer } from "react-toastify";
-import { IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, 
+import { Button, IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, 
     TableHead, TableRow, Tooltip } from "@mui/material";
-import { CancelOutlined, Check, Close, Edit, EggAlt, EggAltOutlined, Email,
+import { Cancel, CancelOutlined, Check, Close, Edit, EggAlt, EggAltOutlined, Email,
     Favorite, FavoriteBorder,
     FilterAlt,
     LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, PlaylistRemove, QuestionMark, Restaurant } from "@mui/icons-material";
@@ -30,7 +30,7 @@ export default function Groups (props) {
     const [anchorEl, setAnchorEl] = useState(null);
     const filterOpen = Boolean(anchorEl);
     const [filterConfig, setFilterConfig] = useState({
-        'rsvp': false,
+        'rsvp': true, // Initially filter based on those who confirmed rsvp
         'not_rsvp': false,
         'undecided': false,
         'invited_rehearsal': false,
@@ -40,7 +40,7 @@ export default function Groups (props) {
     })
 
     const passesFilter = (group) => {
-        if (filterConfig['rsvp'] === true) {
+        if (filterConfig['rsvp'] === true && group.guests) {
             let guestAttending = false;
             for (let i = 0; i < group.guests.length; ++i) {
                 if (group.guests[i].attending_ceremony === 1) {
@@ -189,6 +189,7 @@ export default function Groups (props) {
     }, [])
 
 
+
     const createGroupToGuestArray = async (guestData) => {
         const newGroups = await groupService.getGroups();
         const updatedGroups = newGroups.map(group => {
@@ -298,6 +299,25 @@ export default function Groups (props) {
         return ret;
     }
 
+    const getRehearsalRejected = () => {
+        let ret = 0;
+        for (let i = 0; i < groups.length; ++i) {
+            if (!groups[i].invited_rehearsal || !groups[i].guestts) {
+                continue;
+            }
+            for (let j = 0; j < groups[i].guests.length; ++j) {
+                // First and foremost if they aren't attending ceremony they aren't attending anything else
+                if (groups[i].guests[j] && groups[i].guests[j].attending_ceremony === 0) {
+                    ret++;
+                }
+                else if (groups[i].guests[j] && groups[i].guests[j].attending_rehearsal == false) {
+                    ret++;
+                }
+            }
+         }
+         return ret;
+    }
+
     const getRehearsalInvited = () => {
         let ret = 0;
         for (let i = 0; i < groups.length; ++i) {
@@ -323,6 +343,21 @@ export default function Groups (props) {
         return ret;
     }
 
+    const getCeremonyRejected = () => {
+        let ret = 0;
+        for (let i = 0; i < groups.length; ++i) {
+            if (!groups[i].guests) {
+                continue
+            }
+            for (let j = 0; j < groups[i].guests.length; ++j) {
+                if (groups[i].guests[j] && groups[i].guests[j].attending_ceremony ===0) {
+                    ret++;
+                }
+            }
+        }
+        return ret;
+    }
+
     const getBrunchHeadcount = () => {
         let ret = 0;
         for (let i = 0; i < groups.length; ++i) {
@@ -335,6 +370,11 @@ export default function Groups (props) {
             }
         }
         return ret;
+    }
+
+    const getBrunchRejected = () => {
+        // Insert code here
+        return 0;
     }
 
     const getCeremonyInvited = () => {
@@ -360,6 +400,11 @@ export default function Groups (props) {
             }
         }
         return ret;
+    }
+
+    const getHappyHourRejected = () => {
+        // Insert code here
+        return 0;
     }
 
     const getHappyHourInvited = () => {
@@ -401,7 +446,7 @@ export default function Groups (props) {
 
             </div>
             } */}
-            {groups && groups.length > 0 &&
+            {groups && groups.length > 0 && !loading && 
             <TableContainer sx={{maxWidth: 650}}
                 component = {Paper}>
                 <Table sx={{maxWidth: 650}} 
@@ -410,7 +455,8 @@ export default function Groups (props) {
                     <TableHead>
                         <TableRow>
                             <TableCell>Event</TableCell>
-                            <TableCell>Headcount</TableCell>
+                            <TableCell>Accepted</TableCell>
+                            <TableCell>Rejected</TableCell>
                             <TableCell>Invited</TableCell>
                             <TableCell>Capacity</TableCell>
                         </TableRow>
@@ -421,6 +467,7 @@ export default function Groups (props) {
                                 <Restaurant color="primary"></Restaurant> Rehearsal
                             </TableCell>
                             <TableCell>{getRehearsalHeadcount()}</TableCell>
+                            <TableCell>{getRehearsalRejected()}</TableCell>
                             <TableCell>{getRehearsalInvited()}</TableCell>
                             <TableCell>{50}</TableCell>
                         </TableRow>
@@ -429,6 +476,7 @@ export default function Groups (props) {
                                  <Favorite color="primary"></Favorite> Ceremony
                             </TableCell>
                             <TableCell>{getCeremonyHeadcount()}</TableCell>
+                            <TableCell>{getCeremonyRejected()}</TableCell>
                             <TableCell>{getCeremonyInvited()}</TableCell>
                             <TableCell>{150}</TableCell>
                         </TableRow>
@@ -437,6 +485,7 @@ export default function Groups (props) {
                                 <EggAlt color="primary"></EggAlt> Brunch
                             </TableCell>
                             <TableCell>{getBrunchHeadcount()}</TableCell>
+                            <TableCell>{getBrunchRejected()}</TableCell>
                             <TableCell>{getCeremonyInvited()}</TableCell>
                             <TableCell>{125}</TableCell>
                         </TableRow>
@@ -445,6 +494,7 @@ export default function Groups (props) {
                                 <LocalBar color="primary"></LocalBar> Happy Hour
                             </TableCell>
                             <TableCell>{getHappyHourHeadcount()}</TableCell>
+                            <TableCell>{getHappyHourRejected()}</TableCell>
                             <TableCell>{getHappyHourInvited()}</TableCell>
                             <TableCell>{50}</TableCell>
                         </TableRow>
@@ -545,6 +595,23 @@ export default function Groups (props) {
                         </Menu>
                     </Tooltip>
                     {/* Filter */}
+                </div>
+                <div>
+                    {Object.keys(filterConfig).map(key =>
+                            filterConfig[key]==true &&
+                                <Tooltip title = "Remove Filter Option">
+                                    <Button variant="outlined"
+                                        disabled = {loading}
+                                        onClick = {() => {
+                                            let newFilterConfig = {...filterConfig};
+                                            newFilterConfig[key] = false;
+                                            setFilterConfig(newFilterConfig);
+                                       }}
+                                        color="secondary">
+                                        <CancelOutlined/> {key}
+                                    </Button>
+                                </Tooltip>
+                    )}
                 </div>
             </div>
             {/* <GroupCreate closeCallback = {dialogCallback}
