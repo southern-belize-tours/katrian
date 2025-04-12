@@ -4,6 +4,13 @@
     border-color: var(--clr-lavender) var(--clr-lavender) transparent !important;
 }
 
+.inviteHeader {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
 .filterOption.selected {
     background: var(--clr-lavender);
     color: white;
@@ -88,10 +95,20 @@
     .groupsContainer {
         grid-template-columns: auto auto;
     }
+
+    .MuiTableCell-root {
+        font-size: .7rem !important;
+        padding: .8rem !important;
+    }
 }
 
 @media(max-width: 425px) {
     .groupsContainer {
         grid-template-columns: auto;
     }
+
+    .hideSmall {
+        display: none !important;
+    }
+
 }
