@@ -571,7 +571,7 @@ export default function Groups (props) {
                     </div>
                 </div>
                 <div>
-                    Currently displaying {groups.filter(g => passesFilter(g)).length} groups, and {[...groups].filter(g =>passesFilter(g)).reduce((sum, group) => sum + group.guests.length, 0)} guests.
+                    Currently displaying {groups.filter(g => passesFilter(g)).length} groups, and {[...groups].filter(g =>passesFilter(g)).reduce((sum, group) => sum + (group.guests?.length || 0), 0)} guests.
                 </div>
             </div>
             }
