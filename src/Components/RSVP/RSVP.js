@@ -577,7 +577,7 @@ export default function RSVP (props) {
                 : statusConfirmed == false ?
                 <>
                 {/* Rehearsal */}
-                {/* { group.invited_rehearsal === true &&
+                { group.invited_rehearsal === true &&
                 <>
                 <div className="summaryItemName">
                     Rehearsal
@@ -633,7 +633,7 @@ export default function RSVP (props) {
                     }
                 </div>
                 </>
-                } */}
+                }
                 <div className={`flexed logisticsItem centered`}>
                     Thank you for helping us plan by RSVPing here. You can always update your status later if things change.
                 </div>
@@ -705,7 +705,7 @@ export default function RSVP (props) {
                 </div>
 
                 {/* Brunch */}
-                {/* <div className="summaryItemName">
+                <div className="summaryItemName">
                     Brunch
                 </div>
                 <div className="summaryItemLocation">
@@ -752,7 +752,7 @@ export default function RSVP (props) {
                         </div>
                     )
                     }
-                </div> */}
+                </div>
 
                 {/* Happy Hour */}
                 {/* {group.invited_happy_hour &&
