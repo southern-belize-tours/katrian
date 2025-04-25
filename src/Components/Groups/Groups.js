@@ -280,6 +280,11 @@ export default function Groups (props) {
     // }
 
     const editGroup = (group) => {
+        for (let i = 0; i < groups.length; ++i) {
+            console.log(groups[i].title);
+            console.log(groups[i].guests);
+        }
+        console.log(groups);
         setEditingGroup(group);
     }
 

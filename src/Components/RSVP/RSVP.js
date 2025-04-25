@@ -576,6 +576,9 @@ export default function RSVP (props) {
                 </div>
                 : statusConfirmed == false ?
                 <>
+                <div className={`flexed logisticsItem centered`}>
+                    Thank you for helping us plan by RSVPing here. You can always update your status later if things change.
+                </div>
                 {/* Rehearsal */}
                 { group.invited_rehearsal === true &&
                 <>
@@ -612,20 +615,31 @@ export default function RSVP (props) {
                     {
                         people_selected.map(person => 
                         <div className="RSVPFormField">
-                            <div>
-                                {person.first}
+                            <div className="RSVPName">
+                                <Tooltip title = {`${person.first} is currently ${person.attending_rehearsal === 0 ? "not planning on" : person.attending_rehearsal === -1 ? "undecided regarding" : "planning on"} attending the rehearsal`}>
+                                    {person.first}
+                                </Tooltip>
                             </div>
                             <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attending_rehearsal ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingRehearsal(person, true)}}
+                                <Button variant={`${person.attending_rehearsal == 1 ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttendingRehearsal(person, 1)}}
                                     disabled = {loading}
+                                    size="small"
                                     color="primary">
                                     {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Check></Check>} Accept
                                 </Button>
-                                <Button variant={`${person.attending_rehearsal ? "outlined" : "contained"}`}
-                                    onClick = {() => {setAttendingRehearsal(person, false)}}
+                                <Button variant={`${person.attending_rehearsal == 0 ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttendingRehearsal(person, 0)}}
+                                    size="small"
                                     color="secondary">
                                     {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
+                                </Button>
+                                <Button variant={`${person.attending_rehearsal == -1 ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttendingRehearsal(person, -1)}}
+                                    disabled = {loading}
+                                    size="small"
+                                    color="disabled">
+                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
                                 </Button>
                             </div>
                         </div>
@@ -634,9 +648,6 @@ export default function RSVP (props) {
                 </div>
                 </>
                 }
-                <div className={`flexed logisticsItem centered`}>
-                    Thank you for helping us plan by RSVPing here. You can always update your status later if things change.
-                </div>
                 {/* Ceremony */}
                 <div className="summaryItemName">
                     Ceremony + Reception
@@ -732,21 +743,32 @@ export default function RSVP (props) {
                     {
                         people_selected.map(person => 
                         <div className="RSVPFormField">
-                            <div>
-                                {person.first}
+                            <div className="RSVPName">
+                                <Tooltip title = {`${person.first} is currently ${person.attending_brunch === 0 ? "not planning on" : person.attending_brunch === -1 ? "undecided regarding" : "planning on"} attending brunch`}>
+                                    {person.first}
+                                </Tooltip>
                             </div>
                             <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attending_brunch ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingBrunch(person, true)}}
+                                <Button variant={`${person.attending_brunch == 1 ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttendingBrunch(person, 1)}}
                                     disabled = {loading}
+                                    size="small"
                                     color="primary">
                                     {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
                                 </Button>
-                                <Button variant={`${person.attending_brunch ? "outlined" : "contained"}`}
-                                    onClick = {() => {setAttendingBrunch(person, false)}}
+                                <Button variant={`${person.attending_brunch  == 0? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttendingBrunch(person, 0)}}
                                     disabled = {loading}
+                                    size="small"
                                     color="secondary">
                                     {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
+                                </Button>
+                                <Button variant={`${person.attending_brunch === -1 ? "contained" : "outlined"}`}
+                                    onClick = {() => {setAttendingBrunch(person, -1)}}
+                                    disabled = {loading}
+                                    size="small"
+                                    color="disabled">
+                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
                                 </Button>
                             </div>
                         </div>
