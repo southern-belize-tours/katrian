@@ -383,7 +383,13 @@ export default function RSVP (props) {
             {group === null ?
             <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
                 <div className="flexed logisticsItem centered">
-                    Search for your party by names to RSVP
+                    <div>Thank you for helping us plan by RSVPing here. Please respond by <span style={{fontWeight: 600}}>July 25, 2025</span>.</div>
+                </div>
+                {/* <div className="flexed logisticsItem centered">
+                    Please respond by <span style={{fontWeight: 600}}>July 25, 2025</span>.
+                </div> */}
+                <div className="flexed logisticsItem centered">
+                    Search for your party by names to RSVP.
                 </div>
                 <div className="searchFieldContainer">
                     <Tooltip title={`${loading ? "loading groups, please wait" : ""}`}>
@@ -393,6 +399,7 @@ export default function RSVP (props) {
                         value = {search}
                         disabled = {loading}
                         label = "Last Name"
+                        style = {{flex: "1 1 auto"}}
                         onChange = {(e) => {
                             setSearch(e.target.value)
                             if (e.target.value.length === 0) {
@@ -586,22 +593,26 @@ export default function RSVP (props) {
                     Rehearsal
                 </div>
                 <div className="summaryItemLocation">
+                    {/* We're so excited to celebrate with you before the wedding! Please join us for a rehearsal dinner as detailed below. Other than the bridal party, this is NOT mandatory, so if you are not arriving early or not able to attend, but still plan to attend the wedding, this is of course fine too. */}
+                    We’re excited to kick things off with a relaxed evening together before the wedding! If you’ve received an invite to this informal seated dinner we're hosting, please join us if you're in town early. No pressure if you can't make it—unless you're in the bridal party, attendance isn’t required.
+                </div>
+                <div className="summaryItemLocation">
                     <CalendarMonth color="primary"></CalendarMonth>
                     <div>
-                        Thursday, August 21st, 2025
+                        Thursday, August 21st, 2025, 5:30pm - 8:00pm
                     </div>
                 </div>
-                <Tooltip title={`${text === "TBD Address" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
+                <Tooltip title={`${text === "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
                     <div className="summaryItemLocation textCopy"
-                        onClick = {() => {copyTextToClipBoard("TBD Address")}}>
+                        onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}>
                             {
-                            text === "TBD Address" ?
+                            text === "7776 Eads Ave, La Jolla, CA 92037" ?
                             <CheckOutlined color="primary"></CheckOutlined>
                             :
                             <LocationOn color="primary"></LocationOn>
                             }
                         <div>
-                            TBD
+                            The Cottage, La Jolla
                         </div>
                     </div>
                 </Tooltip>
@@ -720,22 +731,25 @@ export default function RSVP (props) {
                     Brunch
                 </div>
                 <div className="summaryItemLocation">
+                    If you’ll still be around on Sunday, we’d love to see you one more time over a hosted brunch featuring bottomless mimosas, eggs, bacon, and more.
+                </div>
+                <div className="summaryItemLocation">
                     <CalendarMonth color="primary"></CalendarMonth>
                     <div>
-                        Saturday, August 23rd, 2025
+                        Saturday, August 23rd, 2025, 10:30am - 12:30pm
                     </div>
                 </div>
-                <Tooltip title={`${text === "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
+                <Tooltip title={`${text === "8030 Girard Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
                     <div className="summaryItemLocation textCopy"
-                        onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}>
+                        onClick = {() => {copyTextToClipBoard("8030 Girard Ave, La Jolla, CA 92037")}}>
                             {
-                            text === "7776 Eads Ave, La Jolla, CA 92037" ?
+                            text === "8030 Girard Ave, La Jolla, CA 92037" ?
                             <CheckOutlined color="primary"></CheckOutlined>
                             :
                             <LocationOn color="primary"></LocationOn>
                             }
                         <div>
-                            The Cottage, La Jolla
+                            Cove House, La Jolla Cove
                         </div>
                     </div>
                 </Tooltip>

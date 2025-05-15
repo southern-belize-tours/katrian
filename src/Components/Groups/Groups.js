@@ -1,14 +1,18 @@
 import { useCallback, useContext, useEffect, useState } from "react"
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { toast, ToastContainer } from "react-toastify";
-import { IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, 
-    TableHead, TableRow, Tooltip } from "@mui/material";
-import { CancelOutlined, Check, Close, Edit, EggAlt, EggAltOutlined, Email,
+import {
+    IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer,
+    TableHead, TableRow, Tooltip
+} from "@mui/material";
+import {
+    CancelOutlined, Check, Close, Edit, EggAlt, EggAltOutlined, Email,
     Favorite, FavoriteBorder,
     FilterAlt,
-    LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, PlaylistRemove, QuestionMark, Restaurant, 
-    ThumbDown, 
-    ThumbUp} from "@mui/icons-material";
+    LocalBar, LocalPhone, LocationOn, NoDrinks, NoMeals, PlaylistRemove, QuestionMark, Restaurant,
+    ThumbDown,
+    ThumbUp
+} from "@mui/icons-material";
 
 import './Groups.css';
 import { ClipLoader } from "react-spinners";
@@ -20,8 +24,8 @@ const toastConfig = {
     autoClose: 2000
 };
 
-export default function Groups (props) {
-    const {user} = useContext(AuthContext)
+export default function Groups(props) {
+    const { user } = useContext(AuthContext)
     const groupService = useGroupService();
     const guestService = useGuestService();
 
@@ -121,7 +125,7 @@ export default function Groups (props) {
      */
     const toggleFilterOption = (key) => {
         const oldVal = filterConfig[key];
-        let newFilterConfig = {...filterConfig};
+        let newFilterConfig = { ...filterConfig };
         newFilterConfig[key] = !oldVal;
         return newFilterConfig;
     }
@@ -181,7 +185,7 @@ export default function Groups (props) {
 
         getGroups();
         getGuests();
-        
+
         return () => {
             isSubscribed = false;
             isSubscribedGuest = false;
@@ -217,10 +221,10 @@ export default function Groups (props) {
         // eslint-disable-next-line
     }, [groupService, guestService]);
 
-        // This effect runs whenever `groups` changes, ensuring UI updates
-        useEffect(() => {
-            // console.log("Group State Changed");
-        }, [groups]);
+    // This effect runs whenever `groups` changes, ensuring UI updates
+    useEffect(() => {
+        // console.log("Group State Changed");
+    }, [groups]);
 
     // const addDummyGroup = async () => {
     //     setLoading(true);
@@ -251,7 +255,7 @@ export default function Groups (props) {
         const updatedGroups = await groupService.deleteGroup(group.id);
         setGroups(updatedGroups);
         // Delete guests associated with the group
-        for (let i = 0; i < group.Guest_ids.length; ++i ) {
+        for (let i = 0; i < group.Guest_ids.length; ++i) {
             await guestService.deleteGuest(group.Guest_ids[i]);
         }
         const updatedGuests = await guestService.getGuests();
@@ -281,10 +285,10 @@ export default function Groups (props) {
 
     const editGroup = (group) => {
         for (let i = 0; i < groups.length; ++i) {
-            console.log(groups[i].title);
-            console.log(groups[i].guests);
+            // console.log(groups[i].title);
+            // console.log(groups[i].guests);
         }
-        console.log(groups);
+        // console.log(groups);
         setEditingGroup(group);
     }
 
@@ -406,187 +410,187 @@ export default function Groups (props) {
 
     return (
         (user && user.isSignedIn) ?
-        <div className="weddingBody">
+            <div className="weddingBody">
 
-            <ToastContainer></ToastContainer>
-            <h1>Invite List</h1>
-            {groups && groups.length > 0 &&
-            <TableContainer sx={{maxWidth: 650}}
-                component = {Paper}>
-                <Table sx={{maxWidth: 650}} 
-                    id = "headhunter"
-                    aria-label="heaadcounts">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Event</TableCell>
-                            {/* <TableCell>Headcount</TableCell> */}
-                            <TableCell>Invited</TableCell>
-                            <TableCell>
-                                <div className="inviteHeader">
-                                    <span>Rejected</span> <ThumbDown className="hideSmall" color="secondary"/>
-                                </div>
-                            </TableCell>
-                            <TableCell>
-                                <div className="inviteHeader">
-                                    <span>Accepted</span> <ThumbUp className="hideSmall" color="primary"/>
-                                </div>
-                            </TableCell>
-                            <TableCell>Capacity</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>
-                                <Restaurant className="hideSmall" color="primary"></Restaurant> Rehearsal
-                            </TableCell>
-                            {/* <TableCell>{getRehearsalHeadcount()}</TableCell> */}
-                            <TableCell>{getRehearsalInvited()}</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell>{50}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                 <Favorite className="hideSmall"  color="primary"></Favorite> Ceremony
-                            </TableCell>
-                            <TableCell>{getCeremonyInvited()}</TableCell>
-                            <TableCell>{getCeremonyRejected()}</TableCell>
-                            <TableCell>{getCeremonyHeadcount()}</TableCell>
-                            <TableCell>{150}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <EggAlt className="hideSmall"  color="primary"></EggAlt> Brunch
-                            </TableCell>
-                            {/* <TableCell>{getBrunchHeadcount()}</TableCell> */}
-                            <TableCell>{getCeremonyInvited()}</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell>{125}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <LocalBar className="hideSmall"  color="primary"></LocalBar> Happy Hour
-                            </TableCell>
-                            {/* <TableCell>{getHappyHourHeadcount()}</TableCell> */}
-                            <TableCell>{getHappyHourInvited()}</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell>{50}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            }
-            {!loading &&
-            <div className="flexed col">
-                <div className="flexed row">
-                    <GroupCreate closeCallback = {dialogCallback}
-                        disabled = {loading}
-                        cancelCallback = {dialogCancelCallback}
-                        group={editingGroup}
-                        hideButton = {false}>
-                    </GroupCreate>
-                    <div>
-                        <Tooltip title={`${filterOpen ? "" : "Filter Invitees"}`}>
-                            <IconButton id={`Groups-List-Filter-Button`} 
-                                aria-controls = {filterOpen ? `filter-submenu` : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={filterOpen ? 'true' : undefined}
-                                onClick = { (e) => {
-                                    setAnchorEl(e.currentTarget)
-                                }}
-                                >
-                                <FilterAlt color="primary"></FilterAlt>
-                            </IconButton>
-                            <Menu id={'filter-submenu'}
-                                anchorEl = {anchorEl}
-                                open = {filterOpen}
-                                onClose = {() => {
-                                    setAnchorEl(null);
-                                }}
-                                MenuListProps = {{
-                                    'aria-labelledby': 'Groups-List-Filter-Button'
-                                }}>
-                                {anySelected() &&
-                                    <MenuItem className = {`filterOption`} 
-                                        onClick = {() => {
-                                            removeFilterSelections();
+                <ToastContainer></ToastContainer>
+                <h1>Invite List</h1>
+                {groups && groups.length > 0 &&
+                    <TableContainer sx={{ maxWidth: 650 }}
+                        component={Paper}>
+                        <Table sx={{ maxWidth: 650 }}
+                            id="headhunter"
+                            aria-label="heaadcounts">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Event</TableCell>
+                                    {/* <TableCell>Headcount</TableCell> */}
+                                    <TableCell>Invited</TableCell>
+                                    <TableCell>
+                                        <div className="inviteHeader">
+                                            <span>Rejected</span> <ThumbDown className="hideSmall" color="secondary" />
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className="inviteHeader">
+                                            <span>Accepted</span> <ThumbUp className="hideSmall" color="primary" />
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>Capacity</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>
+                                        <Restaurant className="hideSmall" color="primary"></Restaurant> Rehearsal
+                                    </TableCell>
+                                    {/* <TableCell>{getRehearsalHeadcount()}</TableCell> */}
+                                    <TableCell>{getRehearsalInvited()}</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>{50}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <Favorite className="hideSmall" color="primary"></Favorite> Ceremony
+                                    </TableCell>
+                                    <TableCell>{getCeremonyInvited()}</TableCell>
+                                    <TableCell>{getCeremonyRejected()}</TableCell>
+                                    <TableCell>{getCeremonyHeadcount()}</TableCell>
+                                    <TableCell>{150}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <EggAlt className="hideSmall" color="primary"></EggAlt> Brunch
+                                    </TableCell>
+                                    {/* <TableCell>{getBrunchHeadcount()}</TableCell> */}
+                                    <TableCell>{getCeremonyInvited()}</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>{125}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <LocalBar className="hideSmall" color="primary"></LocalBar> Happy Hour
+                                    </TableCell>
+                                    {/* <TableCell>{getHappyHourHeadcount()}</TableCell> */}
+                                    <TableCell>{getHappyHourInvited()}</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>{50}</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                }
+                {!loading &&
+                    <div className="flexed col">
+                        <div className="flexed row">
+                            <GroupCreate closeCallback={dialogCallback}
+                                disabled={loading}
+                                cancelCallback={dialogCancelCallback}
+                                group={editingGroup}
+                                hideButton={false}>
+                            </GroupCreate>
+                            <div>
+                                <Tooltip title={`${filterOpen ? "" : "Filter Invitees"}`}>
+                                    <IconButton id={`Groups-List-Filter-Button`}
+                                        aria-controls={filterOpen ? `filter-submenu` : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={filterOpen ? 'true' : undefined}
+                                        onClick={(e) => {
+                                            setAnchorEl(e.currentTarget)
+                                        }}
+                                    >
+                                        <FilterAlt color="primary"></FilterAlt>
+                                    </IconButton>
+                                    <Menu id={'filter-submenu'}
+                                        anchorEl={anchorEl}
+                                        open={filterOpen}
+                                        onClose={() => {
+                                            setAnchorEl(null);
+                                        }}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'Groups-List-Filter-Button'
                                         }}>
-                                        <PlaylistRemove></PlaylistRemove> Remove All Selections
-                                    </MenuItem>
-                                }
-                                <MenuItem className = {`filterOption ${filterConfig['rsvp'] === true ? "selected" : ""}`} 
-                                    onClick = {() => {
-                                        const newOptions = toggleFilterOption('rsvp');
-                                        removeFilterOption('not_rsvp', newOptions);
-                                    }}>
-                                    <Check></Check> Has RSVP'd
-                                </MenuItem>
-                                <MenuItem className = {`filterOption ${filterConfig['not_rsvp'] === true ? "selected" : ""}`} 
-                                    onClick = {() => {
-                                    const newOptions = toggleFilterOption('not_rsvp');
-                                        removeFilterOption('rsvp', newOptions);
-                                    }}>
-                                    <Close></Close> Has Rejected
-                                </MenuItem>
-                                <MenuItem className = {`filterOption ${filterConfig['undecided'] === true ? "selected" : ""}`} 
-                                    onClick = {() => {
-                                    const newOptions = toggleFilterOption('undecided');
-                                    setFilterConfig(newOptions);
-                                    }}>
-                                    <QuestionMark></QuestionMark> Undecided RSVP
-                                </MenuItem>
-                                <MenuItem className = {`filterOption ${filterConfig['invited_rehearsal'] === true ? "selected" : ""}`} 
-                                    onClick = {() => {
-                                    const newOptions = toggleFilterOption('invited_rehearsal');
-                                        removeFilterOption('not_invited_rehearsal', newOptions);
-                                    }}>
-                                    <Restaurant></Restaurant> Invited Rehearsal
-                                </MenuItem>
-                                <MenuItem className = {`filterOption ${filterConfig['not_invited_rehearsal'] === true ? "selected" : ""}`} 
-                                    onClick = {() => {
-                                    const newOptions = toggleFilterOption('not_invited_rehearsal');
-                                        removeFilterOption('invited_rehearsal', newOptions);
-                                    }}>
-                                    <NoMeals></NoMeals> Not Invited Rehearsal
-                                </MenuItem>
-                                <MenuItem className = {`filterOption ${filterConfig['invited_happy_hour'] === true ? "selected" : ""}`} 
-                                    onClick = {() => {
-                                    const newOptions = toggleFilterOption('invited_happy_hour');
-                                        removeFilterOption('not_invited_happy_hour', newOptions);
-                                    }}>
-                                    <LocalBar></LocalBar> Invited Happy Hour
-                                </MenuItem>
-                                <MenuItem className = {`filterOption ${filterConfig['not_invited_happy_hour'] === true ? "selected" : ""}`} 
-                                    onClick = {() => {
-                                    const newOptions = toggleFilterOption('not_invited_happy_hour');
-                                        removeFilterOption('invited_happy_hour', newOptions);
-                                    }}>
-                                    <NoDrinks></NoDrinks> Not Invited Happy Hour
-                                </MenuItem>
-                                {/* 'rsvp': false,
+                                        {anySelected() &&
+                                            <MenuItem className={`filterOption`}
+                                                onClick={() => {
+                                                    removeFilterSelections();
+                                                }}>
+                                                <PlaylistRemove></PlaylistRemove> Remove All Selections
+                                            </MenuItem>
+                                        }
+                                        <MenuItem className={`filterOption ${filterConfig['rsvp'] === true ? "selected" : ""}`}
+                                            onClick={() => {
+                                                const newOptions = toggleFilterOption('rsvp');
+                                                removeFilterOption('not_rsvp', newOptions);
+                                            }}>
+                                            <Check></Check> Has RSVP'd
+                                        </MenuItem>
+                                        <MenuItem className={`filterOption ${filterConfig['not_rsvp'] === true ? "selected" : ""}`}
+                                            onClick={() => {
+                                                const newOptions = toggleFilterOption('not_rsvp');
+                                                removeFilterOption('rsvp', newOptions);
+                                            }}>
+                                            <Close></Close> Has Rejected
+                                        </MenuItem>
+                                        <MenuItem className={`filterOption ${filterConfig['undecided'] === true ? "selected" : ""}`}
+                                            onClick={() => {
+                                                const newOptions = toggleFilterOption('undecided');
+                                                setFilterConfig(newOptions);
+                                            }}>
+                                            <QuestionMark></QuestionMark> Undecided RSVP
+                                        </MenuItem>
+                                        <MenuItem className={`filterOption ${filterConfig['invited_rehearsal'] === true ? "selected" : ""}`}
+                                            onClick={() => {
+                                                const newOptions = toggleFilterOption('invited_rehearsal');
+                                                removeFilterOption('not_invited_rehearsal', newOptions);
+                                            }}>
+                                            <Restaurant></Restaurant> Invited Rehearsal
+                                        </MenuItem>
+                                        <MenuItem className={`filterOption ${filterConfig['not_invited_rehearsal'] === true ? "selected" : ""}`}
+                                            onClick={() => {
+                                                const newOptions = toggleFilterOption('not_invited_rehearsal');
+                                                removeFilterOption('invited_rehearsal', newOptions);
+                                            }}>
+                                            <NoMeals></NoMeals> Not Invited Rehearsal
+                                        </MenuItem>
+                                        <MenuItem className={`filterOption ${filterConfig['invited_happy_hour'] === true ? "selected" : ""}`}
+                                            onClick={() => {
+                                                const newOptions = toggleFilterOption('invited_happy_hour');
+                                                removeFilterOption('not_invited_happy_hour', newOptions);
+                                            }}>
+                                            <LocalBar></LocalBar> Invited Happy Hour
+                                        </MenuItem>
+                                        <MenuItem className={`filterOption ${filterConfig['not_invited_happy_hour'] === true ? "selected" : ""}`}
+                                            onClick={() => {
+                                                const newOptions = toggleFilterOption('not_invited_happy_hour');
+                                                removeFilterOption('invited_happy_hour', newOptions);
+                                            }}>
+                                            <NoDrinks></NoDrinks> Not Invited Happy Hour
+                                        </MenuItem>
+                                        {/* 'rsvp': false,
             'invited_rehearsal': false,
             'not_invited_rehearsal': false,
             'invited_happy_hour': false,
             'not_invited_happy_hour': false, */}
-                            </Menu>
-                        </Tooltip>
-                        {/* Filter */}
+                                    </Menu>
+                                </Tooltip>
+                                {/* Filter */}
+                            </div>
+                        </div>
+                        <div>
+                            Currently displaying {groups.filter(g => passesFilter(g)).length} groups, and {[...groups].filter(g => passesFilter(g)).reduce((sum, group) => sum + (group.guests?.length || 0), 0)} guests.
+                        </div>
                     </div>
-                </div>
-                <div>
-                    Currently displaying {groups.filter(g => passesFilter(g)).length} groups, and {[...groups].filter(g =>passesFilter(g)).reduce((sum, group) => sum + (group.guests?.length || 0), 0)} guests.
-                </div>
-            </div>
-            }
-            {/* <GroupCreate closeCallback = {dialogCallback}
+                }
+                {/* <GroupCreate closeCallback = {dialogCallback}
                 group={editingGroup}
                 single={true}
                 hideButton = {false}>
             </GroupCreate> */}
-            {/* Delete All Groups Button */}
-            {/* <Button variant="outlined"
+                {/* Delete All Groups Button */}
+                {/* <Button variant="outlined"
                 color="primary"
                 disabled = {loading}
                 onClick = {() => {
@@ -599,93 +603,93 @@ export default function Groups (props) {
                 }
                 Delete All Groups
             </Button> */}
-            <div className="groupsContainer">
-                {!groups || loading ?
-                    <ClipLoader className="bigClip"></ClipLoader>
-                //  : groups ?
-                : groups.length < 1 ?
-                <h3>There are Currently no Groups Invited</h3>
-                :
-                    groups.filter(g => passesFilter(g)).map(group => 
-                    <div className="groupContainer"
-                        key={`group-${group.id}`}>
-                        <div className="groupHeader">
-                            <h2>{group.title}</h2>
-                            {loading ?
-                            <ClipLoader className="iconLoader">
-                            </ClipLoader>
+                <div className="groupsContainer">
+                    {!groups || loading ?
+                        <ClipLoader className="bigClip"></ClipLoader>
+                        //  : groups ?
+                        : groups.length < 1 ?
+                            <h3>There are Currently no Groups Invited</h3>
                             :
-                            <div className="groupActions">
-                                <Tooltip title="Edit Group">
-                                    <IconButton color="primary"
-                                        onClick = {() => {
-                                            editGroup(group);
-                                        }}>
-                                        <Edit></Edit>
-                                    </IconButton>
-                                </Tooltip>
-                                <Tooltip title="Delete Group">
-                                    <IconButton color="secondary"
-                                        onClick = {() => {
-                                            deleteGroup(group)
-                                        }}>
-                                        <CancelOutlined></CancelOutlined>
-                                    </IconButton>
-                                </Tooltip>
-                            </div>
-                            }
+                            groups.filter(g => passesFilter(g)).map(group =>
+                                <div className="groupContainer"
+                                    key={`group-${group.id}`}>
+                                    <div className="groupHeader">
+                                        <h2>{group.title}</h2>
+                                        {loading ?
+                                            <ClipLoader className="iconLoader">
+                                            </ClipLoader>
+                                            :
+                                            <div className="groupActions">
+                                                <Tooltip title="Edit Group">
+                                                    <IconButton color="primary"
+                                                        onClick={() => {
+                                                            editGroup(group);
+                                                        }}>
+                                                        <Edit></Edit>
+                                                    </IconButton>
+                                                </Tooltip>
+                                                <Tooltip title="Delete Group">
+                                                    <IconButton color="secondary"
+                                                        onClick={() => {
+                                                            deleteGroup(group)
+                                                        }}>
+                                                        <CancelOutlined></CancelOutlined>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </div>
+                                        }
 
-                        </div>
-                        <div className="flexed centered">
-                            {group.invited_rehearsal ? 
-                            <Restaurant color="primary"></Restaurant> 
-                            : <NoMeals color="secondary"></NoMeals>} 
-                            {group.invited_rehearsal === true ? "Invited to Rehearsal Dinner" : "Not Invited to Rehearsal Dinner"}
-                        </div>
-                        <div className="flexed centered">
-                            {group.invited_happy_hour === true? 
-                            <LocalBar color="primary"></LocalBar> 
-                            : <NoDrinks color="secondary"></NoDrinks>} 
-                            {`${group.invited_happy_hour === true ? "" : "Not "}Invited to Happy Hour`}
-                            {/* {group.invited_rehearsal == true ? "Invited to Rehearsal Dinner" : "Not Invited to Rehearsal Dinner"} */}
-                        </div>
-                        {group.email &&    
-                            <div className="flexed centered">
-                                <Email color="primary"></Email> {group.email}
-                            </div>
-                        }
-                        {group.phone &&
-                            <div className="flexed centered">
-                                <LocalPhone color="primary"></LocalPhone> {group.phone}
-                            </div>
-                        }
-                        {group.address &&
-                        <div className="flexed row">
-                            <div>
-                                <LocationOn color="primary"></LocationOn>
-                            </div>
-                            <div>
-                                <div>{group.address}</div>
-                                <div>{group.city}, {group.state}, {group.zip}</div>
-                            </div>
-                        </div>
-                        }
-                        <div className="guestsContainer">
-                            {group.guests && group.guests.length > 0 &&
-                                <h3>Guests in Group:</h3>
-                            }
-                            <div>
-                            {group.guests && group.guests.map(guest =>
-                                guest && guest.first !== null &&
-                                <div className="flexed"
-                                    key={`guest-${guest.id}`}>
-                                    <div>
-                                        <Tooltip title={`This guest is ${guest.attending_ceremony === 1 ? "" : guest.attending_ceremony === 0 ? "not" : "undetermined regarding"} attending the ceremony`}>
-                                            {guest.attending_ceremony === 1 ? <Favorite color = "primary"></Favorite> 
-                                            : guest.attending_ceremony === 0 ? <Favorite color= "secondary"></Favorite>
-                                            : <FavoriteBorder color="disabled"></FavoriteBorder>}
-                                        </Tooltip>
-                                        {/* <Tooltip title={`This guest is ${guest.attending_brunch ? "" : "not"} attending brunch`}>
+                                    </div>
+                                    <div className="flexed centered">
+                                        {group.invited_rehearsal ?
+                                            <Restaurant color="primary"></Restaurant>
+                                            : <NoMeals color="secondary"></NoMeals>}
+                                        {group.invited_rehearsal === true ? "Invited to Rehearsal Dinner" : "Not Invited to Rehearsal Dinner"}
+                                    </div>
+                                    <div className="flexed centered">
+                                        {group.invited_happy_hour === true ?
+                                            <LocalBar color="primary"></LocalBar>
+                                            : <NoDrinks color="secondary"></NoDrinks>}
+                                        {`${group.invited_happy_hour === true ? "" : "Not "}Invited to Happy Hour`}
+                                        {/* {group.invited_rehearsal == true ? "Invited to Rehearsal Dinner" : "Not Invited to Rehearsal Dinner"} */}
+                                    </div>
+                                    {group.email &&
+                                        <div className="flexed centered">
+                                            <Email color="primary"></Email> {group.email}
+                                        </div>
+                                    }
+                                    {group.phone &&
+                                        <div className="flexed centered">
+                                            <LocalPhone color="primary"></LocalPhone> {group.phone}
+                                        </div>
+                                    }
+                                    {group.address &&
+                                        <div className="flexed row">
+                                            <div>
+                                                <LocationOn color="primary"></LocationOn>
+                                            </div>
+                                            <div>
+                                                <div>{group.address}</div>
+                                                <div>{group.city}, {group.state}, {group.zip}</div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div className="guestsContainer">
+                                        {group.guests && group.guests.length > 0 &&
+                                            <h3>Guests in Group:</h3>
+                                        }
+                                        <div>
+                                            {group.guests && group.guests.map(guest =>
+                                                guest && guest.first !== null &&
+                                                <div className="flexed"
+                                                    key={`guest-${guest.id}`}>
+                                                    <div>
+                                                        <Tooltip title={`This guest is ${guest.attending_ceremony === 1 ? "" : guest.attending_ceremony === 0 ? "not" : "undetermined regarding"} attending the ceremony`}>
+                                                            {guest.attending_ceremony === 1 ? <Favorite color="primary"></Favorite>
+                                                                : guest.attending_ceremony === 0 ? <Favorite color="secondary"></Favorite>
+                                                                    : <FavoriteBorder color="disabled"></FavoriteBorder>}
+                                                        </Tooltip>
+                                                        {/* <Tooltip title={`This guest is ${guest.attending_brunch ? "" : "not"} attending brunch`}>
                                             {guest.attending_brunch ? <EggAlt color="primary"></EggAlt> : <EggAltOutlined color="secondary"></EggAltOutlined>}
                                         </Tooltip>
                                         {group.invited_rehearsal &&
@@ -701,22 +705,22 @@ export default function Groups (props) {
                                             }
                                         </Tooltip>
                                         } */}
+                                                    </div>
+                                                    <div>{guest.first} {guest.last}</div>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                    <div>{guest.first} {guest.last}</div>
-                                </div>
-                            )}
-                            </div>
-                        </div>
-                    </div>)
-                    // :
-                    // <ClipLoader className="bigClip"></ClipLoader>
-                }
+                                </div>)
+                        // :
+                        // <ClipLoader className="bigClip"></ClipLoader>
+                    }
+                </div>
             </div>
-        </div>
-        :
-        <div className="weddingBody">
-            <div>You need to be signed in to view this page. Please <a href="/signin">sign in</a> first</div>
-        </div>
+            :
+            <div className="weddingBody">
+                <div>You need to be signed in to view this page. Please <a href="/signin">sign in</a> first</div>
+            </div>
     )
 
 };
