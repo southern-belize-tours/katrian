@@ -731,7 +731,7 @@ export default function RSVP (props) {
                     Brunch
                 </div>
                 <div className="summaryItemLocation">
-                    If you’ll still be around on Sunday, we’d love to see you one more time over a hosted brunch featuring bottomless mimosas, eggs, bacon, and more.
+                    If you’ll still be around on Saturday, we’d love to see you one more time over a hosted brunch featuring bottomless mimosas, eggs, bacon, and more.
                 </div>
                 <div className="summaryItemLocation">
                     <CalendarMonth color="primary"></CalendarMonth>
