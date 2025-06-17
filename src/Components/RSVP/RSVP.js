@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 
 import './RSVP.css';
 import { Button, IconButton, TextField, Tooltip } from "@mui/material";
-import { Apple, CalendarMonth, CancelOutlined, Check, CheckOutlined, Google, GroupAdd, InfoOutlined,
-    LocationOn, PersonAdd, PsychologyAlt, Search, Undo } from "@mui/icons-material";
+import { Apple, CalendarMonth, CancelOutlined, Check, CheckOutlined, DinnerDining, Google, GroupAdd, InfoOutlined,
+    LocationOn, PersonAdd, PsychologyAlt, Restaurant, Search, Undo, 
+    WineBar} from "@mui/icons-material";
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
 import { toast, ToastContainer} from 'react-toastify';
@@ -383,12 +384,14 @@ export default function RSVP (props) {
             {group === null ?
             <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
                 <div className="flexed logisticsItem centered">
-                    <div>Thank you for helping us plan by RSVPing here. Please respond by <span style={{fontWeight: 600}}>July 25, 2025</span>.</div>
+                    <div>
+                        We can't wait to celebrate -- please find your group and RSVP for the following events by <span style={{fontWeight: 600}}>July 25, 2025</span> so we can prepare accordingly!
+                    </div>
                 </div>
                 {/* <div className="flexed logisticsItem centered">
                     Please respond by <span style={{fontWeight: 600}}>July 25, 2025</span>.
                 </div> */}
-                <div className="flexed logisticsItem centered">
+                <div className="flexed logisticsItem centered RSVPSearchInput">
                     Search for your party by names to RSVP.
                 </div>
                 <div className="searchFieldContainer">
@@ -472,7 +475,7 @@ export default function RSVP (props) {
             </div>
             :
 
-            <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
+            <div className={`flexed col RSVPBody logisticsText ${fade ? "" : "fading"}`}>
                 {!peopleConfirmed ? 
                 <div className="flexed col">
                     { people_selected.length < group.guests.length && selecting === false &&
@@ -584,23 +587,39 @@ export default function RSVP (props) {
                 : statusConfirmed == false ?
                 <>
                 <div className={`flexed logisticsItem centered`}>
-                    Thank you for helping us plan by RSVPing here. You can always update your status later if things change.
+                    <div>
+                    We can't wait to celebrate - please RSVP for the following events by <span style={{fontWeight: 600}}>July 25, 2025</span> so we can prepare accordingly!
+                    </div>
+                    {/* Thank you for helping us plan by RSVPing here. You can always update your status later if things change. */}
                 </div>
                 {/* Rehearsal */}
                 { group.invited_rehearsal === true &&
                 <>
                 <div className="summaryItemName">
-                    Rehearsal
+                    Rehearsal Dinner + Welcome Drinks
                 </div>
                 <div className="summaryItemLocation">
                     {/* We're so excited to celebrate with you before the wedding! Please join us for a rehearsal dinner as detailed below. Other than the bridal party, this is NOT mandatory, so if you are not arriving early or not able to attend, but still plan to attend the wedding, this is of course fine too. */}
-                    We’re excited to kick things off with a relaxed evening together before the wedding! If you’ve received an invite to this informal seated dinner we're hosting, please join us if you're in town early. No pressure if you can't make it—unless you're in the bridal party, attendance isn’t required.
+                    {/* We’re excited to kick things off with a relaxed evening together before the wedding! If you’ve received an invite to this informal seated dinner we're hosting, please join us if you're in town early. No pressure if you can't make it—unless you're in the bridal party, attendance isn’t required. */}
+                    We’re excited to kick things off with a relaxed evening together before the wedding! Please join us if you're in town early. No pressure if you can't make it—unless you're in the bridal party, attendance isn’t required.
                 </div>
                 <div className="summaryItemLocation">
                     <CalendarMonth color="primary"></CalendarMonth>
                     <div>
                         Thursday, August 21st, 2025, 5:30pm - 8:00pm
                     </div>
+                </div>
+                <div className="summaryItemLocation">
+                    <Restaurant color="primary"></Restaurant>
+                    <di>
+                        Dinner 5:30pm - 7:00pm
+                    </di>
+                </div>
+                <div className="summaryItemLocation">
+                    <WineBar color="primary"></WineBar>
+                    <di>
+                        Welcome Drinks 7:30pm - 9:00pm
+                    </di>
                 </div>
                 <Tooltip title={`${text === "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
                     <div className="summaryItemLocation textCopy"
@@ -611,17 +630,22 @@ export default function RSVP (props) {
                             :
                             <LocationOn color="primary"></LocationOn>
                             }
-                        <div>
-                            The Cottage, La Jolla
+                        <div className="flexed col">
+                            <div>
+                                The Cottage
+                            </div>
+                            <div>
+                                7702 Fay Ave, La Jolla, CA 92037
+                            </div>    
                         </div>
                     </div>
                 </Tooltip>
-                <div className="summaryItemLocation">
+                {/* <div className="summaryItemLocation">
                     <InfoOutlined color="primary"></InfoOutlined>
                     <div>
                         Rehearsal-specific guests invited to this event.
                     </div>
-                </div>
+                </div> */}
                 <div className="RSVPForm">
                     {
                         people_selected.map(person => 
@@ -681,11 +705,34 @@ export default function RSVP (props) {
                             :
                             <LocationOn color="primary"></LocationOn>
                             }
-                        <div>
+                        {/* <div>
                             The Wedding Bowl, La Jolla Cove
+                        </div> */}
+                        <div className="flexed col">
+                            <div>
+                                The Wedding Bowl, Cuvier Park
+                            </div>
+                            <div>
+                                590 Coast S Blvd, La Jolla, CA 92037
+                            </div>
                         </div>
                     </div>
                 </Tooltip>
+                <div className="summaryItemLocation fancyText">
+                    Followed by reception at
+                </div>
+                <div className="summaryItemLocation textCopy"
+                    onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}>
+                    <LocationOn color="primary"></LocationOn>
+                    <div className="flexed col">
+                        <div>
+                            Cuvier Club
+                        </div>
+                        <div>
+                            7776 Eads Ave, La Jolla, CA 92037
+                        </div>
+                    </div>
+                </div>
                 <div className="RSVPForm">
                     {
                         people_selected.map((person, idx) => 
@@ -731,12 +778,13 @@ export default function RSVP (props) {
                     Brunch
                 </div>
                 <div className="summaryItemLocation">
-                    If you’ll still be around on Saturday, we’d love to see you one more time over a hosted brunch featuring bottomless mimosas, eggs, bacon, and more.
+                    {/* If you’ll still be around on Saturday, we’d love to see you one more time over a hosted brunch featuring bottomless mimosas, eggs, bacon, and more. */}
+                    If you will still be around on Saturday, please join us for a hosted brunch featuring bottomless mimosas, eggs, bacon, and more. Please consider this an optional event—we understand if you have other plans.
                 </div>
                 <div className="summaryItemLocation">
                     <CalendarMonth color="primary"></CalendarMonth>
                     <div>
-                        Saturday, August 23rd, 2025, 10:30am - 12:30pm
+                        Saturday, August 23rd, 2025, 10:00am - 12:30pm
                     </div>
                 </div>
                 <Tooltip title={`${text === "8030 Girard Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
@@ -748,8 +796,13 @@ export default function RSVP (props) {
                             :
                             <LocationOn color="primary"></LocationOn>
                             }
-                        <div>
-                            Cove House, La Jolla Cove
+                        <div className="flexed col">
+                            <div>
+                                Cove House
+                            </div>
+                            <div>
+                                8030 Girard Ave, La Jolla, CA 92037
+                            </div>
                         </div>
                     </div>
                 </Tooltip>

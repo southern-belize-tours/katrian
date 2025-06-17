@@ -27,6 +27,14 @@
     max-width: 100%;
 }
 
+.RSVPSearchInput {
+    padding-top: var(--default-gap);
+}
+
+.fancyText {
+    font-family: 'Dancing Script', cursive;
+}
+
 .searchFieldContainer {
     display: flex;
     align-items: center;
@@ -99,4 +107,10 @@
     gap: var(--default-gap);
     justify-content: space-around;
     flex-wrap: wrap;
+}
+
+@media(min-width: 1024px) {
+    .RSVPBody {
+        max-width: 55%;
+    }
 }
