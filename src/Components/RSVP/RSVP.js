@@ -595,6 +595,7 @@ export default function RSVP (props) {
                 {/* Rehearsal */}
                 {/* {group.invited_rehearsal === true && */}
                 {/* <> */}
+                <div className="summaryItemInfo flexed col">
                 <div className="summaryItemName">
                     {group.invited_rehearsal === true ? "Rehearsal Dinner + " : ""} Welcome Drinks
                 </div>
@@ -606,7 +607,8 @@ export default function RSVP (props) {
                 <div className="summaryItemLocation">
                     <CalendarMonth color="primary"></CalendarMonth>
                     <div>
-                        Thursday, August 21st, 2025, {group.invited_rehearsal === true ? "5:30pm" : "7:30pm"} - 8:00pm
+                        Thursday, August 21st, 2025
+                        {/* , {group.invited_rehearsal === true ? "5:30pm" : "7:30pm"} - 8:00pm */}
                     </div>
                 </div>
                 {group.invited_rehearsal === true &&
@@ -683,9 +685,11 @@ export default function RSVP (props) {
                     )
                     }
                 </div>
+                </div>
                 {/* </> */}
                 {/* } */}
                 {/* Ceremony */}
+                <div className="summaryItemInfo flexed col">
                 <div className="summaryItemName">
                     Ceremony + Reception
                 </div>
@@ -774,8 +778,10 @@ export default function RSVP (props) {
                     )
                     }
                 </div>
+                </div>
 
                 {/* Brunch */}
+                <div className="summaryItemInfo flexed col">
                 <div className="summaryItemName">
                     Brunch
                 </div>
@@ -843,6 +849,7 @@ export default function RSVP (props) {
                         </div>
                     )
                     }
+                </div>
                 </div>
 
                 {/* Happy Hour */}
