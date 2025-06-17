@@ -109,6 +109,18 @@
     flex-wrap: wrap;
 }
 
+@media(max-width: 425px) {
+    .RSVPAcceptReject button{
+        /* width: 100%; */
+        flex: 1 1 auto;
+    }
+
+    .RSVPName {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+}
+
 @media(min-width: 1024px) {
     .RSVPBody {
         max-width: 55%;

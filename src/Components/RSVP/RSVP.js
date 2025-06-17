@@ -385,7 +385,7 @@ export default function RSVP (props) {
             <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
                 <div className="flexed logisticsItem centered">
                     <div>
-                        We can't wait to celebrate -- please find your group and RSVP for the following events by <span style={{fontWeight: 600}}>July 25, 2025</span> so we can prepare accordingly!
+                        We can't wait to celebrate -- please find your group and RSVP for any events by <span style={{fontWeight: 600}}>July 25, 2025</span> so we can prepare accordingly!
                     </div>
                 </div>
                 {/* <div className="flexed logisticsItem centered">
@@ -593,10 +593,10 @@ export default function RSVP (props) {
                     {/* Thank you for helping us plan by RSVPing here. You can always update your status later if things change. */}
                 </div>
                 {/* Rehearsal */}
-                { group.invited_rehearsal === true &&
-                <>
+                {/* {group.invited_rehearsal === true && */}
+                {/* <> */}
                 <div className="summaryItemName">
-                    Rehearsal Dinner + Welcome Drinks
+                    {group.invited_rehearsal === true ? "Rehearsal Dinner + " : ""} Welcome Drinks
                 </div>
                 <div className="summaryItemLocation">
                     {/* We're so excited to celebrate with you before the wedding! Please join us for a rehearsal dinner as detailed below. Other than the bridal party, this is NOT mandatory, so if you are not arriving early or not able to attend, but still plan to attend the wedding, this is of course fine too. */}
@@ -606,15 +606,17 @@ export default function RSVP (props) {
                 <div className="summaryItemLocation">
                     <CalendarMonth color="primary"></CalendarMonth>
                     <div>
-                        Thursday, August 21st, 2025, 5:30pm - 8:00pm
+                        Thursday, August 21st, 2025, {group.invited_rehearsal === true ? "5:30pm" : "7:30pm"} - 8:00pm
                     </div>
                 </div>
-                <div className="summaryItemLocation">
-                    <Restaurant color="primary"></Restaurant>
-                    <di>
-                        Dinner 5:30pm - 7:00pm
-                    </di>
-                </div>
+                {group.invited_rehearsal === true &&
+                    <div className="summaryItemLocation">
+                        <Restaurant color="primary"></Restaurant>
+                        <di>
+                            Dinner 5:30pm - 7:00pm
+                        </di>
+                    </div>
+                }
                 <div className="summaryItemLocation">
                     <WineBar color="primary"></WineBar>
                     <di>
@@ -681,8 +683,8 @@ export default function RSVP (props) {
                     )
                     }
                 </div>
-                </>
-                }
+                {/* </> */}
+                {/* } */}
                 {/* Ceremony */}
                 <div className="summaryItemName">
                     Ceremony + Reception
