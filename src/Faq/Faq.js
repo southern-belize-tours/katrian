@@ -204,6 +204,37 @@ const FaqForm = (props) => {
           <AccordionDetails>
             <div className="flexed col">
               <div className="logisticsItem flexed col">
+                <div className="sanDiegoTitle"><LocalDining fontSize="2rem" color="primary"></LocalDining> Restaurants in La Jolla</div> 
+                <div className="thingsToDoItem">
+                  {/* <img src={seal_image}
+                    alt="See the seals"
+                    className="thingsToDoImage">
+                  </img> */}
+                  <div>
+                    La Jolla Cove has some great spots for plenty of different cuisines and moods.
+                    <ul>
+                      <li>
+                        Duke's La Jolla on <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/vZZfFMxuB4nv6V136" className="secondary" target="_blank" rel="noreferrer">1216 Prospect St, La Jolla, CA 92037</a></Tooltip>, has some great Hawaiian eats, cocktails, and a view of the ocean. Just try to call and make reservations +18584545888 if you're looking for a view or to eat at a particularly busy time.
+                      </li>
+                      <li>
+                        George's at the Cove on <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/E9Djkeb92Esprwzv6" className="secondary" target="_blank" rel="noreferrer">1250 Prospect St, La Jolla, CA 92037</a></Tooltip>, has some solid American-style food, some seafood, and brunch options as well. It's a little less casual than Duke's but offers some fantastic ocean views and really solid food. It might be best to try to call to make reservations as well +18584544244, especially for tables with ocean views.
+                      </li>
+                      <li>
+                        Piazza 1909 on <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/aL6RmavbRnjV546a8" className="secondary" target="_blank" rel="noreferrer">7731 Fay Ave, La Jolla, CA 92037</a></Tooltip> has good pizzas and Italian dishes. For these it also may be worth calling ahead for reservations +18584123108.
+                      </li>
+                      <li>
+                        El Pescador Fish Market on <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/HzsSYtz2m4pMgF3G9" className="secondary" target="_blank" rel="noreferrer">634 Pearl St, La Jolla, CA 92037</a></Tooltip> has open seating with delicious freshly caught seafood, with decent space for last-minute seating and outdoor/indoor table options.
+                      </li>
+                      <li>
+                        Finally, The Taco Stand on <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/hHwsvrBGERH5posNA" className="secondary" target="_blank" rel="noreferrer">621 Pearl St, La Jolla, CA 92037</a></Tooltip> has some of the best Mexican food in San Diego, at reasonable prices. This place can get BUSY and sometimes doesn't have any good seating, so often the best way to work the system is to use Doordash/UberEats to call in a takeout order, and go eat your burrito by the beach.
+                      </li>
+                    </ul>
+                       {/* Farther from the main La Jolla Cove area, and closer to the Inn by the Sea, are some more casual (but very tasty) options. */}
+
+                  </div>
+                </div>
+              </div>
+              <div className="logisticsItem flexed col">
                 <div className="sanDiegoTitle"><BeachAccess fontSize="2rem" color="primary"></BeachAccess> See the Seals</div> 
                 <div className="thingsToDoItem">
                   <img src={seal_image}
