@@ -77,7 +77,11 @@ code {
   background: #fafafa;
   /* padding: var(--default-padding) 0; */
   padding: var(--default-padding);
+  padding-bottom: 0px;
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--default-gap);
 }
 
 .logisticsAccordion {

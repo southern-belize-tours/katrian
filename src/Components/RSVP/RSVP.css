@@ -12,6 +12,7 @@
     gap: var(--default-gap);
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -19,16 +20,27 @@
     font-size: var(--font-size-medium);
 }
 
+
 .RSVPAcceptReject {
-    flex: 1 1 auto;
+    /* flex: 1 1 auto; */
     display: flex;
     gap: var(--default-gap);
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     max-width: 100%;
 }
 
 .RSVPSearchInput {
     padding-top: var(--default-gap);
+}
+
+.summaryItemLocation {
+    color: #2f2f2f;
+    font-size: 1.1rem;
+}
+
+.RSVPItemDescription {
+    color: black;
+    font-size: 1.2rem;
 }
 
 .fancyText {
@@ -109,7 +121,17 @@
     flex-wrap: wrap;
 }
 
+.summaryItemName {
+    font-family: 'Dancing Script', cursive;
+}
+
+
 @media(max-width: 425px) {
+
+    .summaryDay {
+        padding: calc(0.5 * var(--default-padding)) 0;
+        padding-left: calc(0.5 * var(--default-padding));
+    }
     .RSVPAcceptReject button{
         /* width: 100%; */
         flex: 1 1 auto;
@@ -119,10 +141,48 @@
         flex: 1 1 auto;
         text-align: center;
     }
+
+    .RSVPItemDescription {
+        font-size: .5em;
+    }
+
+    .summaryItemtime {
+        flex: 0 0 18%;
+    }
+
+    .summaryItemLocationContent {
+        font-size: 0.7em;
+    }
+
+    .rsvpFormButton {}
+    
+    .rsvpFormButtonText {
+        display: none;
+    }
+
+    .rsvpTableBody .MuiTableCell-body {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        text-align: center;
+    }
+
+    .rsvpTableHead .MuiTableCell-head {
+        padding-left: 2px !important;
+        padding-right: 2px !important;
+        text-align: center;;
+    }
 }
 
 @media(min-width: 1024px) {
     .RSVPBody {
-        max-width: 55%;
+        max-width: 75%;
+    }
+
+    .summaryItemName {
+        font-size: 0.85em;
+    }
+
+    .RSVPName {
+        font-size: 1.15em;
     }
 }

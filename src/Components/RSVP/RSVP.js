@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import './RSVP.css';
-import { Button, IconButton, TextField, Tooltip } from "@mui/material";
+import { Button, ButtonGroup, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from "@mui/material";
 import { Apple, CalendarMonth, CancelOutlined, Check, CheckOutlined, DinnerDining, Google, GroupAdd, InfoOutlined,
     LocationOn, PersonAdd, PsychologyAlt, Restaurant, Search, Undo, 
     WineBar} from "@mui/icons-material";
@@ -11,6 +11,8 @@ import { toast, ToastContainer} from 'react-toastify';
 import { ClipLoader } from "react-spinners";
 import GroupEmailForm from "./GroupEmailForm";
 import AllergyForm from "./AllergyForm";
+
+import RSVPEvent from "./RSVPEvent.js";
 
 const toastConfig = {
     autoClose: 2000
@@ -154,8 +156,8 @@ export default function RSVP (props) {
                 newPeople[i].attending_brunch = val;
 
                 // They'd better be coming to the ceremony if they are going to brunch/rehearsal
-                if (val === true) {
-                    newPeople[i].attending_ceremony = true;
+                if (val === 1) {
+                    newPeople[i].attending_ceremony = 1;
                 }
                 const guestData = {
                     "id": newPeople[i].id,
@@ -182,8 +184,8 @@ export default function RSVP (props) {
                 newPeople[i].attending_happy_hour = val;
 
                 // They'd better be coming to the ceremony if they are going to brunch/rehearsal
-                if (val === true) {
-                    newPeople[i].attending_ceremony = true;
+                if (val === 1) {
+                    newPeople[i].attending_ceremony = 1;
                 }
                 const guestData = {
                     "id": newPeople[i].id,
@@ -209,8 +211,8 @@ export default function RSVP (props) {
             if (newPeople[i].first === person.first && newPeople[i].last === person.last) {
                 newPeople[i].attending_rehearsal = val;
                 // They'd better be coming to the ceremony if they are going to brunch/rehearsal
-                if (val === true) {
-                    newPeople[i].attending_ceremony = true;
+                if (val === 1) {
+                    newPeople[i].attending_ceremony = 1;
                 }
                 const guestData = {
                     "id": newPeople[i].id,
@@ -358,7 +360,74 @@ export default function RSVP (props) {
         document.body.removeChild(link);
       };
 
+      let events = [
+        {
+            dateTimeString: "Thursday, August 21st, 2025",
+            description: "We’re excited to kick things off with a relaxed evening together before the wedding! Please join us if you're in town early. No pressure if you can't make it—unless you're in the bridal party, attendance isn’t required.",
+            title: group && group.invited_rehearsal === true ? "Rehearsal Dinner + Welcome Drinks" : "Welcome Drinks",
+            items: [
+                group && group.invited_rehearsal === true && 
+                {
+                    startString: "5:00pm",
+                    endString: "7:00pm",
+                    name: "Dinner",
+                    location: "The Cottage",
+                    address: "7776 Eads Ave, La Jolla, CA 92037",
+                    link: "https://maps.app.goo.gl/E29Ryk1exf6abfyz9",
+                },
+                {
+                    startString: "7:30pm",
+                    endString: "9:00pm",
+                    name: "Welcome Drinks",
+                    location: "The Spot",
+                    address: "1005 Prospect St, La Jolla, CA 92037",
+                    link: "https://maps.app.goo.gl/YZWZrzdVAZdyqyc99",
+                }
+
+            ]
+        },
+        {
+            dateTimeString: "Friday, August 22nd, 2025",
+            description: "",
+            title: "Wedding Day",
+            items: [
+                {
+                    startString: "5:00pm",
+                    endString: "",
+                    name: "Ceremony",
+                    location: "The Wedding Bowl",
+                    address: "590 Coast S Blvd, La Jolla, CA 92037",
+                    link: "https://maps.app.goo.gl/d9jJB9crHKFxiqWq8"
+                },
+                {
+                    startString: "Followed by",
+                    endString: "",
+                    name: "Reception",
+                    location: "The Cuvier Club",
+                    address: "7776 Eads Ave, La Jolla, CA 92037",
+                    link: "https://maps.app.goo.gl/tGzFWXLR1QyyvwhV8"
+                }
+            ]
+        },
+        {
+            dateTimeString: "Saturday, August 23rd, 2025",
+            description: "If you will still be around on Saturday, please join us for a hosted brunch featuring bottomless mimosas, eggs, bacon, and more. Please consider this an optional event—we understand if you have other plans.",
+            title: "Brunch",
+            items: [
+                {
+                    startString: "10:00am",
+                    endString: "12:30pm",
+                    name: "Brunch",
+                    location: "Cove House",
+                    address: "8030 Girard Ave, La Jolla, CA 92037",
+                    link: "https://maps.app.goo.gl/xAfXt2enRnewwZ6i7"
+                }
+            ]
+        }
+    ]
+
     return (
+        
         <div className="weddingBody">
             <ToastContainer></ToastContainer>
             <h1 className={`logisticsText ${fade ? "" : "fading"}`}>
@@ -595,226 +664,82 @@ export default function RSVP (props) {
                 {/* Rehearsal */}
                 {/* {group.invited_rehearsal === true && */}
                 {/* <> */}
-                <div className="summaryItemInfo flexed col">
-                <div className="summaryItemName">
-                    {group.invited_rehearsal === true ? "Rehearsal Dinner + " : ""} Welcome Drinks
-                </div>
-                <div className="summaryItemLocation">
-                    {/* We're so excited to celebrate with you before the wedding! Please join us for a rehearsal dinner as detailed below. Other than the bridal party, this is NOT mandatory, so if you are not arriving early or not able to attend, but still plan to attend the wedding, this is of course fine too. */}
-                    {/* We’re excited to kick things off with a relaxed evening together before the wedding! If you’ve received an invite to this informal seated dinner we're hosting, please join us if you're in town early. No pressure if you can't make it—unless you're in the bridal party, attendance isn’t required. */}
-                    We’re excited to kick things off with a relaxed evening together before the wedding! Please join us if you're in town early. No pressure if you can't make it—unless you're in the bridal party, attendance isn’t required.
-                </div>
-                <div className="summaryItemLocation">
-                    <CalendarMonth color="primary"></CalendarMonth>
-                    <div>
-                        Thursday, August 21st, 2025
-                        {/* , {group.invited_rehearsal === true ? "5:30pm" : "7:30pm"} - 8:00pm */}
-                    </div>
-                </div>
-                {group.invited_rehearsal === true &&
-                    <div className="summaryItemLocation">
-                        <Restaurant color="primary"></Restaurant>
-                        <di>
-                            Dinner 5:30pm - 7:00pm
-                        </di>
-                    </div>
-                }
-                <div className="summaryItemLocation">
-                    <WineBar color="primary"></WineBar>
-                    <di>
-                        Welcome Drinks 7:30pm - 9:00pm
-                    </di>
-                </div>
-                <Tooltip title={`${text === "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                    <div className="summaryItemLocation textCopy"
-                        onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}>
-                            {
-                            text === "7776 Eads Ave, La Jolla, CA 92037" ?
-                            <CheckOutlined color="primary"></CheckOutlined>
-                            :
-                            <LocationOn color="primary"></LocationOn>
-                            }
-                        <div className="flexed col">
-                            <div>
-                                The Cottage
-                            </div>
-                            <div>
-                                7702 Fay Ave, La Jolla, CA 92037
-                            </div>    
-                        </div>
-                    </div>
-                </Tooltip>
-                {/* <div className="summaryItemLocation">
-                    <InfoOutlined color="primary"></InfoOutlined>
-                    <div>
-                        Rehearsal-specific guests invited to this event.
-                    </div>
-                </div> */}
-                <div className="RSVPForm">
-                    {
-                        people_selected.map(person => 
-                        <div className="RSVPFormField">
-                            <div className="RSVPName">
-                                <Tooltip title = {`${person.first} is currently ${person.attending_rehearsal === 0 ? "not planning on" : person.attending_rehearsal === -1 ? "undecided regarding" : "planning on"} attending the rehearsal`}>
-                                    {person.first}
-                                </Tooltip>
-                            </div>
-                            <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attending_rehearsal == 1 ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingRehearsal(person, 1)}}
-                                    disabled = {loading}
-                                    size="small"
-                                    color="primary">
-                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Check></Check>} Accept
-                                </Button>
-                                <Button variant={`${person.attending_rehearsal == 0 ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingRehearsal(person, 0)}}
-                                    size="small"
-                                    color="secondary">
-                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
-                                </Button>
-                                <Button variant={`${person.attending_rehearsal == -1 ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingRehearsal(person, -1)}}
-                                    disabled = {loading}
-                                    size="small"
-                                    color="disabled">
-                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
-                                </Button>
-                            </div>
-                        </div>
-                    )
-                    }
-                </div>
-                </div>
-                {/* </> */}
-                {/* } */}
-                {/* Ceremony */}
-                <div className="summaryItemInfo flexed col">
-                <div className="summaryItemName">
-                    Ceremony + Reception
-                </div>
-                <Tooltip title={"Add to Google Calendar"}>
-                    <div className="summaryItemLocation"
-                        onClick = {AddToCalendar}>
-                        <CalendarMonth color="primary"></CalendarMonth>
-                        <div>
-                            Friday, August 22nd, 2025, 5:00pm
-                        </div>
-                    </div>
-                </Tooltip>
-                <Tooltip title={`${text === "590 Coast S Blvd, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                    <div className="summaryItemLocation textCopy"
-                        onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}>
-                            {
-                            text === "590 Coast S Blvd, La Jolla, CA 92037" ?
-                            <CheckOutlined color="primary"></CheckOutlined>
-                            :
-                            <LocationOn color="primary"></LocationOn>
-                            }
-                        {/* <div>
-                            The Wedding Bowl, La Jolla Cove
-                        </div> */}
-                        <div className="flexed col">
-                            <div>
-                                The Wedding Bowl, Cuvier Park
-                            </div>
-                            <div>
-                                590 Coast S Blvd, La Jolla, CA 92037
-                            </div>
-                        </div>
-                    </div>
-                </Tooltip>
-                <div className="summaryItemLocation fancyText">
-                    Followed by reception at
-                </div>
-                <div className="summaryItemLocation textCopy"
-                    onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}>
-                    <LocationOn color="primary"></LocationOn>
-                    <div className="flexed col">
-                        <div>
-                            Cuvier Club
-                        </div>
-                        <div>
-                            7776 Eads Ave, La Jolla, CA 92037
-                        </div>
-                    </div>
-                </div>
-                <div className="RSVPForm">
-                    {
-                        people_selected.map((person, idx) => 
-                        <div className="RSVPFormField"
-                            key={`RSVP-guest-${idx}`}>
-                            <div className="RSVPName">
-                                <Tooltip title = {`${person.first} is currently ${person.attending_ceremony === 0 ? "not planning on" : person.attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
-                                    {person.first}
-                                </Tooltip>
-                                {/* {person.attending == true ? "attending" : "not attending"} */}
-                                {/* {person.attending} */}
-                            </div>
-                            <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attending_ceremony === 1 ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttending(person, 1)}}
-                                    size="small"
-                                    disabled = {loading}
-                                    color="primary">
-                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
-                                </Button>
-                                <Button variant={`${person.attending_ceremony === 0 ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttending(person, 0)}}
-                                    disabled = {loading}
-                                    size="small"
-                                    color="secondary">
-                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
-                                </Button>
-                                <Button variant={`${person.attending_ceremony === -1 ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttending(person, -1)}}
-                                    disabled = {loading}
-                                    size="small"
-                                    color="disabled">
-                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
-                                </Button>
-                            </div>
-                        </div>
-                    )
-                    }
-                </div>
-                </div>
 
-                {/* Brunch */}
-                <div className="summaryItemInfo flexed col">
-                <div className="summaryItemName">
-                    Brunch
-                </div>
-                <div className="summaryItemLocation">
-                    {/* If you’ll still be around on Saturday, we’d love to see you one more time over a hosted brunch featuring bottomless mimosas, eggs, bacon, and more. */}
-                    If you will still be around on Saturday, please join us for a hosted brunch featuring bottomless mimosas, eggs, bacon, and more. Please consider this an optional event—we understand if you have other plans.
-                </div>
-                <div className="summaryItemLocation">
-                    <CalendarMonth color="primary"></CalendarMonth>
-                    <div>
-                        Saturday, August 23rd, 2025, 10:00am - 12:30pm
-                    </div>
-                </div>
-                <Tooltip title={`${text === "8030 Girard Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                    <div className="summaryItemLocation textCopy"
-                        onClick = {() => {copyTextToClipBoard("8030 Girard Ave, La Jolla, CA 92037")}}>
-                            {
-                            text === "8030 Girard Ave, La Jolla, CA 92037" ?
-                            <CheckOutlined color="primary"></CheckOutlined>
-                            :
-                            <LocationOn color="primary"></LocationOn>
-                            }
-                        <div className="flexed col">
-                            <div>
-                                Cove House
+
+
+                {/* <div className="RSVPForm">
+                        {
+                            people_selected.map(person => 
+                            <div className="RSVPFormField">
+                                <div className="RSVPName">
+                                    <Tooltip title = {`${person.first} is currently ${person.attending_rehearsal === 0 ? "not planning on" : person.attending_rehearsal === -1 ? "undecided regarding" : "planning on"} attending the rehearsal`}>
+                                        {person.first}
+                                    </Tooltip>
+                                </div>
+                                <div className="RSVPAcceptReject">
+                                    <Button variant={`${person.attending_rehearsal == 1 ? "contained" : "outlined"}`}
+                                        onClick = {() => {setAttendingRehearsal(person, 1)}}
+                                        disabled = {loading}
+                                        size="small"
+                                        color="primary">
+                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Check></Check>} Accept
+                                    </Button>
+                                    <Button variant={`${person.attending_rehearsal == 0 ? "contained" : "outlined"}`}
+                                        onClick = {() => {setAttendingRehearsal(person, 0)}}
+                                        size="small"
+                                        color="secondary">
+                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
+                                    </Button>
+                                    <Button variant={`${person.attending_rehearsal == -1 ? "contained" : "outlined"}`}
+                                        onClick = {() => {setAttendingRehearsal(person, -1)}}
+                                        disabled = {loading}
+                                        size="small"
+                                        color="disabled">
+                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
+                                    </Button>
+                                </div>
                             </div>
-                            <div>
-                                8030 Girard Ave, La Jolla, CA 92037
+                        )
+                        }
+                </div> */}
+                {/* <div className="RSVPForm">
+                        {
+                            people_selected.map((person, idx) => 
+                            <div className="RSVPFormField"
+                                key={`RSVP-guest-${idx}`}>
+                                <div className="RSVPName">
+                                    <Tooltip title = {`${person.first} is currently ${person.attending_ceremony === 0 ? "not planning on" : person.attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
+                                        {person.first}
+                                    </Tooltip>
+                                </div>
+                                <div className="RSVPAcceptReject">
+                                    <Button variant={`${person.attending_ceremony === 1 ? "contained" : "outlined"}`}
+                                        onClick = {() => {setAttending(person, 1)}}
+                                        size="small"
+                                        disabled = {loading}
+                                        color="primary">
+                                        {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
+                                    </Button>
+                                    <Button variant={`${person.attending_ceremony === 0 ? "contained" : "outlined"}`}
+                                        onClick = {() => {setAttending(person, 0)}}
+                                        disabled = {loading}
+                                        size="small"
+                                        color="secondary">
+                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
+                                    </Button>
+                                    <Button variant={`${person.attending_ceremony === -1 ? "contained" : "outlined"}`}
+                                        onClick = {() => {setAttending(person, -1)}}
+                                        disabled = {loading}
+                                        size="small"
+                                        color="disabled">
+                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </Tooltip>
-                <div className="RSVPForm">
+                        )
+                        }
+                </div> */}
+                {/* <div className="RSVPForm">
                     {
                         people_selected.map(person => 
                         <div className="RSVPFormField">
@@ -849,8 +774,189 @@ export default function RSVP (props) {
                         </div>
                     )
                     }
-                </div>
-                </div>
+                </div> */}
+
+                {events.map(event =>
+                    <RSVPEvent dateTimeString = {event.dateTimeString}
+                        description = {event.description}
+                        title = {event.title}
+                        items = {event.items}>
+                    </RSVPEvent>
+                )}
+
+<TableContainer component = {Paper}>
+                    <Table aria-label = "RSVP Guest Responses">
+                        <TableHead className="rsvpTableHead">
+                            <TableRow>
+                                <TableCell
+                                    //  style={{width: '100%'}}
+                                >Guest</TableCell>
+                                <TableCell align="right">Wedding</TableCell>
+                                <TableCell align="right">{group.invited_rehearsal ? "Rehearsal Dinner + " : ""} Welcome Drinks</TableCell>
+                                <TableCell align="right">Brunch</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody className="rsvpTableBody">
+                    {people_selected.map(person =>
+                        <TableRow key={`${person.first}-${person.last}`}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell>{person.first} {person.last}</TableCell>
+                                <TableCell align="right">
+                                    <Tooltip title = {`${person.first} is currently ${person.attending_ceremony === 0 ? "not planning on" : person.attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
+                                        <ButtonGroup variant="outlined"
+                                            aria-label="Guests Wedding Selection">
+                                            <Button variant={`${person.attending_ceremony === 1 ? "contained" : "outlined"}`}
+                                                onClick = {() => {setAttending(person, 1)}}
+                                                className = "rsvpFormButton"
+                                                size="small"
+                                                disabled = {loading}
+                                                color="primary">
+                                                {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} <span className="rsvpFormButtonText">Accept</span>
+                                            </Button>
+                                            <Button variant={`${person.attending_ceremony === 0 ? "contained" : "outlined"}`}
+                                                onClick = {() => {setAttending(person, 0)}}
+                                                disabled = {loading}
+                                                className = "rsvpFormButton"
+                                                size="small"
+                                                color="secondary">
+                                                {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} <span className="rsvpFormButtonText">Decline</span>
+                                            </Button>
+                                            {person.attending_ceremony === -1 &&
+                                                <Button variant={`${person.attending_ceremony === -1 ? "contained" : "outlined"}`}
+                                                    onClick = {() => {setAttending(person, -1)}}
+                                                    disabled = {loading}
+                                                    className = "rsvpFormButton"
+                                                    size="small"
+                                                    color="disabled">
+                                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} <span className="rsvpFormButtonText">Undecided</span>
+                                                </Button>
+                                            }
+                                        </ButtonGroup>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <Tooltip title = {`${person.first} is currently ${person.attending_rehearsal === 0 ? "not planning on" : person.attending_rehearsal === -1 ? "undecided regarding" : "planning on"} attending the rehearsal`}>
+                                        <ButtonGroup variant="outlined"
+                                            aria-label="Guests Rehearsal Selection">
+                                            <Button variant={`${person.attending_rehearsal == 1 ? "contained" : "outlined"}`}
+                                                onClick = {() => {setAttendingRehearsal(person, 1)}}
+                                                disabled = {loading}
+                                                className = "rsvpFormButton"
+                                                size="small"
+                                                color="primary">
+                                                {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Check></Check>} <span className="rsvpFormButtonText">Accept</span>
+                                            </Button>
+                                            <Button variant={`${person.attending_rehearsal == 0 ? "contained" : "outlined"}`}
+                                                onClick = {() => {setAttendingRehearsal(person, 0)}}
+                                                className = "rsvpFormButton"
+                                                size="small"
+                                                color="secondary">
+                                                {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} <span className="rsvpFormButtonText">Decline</span>
+                                            </Button>
+                                            {person.attending_rehearsal == -1 &&
+                                                <Button variant={`${person.attending_rehearsal == -1 ? "contained" : "outlined"}`}
+                                                    onClick = {() => {setAttendingRehearsal(person, -1)}}
+                                                    disabled = {loading}
+                                                    className = "rsvpFormButton"
+                                                    size="small"
+                                                    color="disabled">
+                                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} <span className="rsvpFormButtonText">Undecided</span>
+                                                </Button>
+                                            }
+                                        </ButtonGroup>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <Tooltip title = {`${person.first} is currently ${person.attending_brunch === 0 ? "not planning on" : person.attending_brunch === -1 ? "undecided regarding" : "planning on"} attending brunch`}>
+                                        <ButtonGroup variant="outlined"
+                                            aria-label="Guests Brunch Selection">
+                                            <Button variant={`${person.attending_brunch == 1 ? "contained" : "outlined"}`}
+                                                onClick = {() => {setAttendingBrunch(person, 1)}}
+                                                disabled = {loading}
+                                                className = "rsvpFormButton"
+                                                size="small"
+                                                color="primary">
+                                                {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} <span className="rsvpFormButtonText">Accept</span>
+                                            </Button>
+                                            <Button variant={`${person.attending_brunch  == 0? "contained" : "outlined"}`}
+                                                onClick = {() => {setAttendingBrunch(person, 0)}}
+                                                disabled = {loading}
+                                                className = "rsvpFormButton"
+                                                size="small"
+                                                color="secondary">
+                                                {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} <span className="rsvpFormButtonText">Decline</span>
+                                            </Button>
+                                            {person.attending_brunch == -1 &&
+                                                <Button variant={`${person.attending_brunch === -1 ? "contained" : "outlined"}`}
+                                                    onClick = {() => {setAttendingBrunch(person, -1)}}
+                                                    disabled = {loading}
+                                                    className = "rsvpFormButton"
+                                                    size="small"
+                                                    color="disabled">
+                                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} <span className="rsvpFormButtonText">Undecided</span>
+                                                </Button>
+                                            }
+                                        </ButtonGroup>
+                                    </Tooltip>
+                                </TableCell>
+                        </TableRow>
+
+                    )}
+                    </TableBody>
+                    </Table>
+                </TableContainer>
+
+                {/* </> */}
+                {/* } */}
+                {/* Ceremony */}
+                {/* <div className="summaryDay">
+                    <div className="summaryItemInfo flexed col">
+                    <div className="summaryItemName">
+                        Ceremony + Reception
+                    </div>
+                    <Tooltip title={"Add to Google Calendar"}>
+                        <div className="summaryItemLocation"
+                            onClick = {AddToCalendar}>
+                            <CalendarMonth color="primary"></CalendarMonth>
+                            <div>
+                                Friday, August 22nd, 2025 · 5:00pm
+                            </div>
+                        </div>
+                    </Tooltip>
+                    <Tooltip title={`${text === "590 Coast S Blvd, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
+                        <div className="summaryItemLocation textCopy"
+                            onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}>
+                                {
+                                text === "590 Coast S Blvd, La Jolla, CA 92037" ?
+                                <CheckOutlined color="primary"></CheckOutlined>
+                                :
+                                <LocationOn color="primary"></LocationOn>
+                                }
+                            <div className="flexed col">
+                                <div>
+                                    The Wedding Bowl, Cuvier Park
+                                </div>
+                                <div>
+                                    590 Coast S Blvd, La Jolla, CA 92037
+                                </div>
+                            </div>
+                        </div>
+                    </Tooltip>
+                    <div className="summaryItemLocation fancyText">
+                        Followed by reception at
+                    </div>
+                    <div className="summaryItemLocation textCopy"
+                        onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}>
+                        <LocationOn color="primary"></LocationOn>
+                        <div className="flexed col">
+                            <div>
+                                Cuvier Club
+                            </div>
+                            <div>
+                                7776 Eads Ave, La Jolla, CA 92037
+                            </div>
+                        </div>
+                    </div> */}
 
                 {/* Happy Hour */}
                 {/* {group.invited_happy_hour &&

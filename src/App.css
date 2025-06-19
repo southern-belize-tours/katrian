@@ -62,11 +62,13 @@
 }
 
 .summaryItemTime {
-  font-size: 1.3rem;
+  /* font-size: 1.3rem; */
+  font-size: 0.4em;
   text-align: center;
   font-weight: 400;
   font-family: 'Times New Roman', Times, serif;
   cursor: pointer;
+  flex: 0 0 13%;
 }
 
 .summaryItems {
@@ -81,13 +83,13 @@
   gap: var(--default-gap);
   border-top: solid 1px var(--clr-lavender);
   padding: var(--default-padding) 0;
-  padding-left: var(--default-padding);
 }
 
 .summaryItemMore {
   display: flex;
   gap: var(--default-gap);
   flex-direction: column;
+  flex: 1 1 auto;
 }
 
 .summaryItemName, .summaryItemLocation {
@@ -105,7 +107,7 @@
 }
 
 .summaryItemLocation .MuiSvgIcon-root {
-  font-size: 1rem;
+  font-size: 1.2em;
 }
 
 .summaryItemName {
@@ -475,7 +477,7 @@ a {
 
   .summaryItemName {
     /* font-size: 1rem; */
-    font-size: .8rem;
+    font-size: .8em;
   }
 
   .summaryItemLocation {
