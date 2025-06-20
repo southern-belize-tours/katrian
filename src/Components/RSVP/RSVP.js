@@ -412,7 +412,7 @@ export default function RSVP (props) {
         {
             dateTimeString: "Saturday, August 23rd, 2025",
             description: "If you will still be around on Saturday, please join us for a hosted brunch featuring bottomless mimosas, eggs, bacon, and more. Please consider this an optional event—we understand if you have other plans.",
-            title: "Brunch",
+            title: "Post-Wedding Brunch",
             items: [
                 {
                     startString: "10:00am",
