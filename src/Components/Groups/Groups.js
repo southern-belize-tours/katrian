@@ -295,12 +295,12 @@ export default function Groups(props) {
     const getRehearsalHeadcount = () => {
         let ret = 0;
         for (let i = 0; i < groups.length; ++i) {
-            if (!groups[i].invited_rehearsal) {
-                continue;
-            }
+            // if (!groups[i].invited_rehearsal) {
+            //     continue;
+            // }
             if (groups[i].guests) {
                 for (let j = 0; j < groups[i].guests.length; ++j) {
-                    if (groups[i].guests[j] && groups[i].guests[j].attending_rehearsal) {
+                    if (groups[i].guests[j] && (groups[i].guests[j].attending_rehearsal === 1 || groups[i].guests[j].attending_rehearsal === true)) {
                         ret++;
                     }
                 }
@@ -316,6 +316,23 @@ export default function Groups(props) {
                 continue;
             }
             ret += groups[i].guests.length;
+        }
+        return ret;
+    }
+
+    const getRehearsalRejected = () => {
+        let ret = 0;
+        for (let i = 0; i < groups.length; ++i) {
+            // if (!groups[i].invited_rehearsal) {
+            //     continue;
+            // }
+            if (groups[i].guests) {
+                for (let j = 0; j < groups[i].guests.length; ++j) {
+                    if (groups[i].guests[j] && groups[i].guests[j].attending_rehearsal === 0 || groups[i].guests[j].attending_ceremony === 0) {
+                        ret++;
+                    }
+                }
+            }
         }
         return ret;
     }
@@ -363,7 +380,7 @@ export default function Groups(props) {
         for (let i = 0; i < groups.length; ++i) {
             if (groups[i].guests) {
                 for (let j = 0; j < groups[i].guests.length; ++j) {
-                    if (groups[i].guests[j] && groups[i].guests[j].attending_brunch) {
+                    if (groups[i].guests[j] && (groups[i].guests[j].attending_brunch === 1 || groups[i].guests[j].attending_brunch === true)) {
                         ret++;
                     }
                 }
@@ -371,6 +388,24 @@ export default function Groups(props) {
         }
         return ret;
     }
+
+    const getBrunchRejected = () => {
+        let ret = 0;
+        for (let i = 0; i < groups.length; ++i) {
+            // if (!groups[i].invited_rehearsal) {
+            //     continue;
+            // }
+            if (groups[i].guests) {
+                for (let j = 0; j < groups[i].guests.length; ++j) {
+                    if (groups[i].guests[j] && groups[i].guests[j].attending_brunch === 0 || groups[i].guests[j].attending_ceremony === 0) {
+                        ret++;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
 
     const getCeremonyInvited = () => {
         let ret = 0;
@@ -408,6 +443,7 @@ export default function Groups(props) {
         return ret;
     }
 
+
     return (
         (user && user.isSignedIn) ?
             <div className="weddingBody">
@@ -441,12 +477,11 @@ export default function Groups(props) {
                             <TableBody>
                                 <TableRow>
                                     <TableCell>
-                                        <Restaurant className="hideSmall" color="primary"></Restaurant> Rehearsal
+                                        <Restaurant className="hideSmall" color="primary"></Restaurant> Rehearsal Dinner
                                     </TableCell>
-                                    {/* <TableCell>{getRehearsalHeadcount()}</TableCell> */}
                                     <TableCell>{getRehearsalInvited()}</TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell>{getRehearsalRejected()}</TableCell>
+                                    <TableCell>{getRehearsalHeadcount()}</TableCell>
                                     <TableCell>{50}</TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -462,10 +497,9 @@ export default function Groups(props) {
                                     <TableCell>
                                         <EggAlt className="hideSmall" color="primary"></EggAlt> Brunch
                                     </TableCell>
-                                    {/* <TableCell>{getBrunchHeadcount()}</TableCell> */}
-                                    <TableCell>{getCeremonyInvited()}</TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell>{getCeremonyHeadcount()}</TableCell>
+                                    <TableCell>{getBrunchRejected()}</TableCell>
+                                    <TableCell>{getBrunchHeadcount()}</TableCell>
                                     <TableCell>{125}</TableCell>
                                 </TableRow>
                                 <TableRow>
