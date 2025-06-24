@@ -125,6 +125,12 @@
     font-family: 'Dancing Script', cursive;
 }
 
+@media(max-width: 768px) {
+    .rsvpFormButtonText {
+        display: none;
+    }
+}
+
 
 @media(max-width: 425px) {
 
@@ -155,10 +161,7 @@
     }
 
     .rsvpFormButton {}
-    
-    .rsvpFormButtonText {
-        display: none;
-    }
+
 
     .rsvpTableBody .MuiTableCell-body {
         padding-left: 0px !important;

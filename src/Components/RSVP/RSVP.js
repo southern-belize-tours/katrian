@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import './RSVP.css';
-import { Button, ButtonGroup, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from "@mui/material";
+import { Button, ButtonGroup, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, useMediaQuery } from "@mui/material";
 import { Apple, CalendarMonth, CancelOutlined, Check, CheckOutlined, DinnerDining, Google, GroupAdd, InfoOutlined,
     LocationOn, PersonAdd, PsychologyAlt, Restaurant, Search, Undo, 
     WineBar} from "@mui/icons-material";
@@ -19,6 +19,8 @@ const toastConfig = {
 };
 
 export default function RSVP (props) {
+    const isSmallScreen = useMediaQuery('(max-width:558px)');
+
     const groupService = useGroupService();
     const guestService = useGuestService();
 
@@ -804,6 +806,7 @@ export default function RSVP (props) {
                                 <TableCell align="right">
                                     <Tooltip title = {`${person.first} is currently ${person.attending_ceremony === 0 ? "not planning on" : person.attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
                                         <ButtonGroup variant="outlined"
+                                            orientation={isSmallScreen ? 'vertical' : 'horizontal'}
                                             aria-label="Guests Wedding Selection">
                                             <Button variant={`${person.attending_ceremony === 1 ? "contained" : "outlined"}`}
                                                 onClick = {() => {setAttending(person, 1)}}
@@ -837,6 +840,7 @@ export default function RSVP (props) {
                                 <TableCell align="right">
                                     <Tooltip title = {`${person.first} is currently ${person.attending_rehearsal === 0 ? "not planning on" : person.attending_rehearsal === -1 ? "undecided regarding" : "planning on"} attending the rehearsal`}>
                                         <ButtonGroup variant="outlined"
+                                            orientation={isSmallScreen ? 'vertical' : 'horizontal'}
                                             aria-label="Guests Rehearsal Selection">
                                             <Button variant={`${person.attending_rehearsal == 1 ? "contained" : "outlined"}`}
                                                 onClick = {() => {setAttendingRehearsal(person, 1)}}
@@ -869,6 +873,7 @@ export default function RSVP (props) {
                                 <TableCell align="right">
                                     <Tooltip title = {`${person.first} is currently ${person.attending_brunch === 0 ? "not planning on" : person.attending_brunch === -1 ? "undecided regarding" : "planning on"} attending brunch`}>
                                         <ButtonGroup variant="outlined"
+                                            orientation={isSmallScreen ? 'vertical' : 'horizontal'}
                                             aria-label="Guests Brunch Selection">
                                             <Button variant={`${person.attending_brunch == 1 ? "contained" : "outlined"}`}
                                                 onClick = {() => {setAttendingBrunch(person, 1)}}
