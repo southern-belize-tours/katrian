@@ -37,6 +37,12 @@ export default function AllergyForm (props) {
             <div className="flexed logisticsItem centered">
                 Please add allergies and required dietary constraints (if any), for your group members.
             </div>
+            <div className="flexed logisticsItem centered">
+                <div>
+                Or if you will need assistance getting to and from the <Tooltip title="View the 6 minute walk in Google Maps"><a className = "secondary" target="_blank" rel="noreferrer" href="https://maps.app.goo.gl/supzxk2rvBhvgfSH7">Wedding Bowl Ceremony to the Cuvier Club Reception</a></Tooltip>
+                , please let us know here so that we can arrange a ride in a golf cart.
+                </div>
+            </div>
             {guests.map((guest, idx) =>
                 <div key={`guest-allergy-${idx}`}
                     className="RSVPForm flexed col">
@@ -48,7 +54,7 @@ export default function AllergyForm (props) {
                             placeholder="Allergic to shellfish"
                             value={guest.notes}
                             fullWidth
-                            label="Allergies & Dietary Restrictions"
+                            label="Notes, Allergies & Dietary Restrictions"
                             onChange = {(e) => {
                                 updateGuestAllergies(idx, e.target.value);
                             }}/>

@@ -19,6 +19,7 @@ import { ClipLoader } from "react-spinners";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
 import GroupCreate from "./GroupCreate";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
+import GroupTable from "../RSVP/GroupTable";
 
 const toastConfig = {
     autoClose: 2000
@@ -31,7 +32,7 @@ export default function Groups(props) {
 
     const [loading, setLoading] = useState(false);
     const [groups, setGroups] = useState([]);
-    const [, setGuests] = useState([]);
+    const [guests, setGuests] = useState([]);
     const [editingGroup, setEditingGroup] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
     const filterOpen = Boolean(anchorEl);
@@ -443,6 +444,13 @@ export default function Groups(props) {
         return ret;
     }
 
+    const guestList = (groups ?? []).flatMap(group =>
+        (group.guests ?? []).map(guest => ({
+          ...guest,
+          invited_rehearsal: group.invited_rehearsal
+        }))
+      );
+      
 
     return (
         (user && user.isSignedIn) ?
@@ -613,9 +621,14 @@ export default function Groups(props) {
                                 {/* Filter */}
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             Currently displaying {groups.filter(g => passesFilter(g)).length} groups, and {[...groups].filter(g => passesFilter(g)).reduce((sum, group) => sum + (group.guests?.length || 0), 0)} guests.
-                        </div>
+                        </div> */}
+                        {!loading &&
+
+                        <GroupTable guests={guestList}></GroupTable>
+
+                        }
                     </div>
                 }
                 {/* <GroupCreate closeCallback = {dialogCallback}
