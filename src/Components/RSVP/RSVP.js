@@ -786,7 +786,7 @@ export default function RSVP (props) {
                     </RSVPEvent>
                 )}
 
-<TableContainer component = {Paper}>
+                <TableContainer component = {Paper}>
                     <Table aria-label = "RSVP Guest Responses">
                         <TableHead className="rsvpTableHead">
                             <TableRow>
@@ -799,7 +799,157 @@ export default function RSVP (props) {
                             </TableRow>
                         </TableHead>
                         <TableBody className="rsvpTableBody">
-                    {people_selected.map(person =>
+
+                    {people_selected.length === group.guests.length ?
+                    <TableRow>
+                        <TableCell>
+                            <div>
+                            All Group Members:
+                            </div>
+                            <div>
+                                {people_selected.map((person, index) => `${person.first}${index < people_selected.length - 1 ? ", " : ""}`)}
+                            </div>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Tooltip title = {`Your group is currently ${people_selected[0].attending_ceremony === 0 ? "not planning on" : people_selected[0].attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
+                                <ButtonGroup variant="outlined"
+                                    orientation={isSmallScreen ? 'vertical' : 'horizontal'}
+                                    aria-label="Guests Wedding Selection">
+                                    <Button variant={`${people_selected[0].attending_ceremony === 1 ? "contained" : "outlined"}`}
+                                        onClick = {() => {
+                                            for (let i = 0; i < people_selected.length; ++i) {
+                                                setAttending(people_selected[i], 1);
+                                            }
+                                        }}
+                                        className = "rsvpFormButton"
+                                        size="small"
+                                        disabled = {loading}
+                                        color="primary">
+                                        {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} <span className="rsvpFormButtonText">Accept</span>
+                                    </Button>
+                                    <Button variant={`${people_selected[0].attending_ceremony === 0 ? "contained" : "outlined"}`}
+                                        onClick = {() => {
+                                            for (let i = 0; i < people_selected.length; ++i) {
+                                                setAttending(people_selected[i], 0);
+                                            }
+                                        }}
+                                        disabled = {loading}
+                                        className = "rsvpFormButton"
+                                        size="small"
+                                        color="secondary">
+                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} <span className="rsvpFormButtonText">Decline</span>
+                                    </Button>
+                                    {people_selected[0].attending_ceremony === -1 &&
+                                        <Button variant={`${people_selected[0].attending_ceremony === -1 ? "contained" : "outlined"}`}
+                                            onClick = {() => {
+                                                for (let i = 0; i < people_selected.length; ++i) {
+                                                    setAttending(people_selected[i], -1);
+                                                }
+                                            }}
+                                            disabled = {loading}
+                                            className = "rsvpFormButton"
+                                            size="small"
+                                            color="disabled">
+                                            {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} <span className="rsvpFormButtonText">Undecided</span>
+                                        </Button>
+                                    }
+                                </ButtonGroup>
+                            </Tooltip>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Tooltip title = {`Your group is currently ${people_selected[0].attending_rehearsal === 0 ? "not planning on" : people_selected[0].attending_rehearsal === -1 ? "undecided regarding" : "planning on"} attending the rehearsal`}>
+                                <ButtonGroup variant="outlined"
+                                    orientation={isSmallScreen ? 'vertical' : 'horizontal'}
+                                    aria-label="Guests Rehearsal Selection">
+                                    <Button variant={`${people_selected[0].attending_rehearsal == 1 ? "contained" : "outlined"}`}
+                                        onClick = {() => {
+                                            for (let i = 0; i < people_selected.length; ++i) {
+                                                setAttendingRehearsal(people_selected[i], 1);
+                                            }
+                                        }}
+                                        disabled = {loading}
+                                        className = "rsvpFormButton"
+                                        size="small"
+                                        color="primary">
+                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Check></Check>} <span className="rsvpFormButtonText">Accept</span>
+                                    </Button>
+                                    <Button variant={`${people_selected[0].attending_rehearsal == 0 ? "contained" : "outlined"}`}
+                                        onClick = {() => {
+                                            for (let i = 0; i < people_selected.length; ++i) {
+                                                setAttendingRehearsal(people_selected[i], 0);
+                                            }
+                                        }}
+                                        className = "rsvpFormButton"
+                                        size="small"
+                                        color="secondary">
+                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} <span className="rsvpFormButtonText">Decline</span>
+                                    </Button>
+                                    {people_selected[0].attending_rehearsal == -1 &&
+                                        <Button variant={`${people_selected[0].attending_rehearsal == -1 ? "contained" : "outlined"}`}
+                                            onClick = {() => {
+                                                for (let i = 0; i < people_selected.length; ++i) {
+                                                    setAttendingRehearsal(people_selected[i], -1);
+                                                }
+                                            }}
+                                            disabled = {loading}
+                                            className = "rsvpFormButton"
+                                            size="small"
+                                            color="disabled">
+                                            {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} <span className="rsvpFormButtonText">Undecided</span>
+                                        </Button>
+                                    }
+                                </ButtonGroup>
+                            </Tooltip>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Tooltip title = {`Your group is currently ${people_selected[0].attending_brunch === 0 ? "not planning on" : people_selected[0].attending_brunch === -1 ? "undecided regarding" : "planning on"} attending brunch`}>
+                                <ButtonGroup variant="outlined"
+                                    orientation={isSmallScreen ? 'vertical' : 'horizontal'}
+                                    aria-label="Guests Brunch Selection">
+                                    <Button variant={`${people_selected[0].attending_brunch == 1 ? "contained" : "outlined"}`}
+                                        onClick = {() => {
+                                            for (let i = 0; i < people_selected.length; ++i) {
+                                                setAttendingBrunch(people_selected[i], 1);
+                                            }
+                                        }}
+                                        disabled = {loading}
+                                        className = "rsvpFormButton"
+                                        size="small"
+                                        color="primary">
+                                        {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} <span className="rsvpFormButtonText">Accept</span>
+                                    </Button>
+                                    <Button variant={`${people_selected[0].attending_brunch  == 0? "contained" : "outlined"}`}
+                                        onClick = {() => {
+                                            for (let i = 0; i < people_selected.length; ++i) {
+                                                setAttendingBrunch(people_selected[i], 0);
+                                            }
+                                        }}
+                                        disabled = {loading}
+                                        className = "rsvpFormButton"
+                                        size="small"
+                                        color="secondary">
+                                        {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} <span className="rsvpFormButtonText">Decline</span>
+                                    </Button>
+                                    {people_selected[0].attending_brunch == -1 &&
+                                        <Button variant={`${people_selected[0].attending_brunch === -1 ? "contained" : "outlined"}`}
+                                            onClick = {() => {
+                                                for (let i = 0; i < people_selected.length; ++i) {
+                                                    setAttendingBrunch(people_selected[i], -1);
+                                                }
+                                            }}
+                                            disabled = {loading}
+                                            className = "rsvpFormButton"
+                                            size="small"
+                                            color="disabled">
+                                            {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} <span className="rsvpFormButtonText">Undecided</span>
+                                        </Button>
+                                    }
+                                </ButtonGroup>
+                            </Tooltip>
+                        </TableCell>
+                    </TableRow>
+                    :
+                    people_selected.map(person =>
                         <TableRow key={`${person.first}-${person.last}`}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell>{person.first} {person.last}</TableCell>
@@ -906,7 +1056,8 @@ export default function RSVP (props) {
                                 </TableCell>
                         </TableRow>
 
-                    )}
+                    )
+                    }
                     </TableBody>
                     </Table>
                 </TableContainer>

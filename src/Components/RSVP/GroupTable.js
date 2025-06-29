@@ -1,4 +1,4 @@
-import { Filter } from "@mui/icons-material";
+import { Filter, ThumbDown, ThumbUp } from "@mui/icons-material";
 import { Box, Checkbox, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Typography } from "@mui/material";
 import { useState } from "react";
 
@@ -221,6 +221,15 @@ return (
                     onClick={() => handleSort(col.field)}
                     sx={{ cursor: "pointer" }}
                 >
+                    {
+                    col.field === "attending_ceremony" && ceremonyFilter===1 ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                    : col.field === "attending_ceremony" && ceremonyFilter ===0 ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
+                  : col.field === "attending_rehearsal" && rehearsalFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                  : col.field === "attending_rehearsal" && rehearsalFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
+                  : col.field === "attending_brunch" && brunchFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                  : col.field === "attending_brunch" && brunchFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color = "secondary"></ThumbDown>
+                  :<></>
+                  }
                     {col.label}
                     {sortField === col.field ? (sortDirection === "asc" ? " ▲" : " ▼") : ""}
                 </TableCell>
