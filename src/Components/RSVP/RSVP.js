@@ -1,10 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import './RSVP.css';
 import { Button, ButtonGroup, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, useMediaQuery } from "@mui/material";
-import { Apple, CalendarMonth, CancelOutlined, Check, CheckOutlined, DinnerDining, Google, GroupAdd, InfoOutlined,
-    LocationOn, PersonAdd, PsychologyAlt, Restaurant, Search, Undo, 
-    WineBar} from "@mui/icons-material";
+import { Apple, CalendarMonth, CancelOutlined, Check, Google, GroupAdd, PersonAdd, PsychologyAlt, Search, Undo, } from "@mui/icons-material";
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
 import { toast, ToastContainer} from 'react-toastify';
@@ -136,7 +134,7 @@ export default function RSVP (props) {
                     "attending_rehearsal": newPeople[i].attending_rehearsal,
                     "attending_brunch": newPeople[i].attending_brunch,
                     "attending_happy_hour": newPeople[i].attending_happy_hour,
-                }
+                };
                 const updatedGuest = await guestService.updateGuest(guestData);
                 if (updatedGuest !== null) {
                     toast.success(`Updated ${newPeople[i].first} ${newPeople[i].last} to ${val === 1 ? "" : val === 0 ? "Not" : "Undecided Regarding"} Attending the Ceremony.`, toastConfig);
@@ -158,7 +156,7 @@ export default function RSVP (props) {
                 newPeople[i].attending_brunch = val;
 
                 // They'd better be coming to the ceremony if they are going to brunch/rehearsal
-                if (val === 1) {
+                if (val === true) {
                     newPeople[i].attending_ceremony = 1;
                 }
                 const guestData = {
@@ -169,36 +167,13 @@ export default function RSVP (props) {
                     "attending_rehearsal": newPeople[i].attending_rehearsal,
                     "attending_brunch": newPeople[i].attending_brunch,
                     "attending_happy_hour": newPeople[i].attending_happy_hour,
+                };
+                const updatedGuest = await guestService.updateGuest(guestData);
+                if (updatedGuest !== null) {
+                    toast.success(`Updated ${newPeople[i].first} ${newPeople[i].last} to ${val === true ? "" : val === false ? "Not" : "Undecided Regarding"} Attending the Brunch.`, toastConfig);
+                } else {
+                    toast.error(`Failure to Update ${newPeople[i].first} ${newPeople[i].last}.`, toastConfig);
                 }
-                await guestService.updateGuest(guestData);
-                break;
-            }
-        }
-        set_people_selected(newPeople);
-        setLoading(false);
-    }
-
-    const setAttendingHappyHour = async (person, val) => {
-        setLoading(true);
-        let newPeople = [...people_selected];
-        for (let i = 0; i < newPeople.length; ++i ) {
-            if (newPeople[i].first === person.first && newPeople[i].last === person.last) {
-                newPeople[i].attending_happy_hour = val;
-
-                // They'd better be coming to the ceremony if they are going to brunch/rehearsal
-                if (val === 1) {
-                    newPeople[i].attending_ceremony = 1;
-                }
-                const guestData = {
-                    "id": newPeople[i].id,
-                    "first": newPeople[i].first,
-                    "last": newPeople[i].last,
-                    "attending_ceremony": newPeople[i].attending_ceremony,
-                    "attending_rehearsal": newPeople[i].attending_rehearsal,
-                    "attending_brunch": newPeople[i].attending_brunch,
-                    "attending_happy_hour": newPeople[i].attending_happy_hour,
-                }
-                await guestService.updateGuest(guestData);
                 break;
             }
         }
@@ -213,7 +188,7 @@ export default function RSVP (props) {
             if (newPeople[i].first === person.first && newPeople[i].last === person.last) {
                 newPeople[i].attending_rehearsal = val;
                 // They'd better be coming to the ceremony if they are going to brunch/rehearsal
-                if (val === 1) {
+                if (val === true) {
                     newPeople[i].attending_ceremony = 1;
                 }
                 const guestData = {
@@ -224,8 +199,13 @@ export default function RSVP (props) {
                     "attending_rehearsal": newPeople[i].attending_rehearsal,
                     "attending_brunch": newPeople[i].attending_brunch,
                     "attending_happy_hour": newPeople[i].attending_happy_hour,
+                };
+                const updatedGuest = await guestService.updateGuest(guestData);
+                if (updatedGuest !== null) {
+                    toast.success(`Updated ${newPeople[i].first} ${newPeople[i].last} to ${val === true ? "" : val === false ? "Not" : "Undecided Regarding"} Attending the Rehearsal.`, toastConfig);
+                } else {
+                    toast.error(`Failure to Update ${newPeople[i].first} ${newPeople[i].last}.`, toastConfig);
                 }
-                await guestService.updateGuest(guestData);
                 break;
             }
         }
@@ -459,9 +439,6 @@ export default function RSVP (props) {
                         We can't wait to celebrate -- please find your group and RSVP for any events by <span style={{fontWeight: 600}}>July 25, 2025</span> so we can prepare accordingly!
                     </div>
                 </div>
-                {/* <div className="flexed logisticsItem centered">
-                    Please respond by <span style={{fontWeight: 600}}>July 25, 2025</span>.
-                </div> */}
                 <div className="flexed logisticsItem centered RSVPSearchInput">
                     Search for your party by names to RSVP.
                 </div>
@@ -551,17 +528,6 @@ export default function RSVP (props) {
                 <div className="flexed col">
                     { people_selected.length < group.guests.length && selecting === false &&
                         <>
-                        {/* <div className="flexed col">
-                            {group.email && group.email.length > 0 ?
-                            <div className="flexed logisticsItem centered">
-                                The current best email we have for reaching your group is {group.email}
-                            </div>
-                            :
-                            <div className="flexed logisticsItem centered">
-                                We currently don't an email on file for reaching your group.
-                            </div>
-                            }
-                        </div> */}
                         <div className="flexed col">
                             <div className="flexed logisticsItem centered">
                                 Are you RSVPing on behalf of your entire group? Or are you booking for just a few members?
@@ -595,12 +561,6 @@ export default function RSVP (props) {
                                 Add the people in your group whom you are RSVPing on behalf of.
                             </div>
                             <div className="peopleSelection">
-                                {/* {people_selected.length < group.guests.length &&
-                                <Button variant="contained"
-                                    onClick = {() => {set_people_selected([...group.guests])}}>
-                                    <GroupAdd></GroupAdd> Add All
-                                </Button>
-                                } */}
                                 {group.guests.map(person =>
                                     !people_selected.find(p => p.first === person.first && p.last === person.last) &&
                                     <Tooltip title = {`RSVP on behalf of ${person.first}`}>
@@ -661,122 +621,7 @@ export default function RSVP (props) {
                     <div>
                     We can't wait to celebrate - please RSVP for the following events by <span style={{fontWeight: 600}}>July 25, 2025</span> so we can prepare accordingly!
                     </div>
-                    {/* Thank you for helping us plan by RSVPing here. You can always update your status later if things change. */}
                 </div>
-                {/* Rehearsal */}
-                {/* {group.invited_rehearsal === true && */}
-                {/* <> */}
-
-
-
-                {/* <div className="RSVPForm">
-                        {
-                            people_selected.map(person => 
-                            <div className="RSVPFormField">
-                                <div className="RSVPName">
-                                    <Tooltip title = {`${person.first} is currently ${person.attending_rehearsal === 0 ? "not planning on" : person.attending_rehearsal === -1 ? "undecided regarding" : "planning on"} attending the rehearsal`}>
-                                        {person.first}
-                                    </Tooltip>
-                                </div>
-                                <div className="RSVPAcceptReject">
-                                    <Button variant={`${person.attending_rehearsal == 1 ? "contained" : "outlined"}`}
-                                        onClick = {() => {setAttendingRehearsal(person, 1)}}
-                                        disabled = {loading}
-                                        size="small"
-                                        color="primary">
-                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <Check></Check>} Accept
-                                    </Button>
-                                    <Button variant={`${person.attending_rehearsal == 0 ? "contained" : "outlined"}`}
-                                        onClick = {() => {setAttendingRehearsal(person, 0)}}
-                                        size="small"
-                                        color="secondary">
-                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
-                                    </Button>
-                                    <Button variant={`${person.attending_rehearsal == -1 ? "contained" : "outlined"}`}
-                                        onClick = {() => {setAttendingRehearsal(person, -1)}}
-                                        disabled = {loading}
-                                        size="small"
-                                        color="disabled">
-                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
-                                    </Button>
-                                </div>
-                            </div>
-                        )
-                        }
-                </div> */}
-                {/* <div className="RSVPForm">
-                        {
-                            people_selected.map((person, idx) => 
-                            <div className="RSVPFormField"
-                                key={`RSVP-guest-${idx}`}>
-                                <div className="RSVPName">
-                                    <Tooltip title = {`${person.first} is currently ${person.attending_ceremony === 0 ? "not planning on" : person.attending_ceremony === -1 ? "undecided regarding" : "planning on"} attending the ceremony`}>
-                                        {person.first}
-                                    </Tooltip>
-                                </div>
-                                <div className="RSVPAcceptReject">
-                                    <Button variant={`${person.attending_ceremony === 1 ? "contained" : "outlined"}`}
-                                        onClick = {() => {setAttending(person, 1)}}
-                                        size="small"
-                                        disabled = {loading}
-                                        color="primary">
-                                        {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
-                                    </Button>
-                                    <Button variant={`${person.attending_ceremony === 0 ? "contained" : "outlined"}`}
-                                        onClick = {() => {setAttending(person, 0)}}
-                                        disabled = {loading}
-                                        size="small"
-                                        color="secondary">
-                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
-                                    </Button>
-                                    <Button variant={`${person.attending_ceremony === -1 ? "contained" : "outlined"}`}
-                                        onClick = {() => {setAttending(person, -1)}}
-                                        disabled = {loading}
-                                        size="small"
-                                        color="disabled">
-                                        {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
-                                    </Button>
-                                </div>
-                            </div>
-                        )
-                        }
-                </div> */}
-                {/* <div className="RSVPForm">
-                    {
-                        people_selected.map(person => 
-                        <div className="RSVPFormField">
-                            <div className="RSVPName">
-                                <Tooltip title = {`${person.first} is currently ${person.attending_brunch === 0 ? "not planning on" : person.attending_brunch === -1 ? "undecided regarding" : "planning on"} attending brunch`}>
-                                    {person.first}
-                                </Tooltip>
-                            </div>
-                            <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attending_brunch == 1 ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingBrunch(person, 1)}}
-                                    disabled = {loading}
-                                    size="small"
-                                    color="primary">
-                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
-                                </Button>
-                                <Button variant={`${person.attending_brunch  == 0? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingBrunch(person, 0)}}
-                                    disabled = {loading}
-                                    size="small"
-                                    color="secondary">
-                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
-                                </Button>
-                                <Button variant={`${person.attending_brunch === -1 ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingBrunch(person, -1)}}
-                                    disabled = {loading}
-                                    size="small"
-                                    color="disabled">
-                                    {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} Undecided
-                                </Button>
-                            </div>
-                        </div>
-                    )
-                    }
-                </div> */}
 
                 {events.map(event =>
                     <RSVPEvent dateTimeString = {event.dateTimeString}
@@ -864,7 +709,7 @@ export default function RSVP (props) {
                                     <Button variant={`${people_selected[0].attending_rehearsal == 1 ? "contained" : "outlined"}`}
                                         onClick = {() => {
                                             for (let i = 0; i < people_selected.length; ++i) {
-                                                setAttendingRehearsal(people_selected[i], 1);
+                                                setAttendingRehearsal(people_selected[i], true);
                                             }
                                         }}
                                         disabled = {loading}
@@ -876,7 +721,7 @@ export default function RSVP (props) {
                                     <Button variant={`${people_selected[0].attending_rehearsal == 0 ? "contained" : "outlined"}`}
                                         onClick = {() => {
                                             for (let i = 0; i < people_selected.length; ++i) {
-                                                setAttendingRehearsal(people_selected[i], 0);
+                                                setAttendingRehearsal(people_selected[i], false);
                                             }
                                         }}
                                         className = "rsvpFormButton"
@@ -884,20 +729,6 @@ export default function RSVP (props) {
                                         color="secondary">
                                         {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} <span className="rsvpFormButtonText">Decline</span>
                                     </Button>
-                                    {people_selected[0].attending_rehearsal == -1 &&
-                                        <Button variant={`${people_selected[0].attending_rehearsal == -1 ? "contained" : "outlined"}`}
-                                            onClick = {() => {
-                                                for (let i = 0; i < people_selected.length; ++i) {
-                                                    setAttendingRehearsal(people_selected[i], -1);
-                                                }
-                                            }}
-                                            disabled = {loading}
-                                            className = "rsvpFormButton"
-                                            size="small"
-                                            color="disabled">
-                                            {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} <span className="rsvpFormButtonText">Undecided</span>
-                                        </Button>
-                                    }
                                 </ButtonGroup>
                             </Tooltip>
                         </TableCell>
@@ -909,7 +740,7 @@ export default function RSVP (props) {
                                     <Button variant={`${people_selected[0].attending_brunch == 1 ? "contained" : "outlined"}`}
                                         onClick = {() => {
                                             for (let i = 0; i < people_selected.length; ++i) {
-                                                setAttendingBrunch(people_selected[i], 1);
+                                                setAttendingBrunch(people_selected[i], true);
                                             }
                                         }}
                                         disabled = {loading}
@@ -921,7 +752,7 @@ export default function RSVP (props) {
                                     <Button variant={`${people_selected[0].attending_brunch  == 0? "contained" : "outlined"}`}
                                         onClick = {() => {
                                             for (let i = 0; i < people_selected.length; ++i) {
-                                                setAttendingBrunch(people_selected[i], 0);
+                                                setAttendingBrunch(people_selected[i], false);
                                             }
                                         }}
                                         disabled = {loading}
@@ -930,20 +761,6 @@ export default function RSVP (props) {
                                         color="secondary">
                                         {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} <span className="rsvpFormButtonText">Decline</span>
                                     </Button>
-                                    {people_selected[0].attending_brunch == -1 &&
-                                        <Button variant={`${people_selected[0].attending_brunch === -1 ? "contained" : "outlined"}`}
-                                            onClick = {() => {
-                                                for (let i = 0; i < people_selected.length; ++i) {
-                                                    setAttendingBrunch(people_selected[i], -1);
-                                                }
-                                            }}
-                                            disabled = {loading}
-                                            className = "rsvpFormButton"
-                                            size="small"
-                                            color="disabled">
-                                            {loading ? <ClipLoader className="iconLoader"></ClipLoader> : <PsychologyAlt></PsychologyAlt>} <span className="rsvpFormButtonText">Undecided</span>
-                                        </Button>
-                                    }
                                 </ButtonGroup>
                             </Tooltip>
                         </TableCell>
@@ -1062,135 +879,6 @@ export default function RSVP (props) {
                     </Table>
                 </TableContainer>
 
-                {/* </> */}
-                {/* } */}
-                {/* Ceremony */}
-                {/* <div className="summaryDay">
-                    <div className="summaryItemInfo flexed col">
-                    <div className="summaryItemName">
-                        Ceremony + Reception
-                    </div>
-                    <Tooltip title={"Add to Google Calendar"}>
-                        <div className="summaryItemLocation"
-                            onClick = {AddToCalendar}>
-                            <CalendarMonth color="primary"></CalendarMonth>
-                            <div>
-                                Friday, August 22nd, 2025 · 5:00pm
-                            </div>
-                        </div>
-                    </Tooltip>
-                    <Tooltip title={`${text === "590 Coast S Blvd, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                        <div className="summaryItemLocation textCopy"
-                            onClick = {() => {copyTextToClipBoard("590 Coast S Blvd, La Jolla, CA 92037")}}>
-                                {
-                                text === "590 Coast S Blvd, La Jolla, CA 92037" ?
-                                <CheckOutlined color="primary"></CheckOutlined>
-                                :
-                                <LocationOn color="primary"></LocationOn>
-                                }
-                            <div className="flexed col">
-                                <div>
-                                    The Wedding Bowl, Cuvier Park
-                                </div>
-                                <div>
-                                    590 Coast S Blvd, La Jolla, CA 92037
-                                </div>
-                            </div>
-                        </div>
-                    </Tooltip>
-                    <div className="summaryItemLocation fancyText">
-                        Followed by reception at
-                    </div>
-                    <div className="summaryItemLocation textCopy"
-                        onClick = {() => {copyTextToClipBoard("7776 Eads Ave, La Jolla, CA 92037")}}>
-                        <LocationOn color="primary"></LocationOn>
-                        <div className="flexed col">
-                            <div>
-                                Cuvier Club
-                            </div>
-                            <div>
-                                7776 Eads Ave, La Jolla, CA 92037
-                            </div>
-                        </div>
-                    </div> */}
-
-                {/* Happy Hour */}
-                {/* {group.invited_happy_hour &&
-                <>
-                <div className="summaryItemName">
-                    Happy Hour
-                </div>
-                <div className="summaryItemLocation">
-                    <CalendarMonth color="primary"></CalendarMonth>
-                    <div>
-                        Saturday, August 23rd, 2025
-                    </div>
-                </div>
-                <Tooltip title={`${text === "7776 Eads Ave, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
-                    <div className="summaryItemLocation textCopy"
-                        onClick = {() => {copyTextToClipBoard("TBD")}}>
-                            {
-                            text === "TBD" ?
-                            <CheckOutlined color="primary"></CheckOutlined>
-                            :
-                            <LocationOn color="primary"></LocationOn>
-                            }
-                        <div>
-                            TBD
-                        </div>
-                    </div>
-                </Tooltip>
-                <div className="RSVPForm">
-                    {
-                        people_selected.map(person => 
-                        <div className="RSVPFormField">
-                            <div>
-                                {person.first}
-                            </div>
-                            <div className="RSVPAcceptReject">
-                                <Button variant={`${person.attending_happy_hour ? "contained" : "outlined"}`}
-                                    onClick = {() => {setAttendingHappyHour(person, true)}}
-                                    disabled = {loading}
-                                    color="primary">
-                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Accept
-                                </Button>
-                                <Button variant={`${person.attending_happy_hour ? "outlined" : "contained"}`}
-                                    onClick = {() => {setAttendingHappyHour(person, false)}}
-                                    disabled = {loading}
-                                    color="secondary">
-                                    {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <CancelOutlined></CancelOutlined>} Decline
-                                </Button>
-                            </div>
-                        </div>
-                    )
-                    }
-                </div>
-                </>
-                } */}
-{/* 
-                <table className='attendingTable'>
-                    <tr>
-                        <th className="maxCell">Name</th>
-                        <th>Attending Rehearsal</th>
-                        <th>Attending Ceremony</th>
-                        <th>Attending Brunch</th>
-                    </tr>
-                    {group.guests.map(person =>
-                        <tr>
-                            <td className="maxCell">{person.first} {person.last}</td>
-                            <td>
-                                <Checkbox></Checkbox>
-                            </td>
-                            <td>
-                                <Checkbox></Checkbox>
-                            </td>
-                            <td>
-                                <Checkbox></Checkbox>
-                            </td>
-                        </tr>
-                    )}
-
-                </table> */}
                     <Button variant="contained"
                         onClick = {() => {
                             setStatusConfirmed(true);

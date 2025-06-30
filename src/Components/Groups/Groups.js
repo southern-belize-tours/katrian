@@ -510,19 +510,21 @@ export default function Groups(props) {
                                     <TableCell>{getBrunchHeadcount()}</TableCell>
                                     <TableCell>{125}</TableCell>
                                 </TableRow>
-                                <TableRow>
+                                {/* <TableRow>
                                     <TableCell>
                                         <LocalBar className="hideSmall" color="primary"></LocalBar> Happy Hour
                                     </TableCell>
-                                    {/* <TableCell>{getHappyHourHeadcount()}</TableCell> */}
                                     <TableCell>{getHappyHourInvited()}</TableCell>
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
                                     <TableCell>{50}</TableCell>
-                                </TableRow>
+                                </TableRow> */}
                             </TableBody>
                         </Table>
                     </TableContainer>
+                }
+                {!loading &&
+                    <GroupTable guests={guestList}></GroupTable>
                 }
                 {!loading &&
                     <div className="flexed col">
@@ -624,11 +626,7 @@ export default function Groups(props) {
                         {/* <div>
                             Currently displaying {groups.filter(g => passesFilter(g)).length} groups, and {[...groups].filter(g => passesFilter(g)).reduce((sum, group) => sum + (group.guests?.length || 0), 0)} guests.
                         </div> */}
-                        {!loading &&
 
-                        <GroupTable guests={guestList}></GroupTable>
-
-                        }
                     </div>
                 }
                 {/* <GroupCreate closeCallback = {dialogCallback}

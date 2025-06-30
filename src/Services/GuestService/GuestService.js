@@ -88,6 +88,7 @@ export default class GuestService {
 
     async updateGuest(data) {
         try {
+            // console.log("Guest Service: Update Guest...", data);
             const newGuest = await client.graphql({
                 query: updateGuest,
                 variables: {

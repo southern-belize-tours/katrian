@@ -66,9 +66,6 @@ export default function AllergyForm (props) {
                 <Button variant="contained"
                     color="primary"
                     onClick = {() => {
-                        // console.log(guests);
-                        // set_people_selected([...group.guests]);
-                        // setPeopleConfirmed(true);
                         saveAllergies();
                     }}>
                     {props.loading ? <ClipLoader className="iconLoader"></ClipLoader> : <><Save></Save> Save & Continue</>}
@@ -78,9 +75,3 @@ export default function AllergyForm (props) {
     </div>
     );
 }
-
-// Email is optional but it better be correct
-// if (email.length > 0 && !email_regex.test(email)) {
-//     updateError("email", "Specify a valid email address");
-//     ret = false;
-// }
