@@ -2,52 +2,6 @@ import { Filter, ThumbDown, ThumbUp } from "@mui/icons-material";
 import { Box, Checkbox, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Typography } from "@mui/material";
 import { useState } from "react";
 
-// const columns = [
-//     { field: "first", headerName: "First Name", flex: 1 },
-//     { field: "last", headerName: "Last Name", flex: 1 },
-//     {
-//       field: "attending_ceremony",
-//       headerName: "Ceremony",
-//       flex: 1,
-//       valueGetter: (params) => params.row.attending_ceremony === 1 ? "Yes" : "No",
-//     },
-//     {
-//       field: "attending_brunch",
-//       headerName: "Brunch",
-//       flex: 1,
-//       type: "boolean",
-//     },
-//     {
-//       field: "attending_rehearsal",
-//       headerName: "Rehearsal",
-//       flex: 1,
-//       type: "boolean",
-//     },
-//     {
-//       field: "attending_happy_hour",
-//       headerName: "Happy Hour",
-//       flex: 1,
-//       type: "boolean",
-//     },
-//     {
-//       field: "createdAt",
-//       headerName: "Created",
-//       flex: 1,
-//       valueGetter: (params) => new Date(params.row.createdAt).toLocaleString(),
-//     },
-//     {
-//       field: "updatedAt",
-//       headerName: "Updated",
-//       flex: 1,
-//       valueGetter: (params) => new Date(params.row.updatedAt).toLocaleString(),
-//     },
-//     {
-//       field: "notes",
-//       headerName: "Notes",
-//       flex: 1,
-//     },
-//   ];
-
 const columns = [
     { field: "first", label: "First" },
     { field: "last", label: "Last" },
@@ -55,8 +9,6 @@ const columns = [
     { field: "attending_brunch", label: "Brunch" },
     { field: "invited_rehearsal", label: "Invited to Rehearsal Dinner"},
     { field: "attending_rehearsal", label: "Rehearsal" },
-    // { field: "attending_happy_hour", label: "Happy Hour" },
-    // { field: "createdAt", label: "Created" },
     { field: "updatedAt", label: "Updated" },
     { field: "notes", label: "Notes" },
   ];  
@@ -131,14 +83,20 @@ export default function GroupTable ({guests}) {
       
 
 return (
-    <Box p={2}>
+    <Box p={2}
+      sx = {{maxWidth: "100%"}}
+      >
     <Typography variant="h6" gutterBottom>
       Guest List Table
     </Typography>
     {/* <Typography variant="h8" gutterBottom>
       Filters
     </Typography> */}
-    <Box display="flex" gap={2} mb={2}>
+    <Box display="flex"
+      sx = {{maxWidth: "100%"}}
+      flexDirection={{ xs: "column", sm: "row" }}   
+      gap={2}
+      mb={2}>
       <Typography variant="h8">
         Filters
       </Typography>
@@ -198,65 +156,76 @@ return (
     <Typography variant="body2" sx={{ mb: 1 }}>
             Showing {sortedGuests.length} guest{sortedGuests.length !== 1 ? "s" : ""}
     </Typography>
-    <TableContainer component={Paper}>
-      <Table>
-        {/* <TableHead>
-          <TableRow>
-            <TableCell>First</TableCell>
-            <TableCell>Last</TableCell>
-            <TableCell>Ceremony</TableCell>
-            <TableCell>Brunch</TableCell>
-            <TableCell>Rehearsal</TableCell>
-            <TableCell>Happy Hour</TableCell>
-            <TableCell>Created</TableCell>
-            <TableCell>Updated</TableCell>
-            <TableCell>Notes</TableCell>
-          </TableRow>
-        </TableHead> */}
-        <TableHead>
-            <TableRow>
-                {columns && columns.map((col) => (
-                <TableCell
-                    key={col.field}
-                    onClick={() => handleSort(col.field)}
-                    sx={{ cursor: "pointer" }}
-                >
-                    {
-                    col.field === "attending_ceremony" && ceremonyFilter===1 ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
-                    : col.field === "attending_ceremony" && ceremonyFilter ===0 ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
-                  : col.field === "attending_rehearsal" && rehearsalFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
-                  : col.field === "attending_rehearsal" && rehearsalFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
-                  : col.field === "attending_brunch" && brunchFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
-                  : col.field === "attending_brunch" && brunchFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color = "secondary"></ThumbDown>
-                  :<></>
-                  }
-                    {col.label}
-                    {sortField === col.field ? (sortDirection === "asc" ? " ▲" : " ▼") : ""}
-                </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
+    <Box sx = {{overflowX: "auto"}}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          maxHeight: 500,
+          overflowY: "auto"
+        }}
+      >
+        <Table>
+          <TableHead>
+              <TableRow>
+                  {columns && columns.map((col) => (
+                  <TableCell
+                      sx={{
+                        position: "sticky",
+                        top: 0,
+                        backgroundColor: "background.paper",
+                        zIndex: 1,
+                        whiteSpace: "nowrap",
+                        maxWidth: 100,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        cursor: "pointer",
+                      }}
+                      // sx={{ whiteSpace: "nowrap", maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", cursor: "pointer" }}
+                      // className="groupTableHeaderCell"
+                      key={col.field}
+                      onClick={() => handleSort(col.field)}
+                      // sx={{ cursor: "pointer" }}
+                  >
+                      {
+                      col.field === "attending_ceremony" && ceremonyFilter===1 ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                      : col.field === "attending_ceremony" && ceremonyFilter ===0 ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
+                    : col.field === "attending_rehearsal" && rehearsalFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                    : col.field === "attending_rehearsal" && rehearsalFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
+                    : col.field === "attending_brunch" && brunchFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                    : col.field === "attending_brunch" && brunchFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color = "secondary"></ThumbDown>
+                    :<></>
+                    }
+                      {col.label}
+                      {sortField === col.field ? (sortDirection === "asc" ? " ▲" : " ▼") : ""}
+                  </TableCell>
+                  ))}
+              </TableRow>
+          </TableHead>
 
-        <TableBody>
-            {sortedGuests && sortedGuests.map((guest) => (
-                <TableRow key={guest.id}>
-                {columns && columns.map((col) => {
-                    const val = guest[col.field];
-                    let display =
-                    col.field === "createdAt" || col.field === "updatedAt"
-                        ? new Date(val).toLocaleString()
-                        : typeof val === "boolean"
-                        ? val ? "Yes" : "No"
-                        : typeof val === "number"
-                        ? (val === 1 ? "Yes" : val === 0 ? "No" : "Undecided")
-                        : val ?? "-";
-                    return <TableCell key={col.field}>{display}</TableCell>;
-                })}
-                </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          <TableBody>
+              {sortedGuests && sortedGuests.map((guest) => (
+                  <TableRow key={guest.id}>
+                  {columns && columns.map((col) => {
+                      const val = guest[col.field];
+                      let display =
+                      col.field === "createdAt" || col.field === "updatedAt"
+                          ? new Date(val).toLocaleString()
+                          : typeof val === "boolean"
+                          ? val ? "Yes" : "No"
+                          : typeof val === "number"
+                          ? (val === 1 ? "Yes" : val === 0 ? "No" : "Undecided")
+                          : val ?? "-";
+                      return <TableCell 
+                        sx={{ whiteSpace: "nowrap", maxWidth: 150, overflow: "hidden", textOverflow: "ellipsis" }}
+                        key={col.field}>{display}</TableCell>;
+                  })}
+                  </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+
   </Box>
 );
 }
