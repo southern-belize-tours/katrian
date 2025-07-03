@@ -1,6 +1,6 @@
 import { Filter, ThumbDown, ThumbUp } from "@mui/icons-material";
 import { Box, Checkbox, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const columns = [
     { field: "first", label: "First" },
@@ -21,6 +21,62 @@ export default function GroupTable ({guests}) {
     const [rehearsalFilter, setRehearsalFilter] = useState("all");
     const [sortField, setSortField] = useState(null); // "first" or "last"
     const [sortDirection, setSortDirection] = useState("asc"); // "asc" or "desc"
+    const [columnWidths, setColumnWidths] = useState({
+      first: 100,
+      last: 100,
+      attending_ceremony: 75,
+      attending_brunch: 75,
+      invited_rehearsal: 75,
+      attending_rehearsal: 75,
+      updatedAt: 100,
+      notes: 200,
+    });
+
+    const cellSx = {
+      padding: "4px 8px",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+    };
+
+    const resizeRef = useRef({ field: null, startX: 0, initialWidth: 0 });
+
+    const startResizing = (field, startX) => {
+      resizeRef.current = {
+        field,
+        startX,
+        initialWidth: columnWidths[field],
+      };
+
+      console.log("Resizing...");
+    
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", stopResizing);
+    };
+
+    const onMouseMove = (e) => {
+      const { field, startX, initialWidth } = resizeRef.current;
+      const delta = e.clientX - startX;
+    
+      setColumnWidths((prev) => ({
+        ...prev,
+        [field]: Math.max(50, initialWidth + delta),
+      }));
+    };
+    
+    const stopResizing = () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopResizing);
+    };
+
+
+    useEffect(() => {
+      return () => {
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", stopResizing);
+      };
+    }, []);
+    
     
     const handleSort = (field) => {
         if (sortField === field) {
@@ -165,47 +221,127 @@ return (
     <Typography variant="body2" sx={{ mb: 1 }}>
             Showing {sortedGuests.length} guest{sortedGuests.length !== 1 ? "s" : ""}
     </Typography>
-    <Box sx = {{overflowX: "auto"}}>
-      <TableContainer
-        component={Paper}
-        sx={{
-          maxHeight: 500,
-          overflowY: "auto"
-        }}
-      >
-        <Table>
+    {/* <Box sx = {{overflowX: "auto"}}> */}
+    <Box sx={{ overflowX: "auto", position: "relative", width: "100%" }}>
+    <TableContainer
+      component={Paper}
+      sx={{
+        maxHeight: 500,
+        overflow: "auto",
+      }}
+    >
+      <Table
+          sx={{
+            tableLayout: "fixed",
+            width: "100%",
+            minWidth: Object.values(columnWidths).reduce((a, b) => a + b, 0),
+            // minWidth: 800, // or dynamically calculated sum of columnWidths
+          }}
+        >
           <TableHead>
               <TableRow>
                   {columns && columns.map((col) => (
-                  <TableCell
+                    <TableCell
+                      key={col.field}
                       sx={{
+                        ...cellSx,
+                        width: columnWidths[col.field],
+                        maxWidth: columnWidths[col.field],
+                        minWidth: 15,
                         position: "sticky",
                         top: 0,
                         backgroundColor: "background.paper",
                         zIndex: 1,
                         whiteSpace: "nowrap",
-                        maxWidth: 100,
                         overflow: "hidden",
                         textOverflow: "ellipsis",
-                        cursor: "pointer",
+                        paddingRight: 0,
                       }}
-                      // sx={{ whiteSpace: "nowrap", maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", cursor: "pointer" }}
-                      // className="groupTableHeaderCell"
-                      key={col.field}
-                      onClick={() => handleSort(col.field)}
-                      // sx={{ cursor: "pointer" }}
-                  >
-                      {
-                      col.field === "attending_ceremony" && ceremonyFilter===1 ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
-                      : col.field === "attending_ceremony" && ceremonyFilter ===0 ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
-                    : col.field === "attending_rehearsal" && rehearsalFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
-                    : col.field === "attending_rehearsal" && rehearsalFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
-                    : col.field === "attending_brunch" && brunchFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
-                    : col.field === "attending_brunch" && brunchFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color = "secondary"></ThumbDown>
-                    :<></>
-                    }
-                      {col.label}
-                      {sortField === col.field ? (sortDirection === "asc" ? " ▲" : " ▼") : ""}
+                    >
+                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                      <Box onClick = {() => handleSort(col.field)}
+                        sx={{
+                          flexGrow: 1,
+                          cursor: "pointer",
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          pr: 1,
+                        }}
+                        title={col.label} // Tooltip on hover
+                        // sx = {{flexGrow: 1, cursor: "Pointer"}}
+                        >
+                        {
+                          col.field === "attending_ceremony" && ceremonyFilter===1 ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                          : col.field === "attending_ceremony" && ceremonyFilter ===0 ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
+                        : col.field === "attending_rehearsal" && rehearsalFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                        : col.field === "attending_rehearsal" && rehearsalFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color="secondary"></ThumbDown>
+                        : col.field === "attending_brunch" && brunchFilter === "yes" ? <ThumbUp sx={{fontSize: '1.2em'}} color="primary"></ThumbUp>
+                        : col.field === "attending_brunch" && brunchFilter === "no" ? <ThumbDown sx={{fontSize: '1.2em'}} color = "secondary"></ThumbDown>
+                        :<></>
+                        }
+                        {col.label}
+                        {sortField === col.field ? (sortDirection === "asc" ? " ▲" : " ▼") : ""}
+                      </Box>
+                        {/* <Box
+                          draggable
+                          onDragStart={(e) => e.preventDefault()}
+                          sx={{
+                            width: 8,
+                            minWidth: 8,
+                            height: 24,
+                            cursor: "col-resize",
+                            ml: 1,
+                            userSelect: "none",
+                            flexShrink: 0,
+                            pointerEvents: "all",
+                            touchAction: "none",
+                            '&:hover': { borderLeft: '2px solid #aaa' },
+                          }}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            startResizing(col.field, e.clientX);
+                          }}
+                        >
+                          <Box sx={{ width: 2, height: "100%", backgroundColor: "#ccc" }} />
+                        </Box> */}
+
+                        <Box
+  draggable
+  onDragStart={(e) => e.preventDefault()}
+  sx={{
+    width: 8,
+    minWidth: 8,
+    height: 24,
+    cursor: "col-resize",
+    ml: 1,
+    userSelect: "none",
+    flexShrink: 0,
+    pointerEvents: "all",
+    touchAction: "none",
+    zIndex: 1000,
+    '&:hover': { borderLeft: '2px solid #aaa' },
+  }}
+  onMouseDown={(e) => {
+    console.log("MouseDown on resizer for", col.field);
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("MouseDown on resizer for", col.field); // ✅ debug
+    startResizing(col.field, e.clientX);
+  }}
+>
+  <Box
+    sx={{
+      width: 2,
+      height: "100%",
+      backgroundColor: "#ccc",
+      pointerEvents: "none", // 👈 ensures outer Box receives click
+    }}
+  />
+</Box>
+
+                    </Box>
                   </TableCell>
                   ))}
               </TableRow>
@@ -224,9 +360,23 @@ return (
                           : typeof val === "number"
                           ? (val === 1 ? "Yes" : val === 0 ? "No" : "Undecided")
                           : val ?? "-";
-                      return <TableCell 
-                        sx={{ whiteSpace: "nowrap", maxWidth: 150, overflow: "hidden", textOverflow: "ellipsis" }}
-                        key={col.field}>{display}</TableCell>;
+                          return (
+                            <TableCell
+                              key={col.field}
+                              sx={{
+                                ...cellSx,
+                                width: columnWidths[col.field],
+                                maxWidth: columnWidths[col.field],
+                                minWidth: 15,
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                              }}
+                            >
+                              {display}
+                            </TableCell>
+                          );
+                          
                   })}
                   </TableRow>
               ))}
