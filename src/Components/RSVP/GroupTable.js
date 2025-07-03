@@ -70,11 +70,20 @@ export default function GroupTable ({guests}) {
           bVal = bVal.toLowerCase();
         }
       
-        // Convert to timestamp if date
         if (sortField === "createdAt" || sortField === "updatedAt") {
-          aVal = new Date(aVal).getTime();
-          bVal = new Date(bVal).getTime();
-        }
+          // Convert to Date safely
+          aVal = new Date(aVal);
+          bVal = new Date(bVal);
+        
+          if (isNaN(aVal) || isNaN(bVal)) {
+            // fallback to string comparison if invalid
+            aVal = a[sortField]?.toString() || "";
+            bVal = b[sortField]?.toString() || "";
+          } else {
+            aVal = aVal.getTime();
+            bVal = bVal.getTime();
+          }
+        }        
       
         if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
         if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
