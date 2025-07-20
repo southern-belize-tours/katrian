@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import './RSVP.css';
 import { Button, ButtonGroup, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, useMediaQuery } from "@mui/material";
-import { Apple, CalendarMonth, CancelOutlined, Check, Google, GroupAdd, PersonAdd, PsychologyAlt, Search, Undo, } from "@mui/icons-material";
+import { Apple, BreakfastDiningOutlined, CalendarMonth, CancelOutlined, Check, Google, GroupAdd, PersonAdd, PsychologyAlt, Search, Undo, } from "@mui/icons-material";
 import { useGroupService } from "../../Services/GroupService/GroupServiceContext";
 import { useGuestService } from "../../Services/GuestService/GuestServiceContext";
 import { toast, ToastContainer} from 'react-toastify';
@@ -407,6 +407,14 @@ export default function RSVP (props) {
             ]
         }
     ]
+
+    let peopleSelectedRsvped = true;
+    for (let i = 0; people_selected && people_selected.length && i < people_selected.length; ++i) {
+        if (people_selected[i].attending_ceremony === -1) {
+            peopleSelectedRsvped = false;
+            break;
+        }
+    }
 
     return (
         
@@ -879,6 +887,10 @@ export default function RSVP (props) {
                     </Table>
                 </TableContainer>
 
+                    <Tooltip
+                        title = {!peopleSelectedRsvped ? "Please select whether each guest is attending the ceremony on the table above" :
+                            ""}
+                        >
                     <Button variant="contained"
                         onClick = {() => {
                             setStatusConfirmed(true);
@@ -896,10 +908,11 @@ export default function RSVP (props) {
                                 setEmailConfirmed(false);
                             }
                         }}
-                        disabled = {loading}
+                        disabled = {loading || !peopleSelectedRsvped}
                         color="primary">
                         {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} Continue
                     </Button>
+                    </Tooltip>
                 </>
                 : emailConfirmed === false ?
                 <GroupEmailForm email={group.email}

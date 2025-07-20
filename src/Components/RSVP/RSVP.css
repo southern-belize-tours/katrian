@@ -127,7 +127,8 @@
 
 @media(max-width: 768px) {
     .rsvpFormButtonText {
-        display: none;
+        /* display: none; */
+        font-size: 8px !important;
     }
 }
 
