@@ -19,8 +19,8 @@ export default function GroupTable ({guests}) {
     const [brunchFilter, setBrunchFilter] = useState("all");
     const [invitedRehearsalFilter, setInvitedRehearsalFilter] = useState("all");
     const [rehearsalFilter, setRehearsalFilter] = useState("all");
-    const [sortField, setSortField] = useState(null); // "first" or "last"
-    const [sortDirection, setSortDirection] = useState("asc"); // "asc" or "desc"
+    const [sortField, setSortField] = useState("updatedAt"); // "first" or "last"
+    const [sortDirection, setSortDirection] = useState("desc"); // "asc" or "desc"
     const [columnWidths, setColumnWidths] = useState({
       first: 100,
       last: 100,
