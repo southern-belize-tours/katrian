@@ -43,6 +43,7 @@ import RSVP from './Components/RSVP/RSVP.js';
 import Groups from './Components/Groups/Groups.js';
 import { GroupServiceProvider } from './Services/GroupService/GroupServiceContext.js';
 import { GuestServiceProvider } from './Services/GuestService/GuestServiceContext.js';
+import Activity from './Components/Activity/Activity.js';
 
 Amplify.configure(awsconfig);
 
@@ -175,6 +176,7 @@ function App() {
           <Route path="/Gallery/Lavender"
             exact component={() => <GalleryPage gallery = {null}></GalleryPage>}>
           </Route>
+          <Route path = "/activity" exact component = {() => <Activity></Activity>}></Route>
           <Route path = "/FAQ" exact component = {() => <FaqForm size = {linkSize * 4}></FaqForm>}></Route>
           <Route path = "/Sandbox" exact component = {() => <Sandbox></Sandbox>}></Route>
           <Route path = "/SignIn" exact component = {() => <SignInForm></SignInForm>}></Route>
