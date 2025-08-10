@@ -53,6 +53,7 @@
 .summaryItemHeading {
   justify-content: center;
   margin-bottom: calc(.5* var(--default-padding));
+  margin-bottom: 0px;
 }
 
 .summaryItemTitle {
@@ -83,6 +84,7 @@
   gap: var(--default-gap);
   border-top: solid 1px var(--clr-lavender);
   padding: var(--default-padding) 0;
+  padding: calc(0.5 * var(--default-padding)) 0;
 }
 
 .summaryItemMore {

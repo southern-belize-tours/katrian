@@ -70,6 +70,45 @@ function Summary (props) {
                             <div><a href="/rehearsal" className="secondary">Rehearsal</a></div>
                         </div>
                     </div> */}
+
+                    <div className="summaryDay">
+                    <div className = "flexed centered summaryItemHeading">
+                        <div>
+                            <div className="summaryItemTitle">
+                                Welcome Day
+                            </div>
+                            <div className="summaryItemTime">
+                                Thursday, August 21st, 2025
+                            </div>
+                        </div>
+                    </div>
+                    <div className="summaryItems">
+                        <div className="summaryItemInfo">
+                            <div className="summaryItemTime">
+                                7:30pm - 9:00pm
+                            </div>
+                            <div className="summaryItemMore">
+                                <div className="summaryItemName">
+                                    Welcome Drinks
+                                </div>
+                                <div className="summaryItemLocation">
+                                    <Tooltip title={`${text === "1005 Prospect St, La Jolla, CA 92037" ? "Location Copied Successfully!" : "Copy Location to Clipboard"}`}>
+                                        {
+                                        text === "1005 Prospect St, La Jolla, CA 92037" ?
+                                        <CheckOutlined color="primary" onClick = {() => {copyTextToClipBoard("1005 Prospect St, La Jolla, CA 92037")}}></CheckOutlined>
+                                        :
+                                        <LocationOn color="primary"></LocationOn>
+                                        }
+                                    </Tooltip>
+                                    <div>
+                                        The Spot - <Tooltip title="Open Location in Google Maps"><a href="https://maps.app.goo.gl/bgTAAidfHBraJNzQ9" target="_blank" rel="noreferrer" className="secondary">1005 Prospect St, La Jolla, CA 92037</a></Tooltip>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
                     <div className="summaryDay">
                     <div className = "flexed centered summaryItemHeading">
                         <div>
@@ -192,11 +231,11 @@ function Summary (props) {
                     </div>
                     </div>
 
-                    {/* <div className="summaryDay">
+                    <div className="summaryDay">
                     <div className = "flexed centered summaryItemHeading">
                         <div>
                             <div className="summaryItemTitle">
-                                Brunch and Chill Day
+                                Brunch Day
                             </div>
                             <div className="summaryItemTime">
                                 Saturday, August 23rd, 2025
@@ -248,15 +287,11 @@ function Summary (props) {
                                 <div className="logisticsItem">
                                     <Nightlife color="primary"></Nightlife> At brunch, there will also be bottomless mimosas, Bloody Marys, beer, and wine to celebrate.
                                 </div>
-                                <div className="logisticsItem">
-                                    <AttachMoney color="primary"></AttachMoney> Brunch will be sponsored. The happy hour will not be sponsored.
-                                </div>
                             </AccordionDetails>
                         </Accordion>
                         </Tooltip>
                     </div>
-                    </div> */}
-
+                    </div>
                 </div>
             </div>
         </div>

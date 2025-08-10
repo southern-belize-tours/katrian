@@ -82,6 +82,7 @@ code {
   display: flex;
   flex-direction: column;
   gap: var(--default-gap);
+  padding-top: calc(0.5 * var(--default-gap));
 }
 
 .logisticsAccordion {
