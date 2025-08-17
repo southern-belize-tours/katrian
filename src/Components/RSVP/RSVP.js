@@ -443,8 +443,11 @@ export default function RSVP (props) {
             {group === null ?
             <div className={`flexed col logisticsText ${fade ? "" : "fading"}`}>
                 <div className="flexed logisticsItem centered">
-                    <div>
+                    {/* <div>
                         We can't wait to celebrate -- please find your group and RSVP for any events by <span style={{fontWeight: 600}}>July 25, 2025</span> so we can prepare accordingly!
+                    </div> */}
+                    <div>
+                        We still can't wait to celebrate with you! It's a bit late to change things given we've made all our final meetings with coordinators, purchased tickets, and communicated headcounts - <span style={{fontWeight: 600}}>please get in contact with the bride or groom to communicate your last-minute-changes.</span>
                     </div>
                 </div>
                 <div className="flexed logisticsItem centered RSVPSearchInput">
@@ -626,8 +629,11 @@ export default function RSVP (props) {
                 : statusConfirmed == false ?
                 <>
                 <div className={`flexed logisticsItem centered`}>
-                    <div>
+                    {/* <div>
                     We can't wait to celebrate - please RSVP for the following events by <span style={{fontWeight: 600}}>July 25, 2025</span> so we can prepare accordingly!
+                    </div> */}
+                    <div>
+                        We still can't wait to celebrate with you! It's a bit late to change things given we've made all our final meetings with coordinators, purchased tickets, and communicated headcounts - <span style={{fontWeight: 600}}>please get in contact with the bride or groom to communicate your last-minute-changes.</span>
                     </div>
                 </div>
 
@@ -676,7 +682,8 @@ export default function RSVP (props) {
                                         }}
                                         className = "rsvpFormButton"
                                         size="small"
-                                        disabled = {loading}
+                                        // disabled = {loading}
+                                        disabled = {true}
                                         color="primary">
                                         {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} <span className="rsvpFormButtonText">Accept</span>
                                     </Button>
@@ -686,7 +693,8 @@ export default function RSVP (props) {
                                                 setAttending(people_selected[i], 0);
                                             }
                                         }}
-                                        disabled = {loading}
+                                        // disabled = {loading}
+                                        disabled = {true}
                                         className = "rsvpFormButton"
                                         size="small"
                                         color="secondary">
@@ -699,7 +707,8 @@ export default function RSVP (props) {
                                                     setAttending(people_selected[i], -1);
                                                 }
                                             }}
-                                            disabled = {loading}
+                                            // disabled = {loading}
+                                            disabled = {true}
                                             className = "rsvpFormButton"
                                             size="small"
                                             color="disabled">
@@ -720,7 +729,8 @@ export default function RSVP (props) {
                                                 setAttendingRehearsal(people_selected[i], true);
                                             }
                                         }}
-                                        disabled = {loading}
+                                        // disabled = {loading}
+                                        disabled = {true}
                                         className = "rsvpFormButton"
                                         size="small"
                                         color="primary">
@@ -732,6 +742,7 @@ export default function RSVP (props) {
                                                 setAttendingRehearsal(people_selected[i], false);
                                             }
                                         }}
+                                        disabled = {true}
                                         className = "rsvpFormButton"
                                         size="small"
                                         color="secondary">
@@ -751,7 +762,8 @@ export default function RSVP (props) {
                                                 setAttendingBrunch(people_selected[i], true);
                                             }
                                         }}
-                                        disabled = {loading}
+                                        // disabled = {loading}
+                                        disabled = {true}
                                         className = "rsvpFormButton"
                                         size="small"
                                         color="primary">
@@ -763,7 +775,8 @@ export default function RSVP (props) {
                                                 setAttendingBrunch(people_selected[i], false);
                                             }
                                         }}
-                                        disabled = {loading}
+                                        // disabled = {loading}
+                                        disabled = {true}
                                         className = "rsvpFormButton"
                                         size="small"
                                         color="secondary">
@@ -787,13 +800,15 @@ export default function RSVP (props) {
                                                 onClick = {() => {setAttending(person, 1)}}
                                                 className = "rsvpFormButton"
                                                 size="small"
-                                                disabled = {loading}
+                                                // disabled = {loading}
+                                                disabled = {true}
                                                 color="primary">
                                                 {loading ? <ClipLoader className = "iconLoader"></ClipLoader> : <Check></Check>} <span className="rsvpFormButtonText">Accept</span>
                                             </Button>
                                             <Button variant={`${person.attending_ceremony === 0 ? "contained" : "outlined"}`}
                                                 onClick = {() => {setAttending(person, 0)}}
-                                                disabled = {loading}
+                                                // disabled = {loading}
+                                                disabled = {true}
                                                 className = "rsvpFormButton"
                                                 size="small"
                                                 color="secondary">
@@ -802,7 +817,8 @@ export default function RSVP (props) {
                                             {person.attending_ceremony === -1 &&
                                                 <Button variant={`${person.attending_ceremony === -1 ? "contained" : "outlined"}`}
                                                     onClick = {() => {setAttending(person, -1)}}
-                                                    disabled = {loading}
+                                                    // disabled = {loading}
+                                                    disabled = {true}
                                                     className = "rsvpFormButton"
                                                     size="small"
                                                     color="disabled">
@@ -819,7 +835,8 @@ export default function RSVP (props) {
                                             aria-label="Guests Rehearsal Selection">
                                             <Button variant={`${person.attending_rehearsal == 1 ? "contained" : "outlined"}`}
                                                 onClick = {() => {setAttendingRehearsal(person, 1)}}
-                                                disabled = {loading}
+                                                // disabled = {loading}
+                                                disabled = {true}
                                                 className = "rsvpFormButton"
                                                 size="small"
                                                 color="primary">
@@ -835,7 +852,8 @@ export default function RSVP (props) {
                                             {person.attending_rehearsal == -1 &&
                                                 <Button variant={`${person.attending_rehearsal == -1 ? "contained" : "outlined"}`}
                                                     onClick = {() => {setAttendingRehearsal(person, -1)}}
-                                                    disabled = {loading}
+                                                    // disabled = {loading}
+                                                    disabled = {true}
                                                     className = "rsvpFormButton"
                                                     size="small"
                                                     color="disabled">
@@ -852,7 +870,8 @@ export default function RSVP (props) {
                                             aria-label="Guests Brunch Selection">
                                             <Button variant={`${person.attending_brunch == 1 ? "contained" : "outlined"}`}
                                                 onClick = {() => {setAttendingBrunch(person, 1)}}
-                                                disabled = {loading}
+                                                // disabled = {loading}
+                                                disabled = {true}
                                                 className = "rsvpFormButton"
                                                 size="small"
                                                 color="primary">
@@ -860,7 +879,8 @@ export default function RSVP (props) {
                                             </Button>
                                             <Button variant={`${person.attending_brunch  == 0? "contained" : "outlined"}`}
                                                 onClick = {() => {setAttendingBrunch(person, 0)}}
-                                                disabled = {loading}
+                                                // disabled = {loading}
+                                                disabled = {true}
                                                 className = "rsvpFormButton"
                                                 size="small"
                                                 color="secondary">
@@ -869,7 +889,8 @@ export default function RSVP (props) {
                                             {person.attending_brunch == -1 &&
                                                 <Button variant={`${person.attending_brunch === -1 ? "contained" : "outlined"}`}
                                                     onClick = {() => {setAttendingBrunch(person, -1)}}
-                                                    disabled = {loading}
+                                                    // disabled = {loading}
+                                                    disabled = {true}
                                                     className = "rsvpFormButton"
                                                     size="small"
                                                     color="disabled">
