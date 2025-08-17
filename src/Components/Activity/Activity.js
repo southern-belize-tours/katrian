@@ -723,10 +723,11 @@ const binaryLines = Array.from({ length: 20 }, (_, idx) => (
                 Your mission is of utmost importance. Should you choose to accept it,
                 please <strong>open the file</strong>.
               </MissionText>
-              <div style={{backgroundColor: "white", color: "black", padding: "0.5rem"}}>
+              {/* {!showMission && */}
+              <div style={{backgroundColor: showMission ? "black" : "white", color: "black", padding: "0.5rem"}}>
               <Typography
                 variant="caption"
-                sx={{ opacity: 0.9, display: "block", backgroundColor: "white", color: "black" }}
+                sx={{ opacity: 0.9, display: "block" }}
               >
                 NOTICE: Unauthorized disclosure of the following contents is strictly{" "}
                 <Redacted /> by order of Section <Redacted />. Refer to file{" "}
@@ -734,6 +735,7 @@ const binaryLines = Array.from({ length: 20 }, (_, idx) => (
               </Typography>
               <RandomRedactions count={8} />
               </div>
+              {/* } */}
             </>
           )}
 
@@ -778,6 +780,7 @@ const binaryLines = Array.from({ length: 20 }, (_, idx) => (
                 )}
 
                 {/* Mission Complete checkbox badge */}
+                {showMission && 
                 <CompleteBadge onClick={(e) => e.stopPropagation()}>
                   <FormControlLabel
                     control={
@@ -792,6 +795,7 @@ const binaryLines = Array.from({ length: 20 }, (_, idx) => (
                     sx={{ m: 0 }}
                   />
                 </CompleteBadge>
+                }
               </PaperSheet>
             </DossierWrap>
           ) : (
